@@ -1,0 +1,19 @@
+Use the left-panel buttons to select scenes, control settings, etc. Selecting each option brings up the corresponding docs in the right panel. The button on the right allows you to return to the introduction text.
+
+<title>Controls</title>
+Note that some scenes do not permit character movement.
+<title>Game Pad</title>
+Left Stick - Move forward/backward
+Left Stick - Strafe Left/Right
+<ONLY_RIFT>Press Left Stick - Run
+</ONLY_RIFT>A - Run
+Bumpers - Rotate left/right in steps
+Right Stick - Smooth rotate
+Start - Open GUI
+<ONLY_RIFT>
+<title>Keyboard + Mouse </title>
+W,A,S,D - Move forward/backward + Strafe Left/Right
+Left Shift- Run
+Q,E- Rotate left/right in steps
+Mouse X Axis - Smooth rotate
+Escape- Open GUI</ONLY_RIFT>

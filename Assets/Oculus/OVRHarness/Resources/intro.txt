@@ -1,0 +1,13 @@
+Welcome to the sample browser!
+
+These samples allow you to explore the pros and cons of different techniques in VR. It's important to remember that not all (or even most) examples in this framework are necessarily recommended, but serve as a way to experiment and discover what does and doesn't work in VR.
+
+Use <ONLY_RIFT>your mouse or </ONLY_RIFT>your gaze to move the pointer. To click on an item<ONLY_RIFT>, click your mouse,</ONLY_RIFT> press your gamepad A button, or tap the Gear VR touchpad.
+
+To scroll, use <ONLY_RIFT>your scroll wheel, </ONLY_RIFT>the gamepad right stick, or position the gaze cursor at the top or bottom of the window. <ONLY_GEARVR>You can also swipe the Gear VR touch pad.</ONLY_GEARVR> This doc panel and the scene list can both be scrolled.
+
+To summon this GUI from any scene, press <ONLY_RIFT>ESCAPE, </ONLY_RIFT>START on a gamepad, or back on your Gear VR.
+
+The left-panel menu offers top level navigation and allows you to select different contexts in the center panel.
+
+Browse to a scene to load from the center menu. Remember you can return to this menu using the “Scenes” button on the left panel.

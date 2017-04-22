@@ -1,0 +1,266 @@
+fileFormatVersion: 2
+guid: e20b8a7f2a259774ebe1ae84b28c7e81
+timeCreated: 1492730129
+licenseType: Pro
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f0000005000000051000000520000005300000054000000
+  assetHash:
+    serializedVersion: 2
+    Hash: 7432eb979dc1e88ac37e6c48acc444de
+  longitude: -105.242139
+  latitude: 40.018309
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 0.82704455, y: 1.6321229, z: -4.8868246}
+      lookAt: {x: -2.0913434, y: -1.3222399, z: 19.298616}
+      up: {x: -0.014422826, y: 0.9927263, z: 0.119525716}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Back
+    100002: BookA
+    100004: BookA 1
+    100006: BookA 10
+    100008: BookA 11
+    100010: BookA 12
+    100012: BookA 13
+    100014: BookA 14
+    100016: BookA 15
+    100018: BookA 16
+    100020: BookA 17
+    100022: BookA 18
+    100024: BookA 19
+    100026: BookA 2
+    100028: BookA 20
+    100030: BookA 21
+    100032: BookA 22
+    100034: BookA 23
+    100036: BookA 24
+    100038: BookA 25
+    100040: BookA 26
+    100042: BookA 27
+    100044: BookA 28
+    100046: BookA 29
+    100048: BookA 3
+    100050: BookA 30
+    100052: BookA 31
+    100054: BookA 32
+    100056: BookA 4
+    100058: BookA 5
+    100060: BookA 6
+    100062: BookA 7
+    100064: BookA 8
+    100066: BookA 9
+    100068: //RootNode
+    100070: Cabinet Door
+    100072: Cabinet Door 1
+    100074: Shelf
+    100076: Shelf 1
+    100078: Shelf 2
+    100080: Shelf 3
+    100082: Side
+    100084: Side 1
+    400000: Back
+    400002: BookA
+    400004: BookA 1
+    400006: BookA 10
+    400008: BookA 11
+    400010: BookA 12
+    400012: BookA 13
+    400014: BookA 14
+    400016: BookA 15
+    400018: BookA 16
+    400020: BookA 17
+    400022: BookA 18
+    400024: BookA 19
+    400026: BookA 2
+    400028: BookA 20
+    400030: BookA 21
+    400032: BookA 22
+    400034: BookA 23
+    400036: BookA 24
+    400038: BookA 25
+    400040: BookA 26
+    400042: BookA 27
+    400044: BookA 28
+    400046: BookA 29
+    400048: BookA 3
+    400050: BookA 30
+    400052: BookA 31
+    400054: BookA 32
+    400056: BookA 4
+    400058: BookA 5
+    400060: BookA 6
+    400062: BookA 7
+    400064: BookA 8
+    400066: BookA 9
+    400068: //RootNode
+    400070: Cabinet Door
+    400072: Cabinet Door 1
+    400074: Shelf
+    400076: Shelf 1
+    400078: Shelf 2
+    400080: Shelf 3
+    400082: Side
+    400084: Side 1
+    2300000: Back
+    2300002: BookA
+    2300004: BookA 1
+    2300006: BookA 10
+    2300008: BookA 11
+    2300010: BookA 12
+    2300012: BookA 13
+    2300014: BookA 14
+    2300016: BookA 15
+    2300018: BookA 16
+    2300020: BookA 17
+    2300022: BookA 18
+    2300024: BookA 19
+    2300026: BookA 2
+    2300028: BookA 20
+    2300030: BookA 21
+    2300032: BookA 22
+    2300034: BookA 23
+    2300036: BookA 24
+    2300038: BookA 25
+    2300040: BookA 26
+    2300042: BookA 27
+    2300044: BookA 28
+    2300046: BookA 29
+    2300048: BookA 3
+    2300050: BookA 30
+    2300052: BookA 31
+    2300054: BookA 32
+    2300056: BookA 4
+    2300058: BookA 5
+    2300060: BookA 6
+    2300062: BookA 7
+    2300064: BookA 8
+    2300066: BookA 9
+    2300068: Cabinet Door
+    2300070: Cabinet Door 1
+    2300072: Shelf
+    2300074: Shelf 1
+    2300076: Shelf 2
+    2300078: Shelf 3
+    2300080: Side
+    2300082: Side 1
+    3300000: Back
+    3300002: BookA
+    3300004: BookA 1
+    3300006: BookA 10
+    3300008: BookA 11
+    3300010: BookA 12
+    3300012: BookA 13
+    3300014: BookA 14
+    3300016: BookA 15
+    3300018: BookA 16
+    3300020: BookA 17
+    3300022: BookA 18
+    3300024: BookA 19
+    3300026: BookA 2
+    3300028: BookA 20
+    3300030: BookA 21
+    3300032: BookA 22
+    3300034: BookA 23
+    3300036: BookA 24
+    3300038: BookA 25
+    3300040: BookA 26
+    3300042: BookA 27
+    3300044: BookA 28
+    3300046: BookA 29
+    3300048: BookA 3
+    3300050: BookA 30
+    3300052: BookA 31
+    3300054: BookA 32
+    3300056: BookA 4
+    3300058: BookA 5
+    3300060: BookA 6
+    3300062: BookA 7
+    3300064: BookA 8
+    3300066: BookA 9
+    3300068: Cabinet Door
+    3300070: Cabinet Door 1
+    3300072: Shelf
+    3300074: Shelf 1
+    3300076: Shelf 2
+    3300078: Shelf 3
+    3300080: Side
+    3300082: Side 1
+    4300000: Mesh BookA
+    4300002: Mesh Shelf
+    4300004: Mesh Side
+    4300006: Mesh Back
+    4300008: Mesh Cabinet Door
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
