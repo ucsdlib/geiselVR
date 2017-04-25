@@ -1,27 +1,53 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Configuration;
+using UnityEngine;
 using Debug = System.Diagnostics.Debug;
 
 public class Mover : MonoBehaviour
 {
+    public float damping = 10000.0f;
 
-    private Vector3 startTransform;
+    private Vector3 startPos;
 
-	void Start () {
-	    startTransform = gameObject.transform.position;
-	}
+    private Vector3 lerpDestPos;
+    private bool lerping = false;
 
-	void Update () {
-	    // Handle 'A' button press
-	    if (OVRInput.GetDown(OVRInput.Button.One))
-	    {
-	        gameObject.transform.Translate(0, 0, 0.5f);
-	    }
+    void Start()
+    {
+        startPos = transform.position;
+    }
 
-	    // Handle trigger press
-	    var flex = OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger);
-	    if (flex > 0.5)
-	    {
-	        gameObject.transform.position = startTransform;
-	    }
-	}
+    void Update()
+    {
+        // Handle 'A' button press - jerk back
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            transform.Translate(0, 0, 0.5f);
+        }
+
+        // Handle 'B' button press - return to original position
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            transform.position = startPos;
+        }
+
+        // Handle trigger press
+        var flex = OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger);
+        if (flex > 0.5)
+        {
+            // Capture destination position
+            if (!lerping)
+            {
+                lerpDestPos = transform.position + new Vector3(0, 0, 1.0f);
+                lerping = true;
+            }
+
+            // Smooth movement
+            transform.position = Vector3.Slerp(transform.position, lerpDestPos, damping);
+        }
+        else if (flex < 0.5)
+        {
+            lerping = false;
+        }
+    }
 }
