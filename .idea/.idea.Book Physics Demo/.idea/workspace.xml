@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a4bd8b0-773e-4c5f-bd6c-d37978bbf2e8" name="Default" comment="kk">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/Mover.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Mover.cs" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,31 +16,18 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="BookSpawn.cs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="270">
-                  <caret line="18" column="44" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
-                  <folding>
-                    <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
-                    <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
-                    <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
-                    <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="Mover.cs" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+                <state relative-caret-position="270">
+                  <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
                   <folding>
-                    <marker date="1493159584036" expanded="false" signature="6:44" ph="..." />
-                    <marker date="1493159584036" expanded="true" signature="85:135" ph="{...}" />
-                    <marker date="1493159584036" expanded="true" signature="103:109" ph="{...}" />
-                    <marker date="1493159584036" expanded="true" signature="127:133" ph="{...}" />
+                    <marker date="1493160912181" expanded="true" signature="6:58" ph="..." />
+                    <marker date="1493160912181" expanded="true" signature="94:569" ph="{...}" />
+                    <marker date="1493160912181" expanded="true" signature="150:207" ph="{...}" />
+                    <marker date="1493160912181" expanded="true" signature="225:567" ph="{...}" />
+                    <marker date="1493160912181" expanded="true" signature="306:373" ph="{...}" />
+                    <marker date="1493160912181" expanded="true" signature="493:564" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -120,8 +107,8 @@
           <file leaf-file-name="OVRGrabber.cs" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="855">
-                  <caret line="57" column="33" lean-forward="false" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+                <state relative-caret-position="225">
+                  <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
                   <folding>
                     <marker date="1492899050333" expanded="true" signature="0:940" ph="/* Copyright   :   Copyright 2014 Oculus VR, LLC. All Rights reserved. ... */" />
                     <marker date="1492899050333" expanded="true" signature="948:1033" ph="..." />
@@ -179,6 +166,21 @@
                     <marker date="1492899050333" expanded="true" signature="12858:12916" ph="{...}" />
                     <marker date="1492899050333" expanded="true" signature="12978:13107" ph="{...}" />
                     <marker date="1492899050333" expanded="true" signature="13023:13101" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="BookSpawn.cs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="225">
+                  <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+                  <folding>
+                    <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
+                    <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
+                    <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
+                    <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -408,12 +410,12 @@
       <updated>1492889051570</updated>
       <workItem from="1492889053507" duration="2594000" />
       <workItem from="1492892740441" duration="3227000" />
-      <workItem from="1493158871049" duration="758000" />
+      <workItem from="1493158871049" duration="2043000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6579000" />
+    <option name="totallyTimeSpent" value="7864000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -431,16 +433,16 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1578125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -554,6 +556,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding>
+            <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
+            <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
+            <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
+            <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1395">
@@ -619,28 +634,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="44" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
-          <folding>
-            <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <marker date="1493159584036" expanded="false" signature="6:44" ph="..." />
-            <marker date="1493159584036" expanded="true" signature="85:135" ph="{...}" />
-            <marker date="1493159584036" expanded="true" signature="103:109" ph="{...}" />
-            <marker date="1493159584036" expanded="true" signature="127:133" ph="{...}" />
+            <marker date="1493160912181" expanded="true" signature="6:58" ph="..." />
+            <marker date="1493160912181" expanded="true" signature="94:569" ph="{...}" />
+            <marker date="1493160912181" expanded="true" signature="150:207" ph="{...}" />
+            <marker date="1493160912181" expanded="true" signature="225:567" ph="{...}" />
+            <marker date="1493160912181" expanded="true" signature="306:373" ph="{...}" />
+            <marker date="1493160912181" expanded="true" signature="493:564" ph="{...}" />
           </folding>
         </state>
       </provider>
