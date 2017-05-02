@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a4bd8b0-773e-4c5f-bd6c-d37978bbf2e8" name="Default" comment="kk">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Prefabs/Book.prefab" afterPath="$PROJECT_DIR$/Assets/Prefabs/Book.prefab" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scenes/[0.1.2] Move on input.unity" afterPath="$PROJECT_DIR$/Assets/Scenes/[0.1.2] Move on input.unity" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.idea.Book Physics Demo/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.Book Physics Demo/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/Mover.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Mover.cs" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,85 +18,17 @@
       <file leaf-file-name="Mover.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="8" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+            <state relative-caret-position="75">
+              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding>
-                <marker date="1493163588798" expanded="true" signature="6:100" ph="..." />
-                <marker date="1493163588798" expanded="true" signature="136:1274" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="292:343" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="362:1272" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="466:531" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="648:711" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="840:1188" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="920:1056" ph="{...}" />
-                <marker date="1493163588798" expanded="true" signature="1217:1266" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OVRGrabber.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1395">
-              <caret line="162" column="24" lean-forward="false" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
-              <folding>
-                <marker date="1492899050333" expanded="true" signature="0:940" ph="/* Copyright   :   Copyright 2014 Oculus VR, LLC. All Rights reserved. ... */" />
-                <marker date="1492899050333" expanded="true" signature="948:1033" ph="..." />
-                <marker date="1492899050333" expanded="true" signature="1035:1148" ph="/// Allows grabbing and throwing of objects with the OVRGrabbable component on them. ... " />
-                <marker date="1492899050333" expanded="true" signature="1279:13109" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="1434:1859" ph="/* Demonstrates parenting the held object to the hand's transform when grabbed. ... */" />
-                <marker date="1492899050333" expanded="true" signature="1933:2112" ph="/* Child/attached transforms of the grabber, indicating where to snap held objects to (if you snap them). ... */" />
-                <marker date="1492899050333" expanded="true" signature="2995:3065" ph="/// The currently grabbed object. ... " />
-                <marker date="1492899050333" expanded="true" signature="3103:3152" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3203:3399" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3350:3393" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3417:3545" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3563:4102" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3687:4096" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3749:3852" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="3869:4086" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="4108:4830" ph="/* Hands follow the touch anchors by calling MovePosition each frame to reach the anchor. ... */" />
-                <marker date="1492899050333" expanded="true" signature="4853:5683" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="5350:5419" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="5705:5794" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="5745:5788" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="5843:6222" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6270:6825" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6595:6635" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6662:6738" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6751:6819" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6883:7114" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="6954:6999" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="7065:7108" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="7146:10588" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="7424:8288" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="7542:7596" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="7663:8278" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="8061:8264" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="8413:10582" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="8467:8572" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="8902:9311" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="9031:9297" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="9328:9565" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="9612:9893" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="9741:9879" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="9910:10096" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="10110:10391" ph="/* Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high ... */" />
-                <marker date="1492899050333" expanded="true" signature="10485:10572" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="10683:11320" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="10723:10763" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="10999:11157" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="11170:11314" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="11350:12202" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="11390:12105" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12288:12461" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12512:12922" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12562:12602" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12697:12823" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12858:12916" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="12978:13107" ph="{...}" />
-                <marker date="1492899050333" expanded="true" signature="13023:13101" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="54:1210" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="213:265" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="292:1208" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="396:461" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="578:642" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="771:1123" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="852:990" ph="{...}" />
+                <marker date="1493758944881" expanded="true" signature="1152:1202" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -123,8 +55,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="960" />
-    <option name="height" value="1160" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1216" />
   </component>
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
@@ -323,11 +257,13 @@
       <workItem from="1492889053507" duration="2594000" />
       <workItem from="1492892740441" duration="3227000" />
       <workItem from="1493158871049" duration="4496000" />
+      <workItem from="1493758609495" duration="93000" />
+      <workItem from="1493758715501" duration="229000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10317000" />
+    <option name="totallyTimeSpent" value="10639000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -339,7 +275,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="960" height="1160" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1216" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -350,7 +287,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3209746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -400,16 +337,51 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1493758944881" expanded="true" signature="54:1210" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="213:265" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="292:1208" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="396:461" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="578:642" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="771:1123" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="852:990" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="1152:1202" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1493758944881" expanded="true" signature="54:1210" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="213:265" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="292:1208" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="396:461" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="578:642" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="771:1123" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="852:990" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="1152:1202" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2430">
+          <caret line="162" column="24" lean-forward="false" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/BookSpawn.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="44" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
-          <folding>
-            <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -417,64 +389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1492899050333" expanded="true" signature="0:940" ph="/* Copyright   :   Copyright 2014 Oculus VR, LLC. All Rights reserved. ... */" />
-            <marker date="1492899050333" expanded="true" signature="948:1033" ph="..." />
-            <marker date="1492899050333" expanded="true" signature="1035:1148" ph="/// Allows grabbing and throwing of objects with the OVRGrabbable component on them. ... " />
-            <marker date="1492899050333" expanded="true" signature="1279:13109" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="1434:1859" ph="/* Demonstrates parenting the held object to the hand's transform when grabbed. ... */" />
-            <marker date="1492899050333" expanded="true" signature="1933:2112" ph="/* Child/attached transforms of the grabber, indicating where to snap held objects to (if you snap them). ... */" />
-            <marker date="1492899050333" expanded="true" signature="2995:3065" ph="/// The currently grabbed object. ... " />
-            <marker date="1492899050333" expanded="true" signature="3103:3152" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3203:3399" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3350:3393" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3417:3545" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3563:4102" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3687:4096" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3749:3852" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3869:4086" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="4108:4830" ph="/* Hands follow the touch anchors by calling MovePosition each frame to reach the anchor. ... */" />
-            <marker date="1492899050333" expanded="true" signature="4853:5683" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5350:5419" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5705:5794" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5745:5788" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5843:6222" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6270:6825" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6595:6635" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6662:6738" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6751:6819" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6883:7114" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6954:6999" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7065:7108" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7146:10588" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7424:8288" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7542:7596" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7663:8278" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8061:8264" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8413:10582" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8467:8572" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8902:9311" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9031:9297" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9328:9565" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9612:9893" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9741:9879" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9910:10096" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10110:10391" ph="/* Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high ... */" />
-            <marker date="1492899050333" expanded="true" signature="10485:10572" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10683:11320" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10723:10763" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10999:11157" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11170:11314" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11350:12202" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11390:12105" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12288:12461" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12512:12922" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12562:12602" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12697:12823" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12858:12916" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12978:13107" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="13023:13101" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -482,77 +396,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
-          <caret line="162" column="24" lean-forward="false" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
-          <folding>
-            <marker date="1492899050333" expanded="true" signature="0:940" ph="/* Copyright   :   Copyright 2014 Oculus VR, LLC. All Rights reserved. ... */" />
-            <marker date="1492899050333" expanded="true" signature="948:1033" ph="..." />
-            <marker date="1492899050333" expanded="true" signature="1035:1148" ph="/// Allows grabbing and throwing of objects with the OVRGrabbable component on them. ... " />
-            <marker date="1492899050333" expanded="true" signature="1279:13109" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="1434:1859" ph="/* Demonstrates parenting the held object to the hand's transform when grabbed. ... */" />
-            <marker date="1492899050333" expanded="true" signature="1933:2112" ph="/* Child/attached transforms of the grabber, indicating where to snap held objects to (if you snap them). ... */" />
-            <marker date="1492899050333" expanded="true" signature="2995:3065" ph="/// The currently grabbed object. ... " />
-            <marker date="1492899050333" expanded="true" signature="3103:3152" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3203:3399" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3350:3393" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3417:3545" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3563:4102" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3687:4096" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3749:3852" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="3869:4086" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="4108:4830" ph="/* Hands follow the touch anchors by calling MovePosition each frame to reach the anchor. ... */" />
-            <marker date="1492899050333" expanded="true" signature="4853:5683" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5350:5419" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5705:5794" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5745:5788" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="5843:6222" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6270:6825" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6595:6635" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6662:6738" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6751:6819" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6883:7114" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="6954:6999" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7065:7108" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7146:10588" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7424:8288" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7542:7596" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="7663:8278" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8061:8264" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8413:10582" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8467:8572" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="8902:9311" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9031:9297" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9328:9565" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9612:9893" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9741:9879" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="9910:10096" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10110:10391" ph="/* Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high ... */" />
-            <marker date="1492899050333" expanded="true" signature="10485:10572" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10683:11320" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10723:10763" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="10999:11157" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11170:11314" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11350:12202" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="11390:12105" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12288:12461" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12512:12922" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12562:12602" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12697:12823" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12858:12916" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="12978:13107" ph="{...}" />
-            <marker date="1492899050333" expanded="true" signature="13023:13101" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -560,29 +403,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-          <folding>
-            <marker date="1493158707865" expanded="true" signature="58:506" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="132:191" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="218:504" ph="{...}" />
-            <marker date="1493158707865" expanded="true" signature="323:498" ph="{...}" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Oculus/OVR/Scripts/Util/OVRGrabber.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2174">
+          <caret line="162" column="24" lean-forward="false" selection-start-line="162" selection-start-column="24" selection-end-line="162" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="8" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
-            <marker date="1493163588798" expanded="true" signature="6:100" ph="..." />
-            <marker date="1493163588798" expanded="true" signature="136:1274" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="292:343" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="362:1272" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="466:531" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="648:711" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="840:1188" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="920:1056" ph="{...}" />
-            <marker date="1493163588798" expanded="true" signature="1217:1266" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="54:1210" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="213:265" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="292:1208" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="396:461" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="578:642" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="771:1123" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="852:990" ph="{...}" />
+            <marker date="1493758944881" expanded="true" signature="1152:1202" ph="{...}" />
           </folding>
         </state>
       </provider>
