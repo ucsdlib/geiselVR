@@ -1442,6 +1442,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 783585894}
+  - 114: {fileID: 783585895}
   m_Layer: 0
   m_Name: Full Bookshelf (1)
   m_TagString: Untagged
@@ -1464,6 +1465,18 @@ Transform:
   - {fileID: 863872703}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &783585895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 783585893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd703eaa7dd147488450bab57b498cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damping: 0.3
 --- !u!1001 &786538142
 Prefab:
   m_ObjectHideFlags: 0
@@ -1676,6 +1689,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 858254045}
+  - 114: {fileID: 858254046}
   m_Layer: 0
   m_Name: Full Bookshelf
   m_TagString: Untagged
@@ -1698,6 +1712,18 @@ Transform:
   - {fileID: 606996064}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &858254046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 858254044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd703eaa7dd147488450bab57b498cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damping: 0.3
 --- !u!1001 &862983283
 Prefab:
   m_ObjectHideFlags: 0
@@ -3876,47 +3902,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4000014294648640, guid: bc2824cd54667bf45a5eb21aec1825e7,
     type: 2}
   m_PrefabInternal: {fileID: 1851801077}
---- !u!1 &2028977511
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2028977513}
-  - 114: {fileID: 2028977512}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2028977512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2028977511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce7840488d14f9146a648c7a688a2f84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _book: {fileID: 0}
---- !u!4 &2028977513
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2028977511}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74606323, y: 1.2757192, z: 1.0124941}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
 --- !u!1001 &2079405573
 Prefab:
   m_ObjectHideFlags: 0
