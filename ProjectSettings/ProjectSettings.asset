@@ -551,7 +551,7 @@ PlayerSettings:
     Game_Performance: 0
     Hub: 0
     Purchasing: 0
-    UNet: 0
+    UNet: 1
     Unity_Ads: 0
   cloudProjectId: 64ee69b0-18e2-472c-a4e6-d7b0272a9935
   projectName: Book Physics Demo
