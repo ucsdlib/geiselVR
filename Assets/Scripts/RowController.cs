@@ -1,18 +1,25 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.ComponentModel.Design;
+using System.Net.Sockets;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.VR.WSA;
 
 public class RowController : MonoBehaviour
 {
 	public Transform Bookshelf;
+	public float Width = 1.2f; // TODO find programatically
+	public int Size = 2;
 
 
-	private void Start () {
-		CalculateLocalBounds();
+	private void Start ()
+	{
+		InstantiateArray(Size);
 	}
 
 	private void Update()
 	{
-		InstantiateOnPress();
+		
 	}
 
 	private void InstantiateOnPress()
@@ -25,7 +32,18 @@ public class RowController : MonoBehaviour
 		}
 	}
 
-	private void CalculateLocalBounds()
+	private void InstantiateArray(int size)
+	{
+		for (int i = 1; i <= size; i++)
+		{
+			Vector3 position = Bookshelf.position + Vector3.left * i * Width;
+			Debug.Log(position); // DEBUG
+			Instantiate(Bookshelf, position, Quaternion.identity, transform);
+		}
+	}
+
+
+	private void TestCalculateLocalBounds()
 	{
 		// Capture the initial rotation and reset to 0
 		Quaternion currentRotation = transform.rotation;
