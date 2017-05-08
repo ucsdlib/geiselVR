@@ -255,7 +255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Unit: {fileID: 2036715921}
   Width: 1.1
-  RowSize: 5
+  RowSize: 4
+  ScrollTime: 0.12
 --- !u!1001 &1156289701
 Prefab:
   m_ObjectHideFlags: 0
