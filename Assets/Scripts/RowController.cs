@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO see if you can make the Unit firld of type UnitController and stil instantiate
+
 public class RowController : MonoBehaviour
 {
     public Transform Unit;
@@ -9,12 +11,12 @@ public class RowController : MonoBehaviour
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
 
-    private readonly List<Transform> _activeUnits = new List<Transform>();
+    private readonly List<UnitController> _activeUnits = new List<UnitController>();
     private bool _lerping;
     private Vector3 _lerpDestPos;
     private Vector3 _firstPos; // first position in array
     private Vector3 _lastPos; // last position in array
-    private Vector3 _rowPos; // initial position of row in world
+    private Vector3 _rowInitPos; // initial position of row in world
 
 
     private void Start()
@@ -24,22 +26,12 @@ public class RowController : MonoBehaviour
         // Save initial positions
         _firstPos = Unit.position;
         _lastPos = _firstPos + Vector3.left * RowSize * Width;
-        _rowPos = transform.position;
+        _rowInitPos = transform.position;
     }
 
     private void Update()
     {
         HandleShiftInput();
-    }
-
-    private void InstantiateOnPress()
-    {
-        // Check use pressed button
-        if (OVRInput.GetDown(OVRInput.Button.One))
-        {
-            Instantiate(Unit, new Vector3(0, 0, -2),
-                Quaternion.Euler(0, 180f, 0), transform);
-        }
     }
 
     private void HandleShiftInput()
@@ -51,7 +43,6 @@ public class RowController : MonoBehaviour
 
         if (flexR > 0.5 && !_lerping)
         {
-            Debug.Log("LERPING"); // DEBUG
             Vector3 destination = transform.position + Vector3.right * Width;
             StartCoroutine(SmoothMove(transform.position, destination, ScrollTime));
         }
@@ -71,22 +62,33 @@ public class RowController : MonoBehaviour
             }
             _lerping = false;
             // TODO call Scroll somehow
+            transform.position = _rowInitPos;
+
         }
     }
 
-    private void Scroll()
+    private void ShiftFrame()
     {
+        // Reset position of row
+        transform.position = _rowInitPos;
+
 
     }
 
     private void InstantiateArray(int size)
     {
-        // Instantiate units in correct position and add to _activeList
-        for (int i = 1; i <= size; i++)
+        // Instantiate units in correct position and add to _activeUnits
+        for (int i = 1; i < size; i++)
         {
+            // Create unitController
             Vector3 position = Unit.position + Vector3.left * i * Width;
             Transform item = Instantiate(Unit, position, Quaternion.identity, transform);
-            _activeUnits.Add(item);
+
+            // Register script and assign position
+            UnitController unit = item.GetComponent<UnitController>();
+            unit.Position = i;
+            unit.Row = this;
+            _activeUnits.Add(unit);
         }
     }
 
