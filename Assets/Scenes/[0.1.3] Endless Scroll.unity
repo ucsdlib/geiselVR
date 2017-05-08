@@ -253,9 +253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1000ff0d5e845ac44a20abb8926871b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bookshelf: {fileID: 2036715921}
+  Unit: {fileID: 2036715921}
   Width: 1.1
-  Size: 4
+  RowSize: 5
 --- !u!1001 &1156289701
 Prefab:
   m_ObjectHideFlags: 0
