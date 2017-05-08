@@ -1,25 +1,26 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Net.Sockets;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VR.WSA;
 
 public class RowController : MonoBehaviour
 {
-	public Transform Bookshelf;
+	public Transform Unit;
 	public float Width = 1.2f; // TODO find programatically
-	public int Size = 2;
+	public int RowSize = 2;
+
+	private List<Transform> _activeUnits = new List<Transform>();
+	private bool _lerping;
+	private Vector3 _lerpDestPos;
 
 
 	private void Start ()
 	{
-		InstantiateArray(Size);
+		InstantiateArray(RowSize);
+		Debug.Log("Count: " + _activeUnits.Count);
 	}
 
 	private void Update()
 	{
-		
+		HandleShiftInput();
 	}
 
 	private void InstantiateOnPress()
@@ -27,8 +28,23 @@ public class RowController : MonoBehaviour
 		// Check use pressed button
 		if (OVRInput.GetDown(OVRInput.Button.One))
 		{
-			Instantiate(Bookshelf, new Vector3(0, 0, -2),
+			Instantiate(Unit, new Vector3(0, 0, -2),
 				Quaternion.Euler(0, 180f, 0), transform);
+		}
+	}
+
+	private void HandleShiftInput()
+	{
+		// Get both hand x-axis thumbstick value [-1, 1]
+		float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
+		float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
+
+		if (flexL > 0.5 || flexR > 0.5)
+		{
+			// Capture destination position
+			if (!_lerping)
+			{
+			}
 		}
 	}
 
@@ -36,9 +52,9 @@ public class RowController : MonoBehaviour
 	{
 		for (int i = 1; i <= size; i++)
 		{
-			Vector3 position = Bookshelf.position + Vector3.left * i * Width;
-			Debug.Log(position); // DEBUG
-			Instantiate(Bookshelf, position, Quaternion.identity, transform);
+			Vector3 position = Unit.position + Vector3.left * i * Width;
+			Transform item = Instantiate(Unit, position, Quaternion.identity, transform);
+			_activeUnits.Add(item);
 		}
 	}
 
