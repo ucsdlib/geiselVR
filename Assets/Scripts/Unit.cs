@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : MonoBehaviour {
+public class Unit : MonoBehaviour {
 
 	public RowController Row;
 	public int Position { get; set; }

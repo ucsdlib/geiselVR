@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class RowController : MonoBehaviour
 {
-    public Transform Unit;
+    public Unit firstUnit;
     public float Width = 1.2f; // TODO find programatically
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
 
-    private readonly List<UnitController> _activeUnits = new List<UnitController>();
+    private readonly List<Unit> _activeUnits = new List<Unit>();
     private bool _lerping;
     private Vector3 _lerpDestPos;
     private Vector3 _firstPos; // first position in array
@@ -24,9 +24,8 @@ public class RowController : MonoBehaviour
         InstantiateArray(RowSize);
 
         // Save initial positions
-        _firstPos = Unit.position;
+        _firstPos = firstUnit.transform.position;
         _lastPos = _firstPos + Vector3.left * RowSize * Width;
-        _rowInitPos = transform.position;
     }
 
     private void Update()
@@ -81,14 +80,13 @@ public class RowController : MonoBehaviour
         for (int i = 1; i < size; i++)
         {
             // Create unitController
-            Vector3 position = Unit.position + Vector3.left * i * Width;
-            Transform item = Instantiate(Unit, position, Quaternion.identity, transform);
+            Vector3 position = firstUnit.transform.position + Vector3.left * i * Width;
+            Unit item = Instantiate(firstUnit, position, Quaternion.identity, transform);
 
             // Register script and assign position
-            UnitController unit = item.GetComponent<UnitController>();
-            unit.Position = i;
-            unit.Row = this;
-            _activeUnits.Add(unit);
+            item.Position = i;
+            item.Row = this;
+            _activeUnits.Add(item);
         }
     }
 
