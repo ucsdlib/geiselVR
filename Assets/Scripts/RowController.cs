@@ -24,13 +24,13 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
-        // Save initial positions
+        // Compute initial positions
         _firstPos = Vector3.zero;
         _lastPos = _firstPos + Vector3.left * (RowSize - 1) * Width;
         _rowInitPos = transform.position;
 
+        // Create the row
         InstantiateArray(RowSize);
-
     }
 
     private void Update()
@@ -41,10 +41,10 @@ public class RowController : MonoBehaviour
     private void HandleShiftInput()
     {
         // Get both hand x-axis thumbstick value [-1, 1]
-        // TODO enable both joysticks
+        float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
-        if (flexR > 0.5 && !_lerping)
+        if ((flexL > 0.5 || flexR > 0.5) && !_lerping)
         {
             Vector3 destination = transform.position + Vector3.right * Width;
             StartCoroutine(SmoothMove(transform.position, destination, ScrollTime));
@@ -85,7 +85,7 @@ public class RowController : MonoBehaviour
             }
         }
 
-        // Remove invalid units
+        // Remove any invalid unit
         if (invalidUnit)
         {
             _activeUnits.Remove(invalidUnit);
@@ -102,10 +102,9 @@ public class RowController : MonoBehaviour
     {
         // TODO maybe have one template objects in the scene for convenience
 
-        // Instantiate units in correct position and add to _activeUnits
         for (int i = 0; i < size; i++)
         {
-            // Create unit
+            // Create unit with correct offset
             Unit unit = InstantiateUnit(_firstPos + Vector3.left * i * Width);
 
             // Register script and assign position
