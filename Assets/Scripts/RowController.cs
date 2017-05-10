@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.VR.WSA;
 
 public class RowController : MonoBehaviour
 {
-    public Unit FirstUnit;
+    public Unit TemplateUnit;
     public float Width = 1.2f; // TODO find programatically
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
@@ -22,12 +24,13 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
-        InstantiateArray(RowSize);
-
         // Save initial positions
-        _firstPos = FirstUnit.transform.position;
+        _firstPos = Vector3.zero;
         _lastPos = _firstPos + Vector3.left * (RowSize - 1) * Width;
         _rowInitPos = transform.position;
+
+        InstantiateArray(RowSize);
+
     }
 
     private void Update()
@@ -75,8 +78,8 @@ public class RowController : MonoBehaviour
         foreach (Unit unit in _activeUnits)
         {
             unit.transform.Translate(Vector3.right * Width);
-            unit.Position--;
-            if (unit.Position < 0)
+            unit.Index--;
+            if (unit.Index < 0)
             {
                 invalidUnit = unit;
             }
@@ -90,30 +93,33 @@ public class RowController : MonoBehaviour
         }
 
         // Instantiate a new unit
-        Unit newUnit = Instantiate(FirstUnit, _lastPos, Quaternion.identity, transform);
-        newUnit.Position = RowSize - 1;
+        Unit newUnit = InstantiateUnit(_lastPos);
+        newUnit.Index = RowSize - 1;
         _activeUnits.Add(newUnit);
     }
 
     private void InstantiateArray(int size)
     {
-        // Register first unit
-        FirstUnit.Position = 0;
-        FirstUnit.Row = this;
-        _activeUnits.Add(FirstUnit);
+        // TODO maybe have one template objects in the scene for convenience
 
         // Instantiate units in correct position and add to _activeUnits
-        for (int i = 1; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
             // Create unit
-            Vector3 position = FirstUnit.transform.position + Vector3.left * i * Width;
-            Unit item = Instantiate(FirstUnit, position, Quaternion.identity, transform);
+            Unit unit = InstantiateUnit(_firstPos + Vector3.left * i * Width);
 
             // Register script and assign position
-            item.Position = i;
-            item.Row = this;
-            _activeUnits.Add(item);
+            unit.Index = i;
+            unit.Row = this;
+            _activeUnits.Add(unit);
         }
+    }
+
+    private Unit InstantiateUnit(Vector3 position)
+    {
+        Unit unit = Instantiate(TemplateUnit, transform);
+        unit.transform.localPosition = position;
+        return unit;
     }
 
 
