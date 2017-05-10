@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
-
-// TODO see if you can make the Unit firld of type UnitController and stil instantiate
+using UnityEngine.Networking;
 
 public class RowController : MonoBehaviour
 {
-    public Unit firstUnit;
+    public Unit FirstUnit;
     public float Width = 1.2f; // TODO find programatically
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
@@ -24,8 +25,9 @@ public class RowController : MonoBehaviour
         InstantiateArray(RowSize);
 
         // Save initial positions
-        _firstPos = firstUnit.transform.position;
-        _lastPos = _firstPos + Vector3.left * RowSize * Width;
+        _firstPos = FirstUnit.transform.position;
+        _lastPos = _firstPos + Vector3.left * (RowSize - 1) * Width;
+        _rowInitPos = transform.position;
     }
 
     private void Update()
@@ -36,8 +38,7 @@ public class RowController : MonoBehaviour
     private void HandleShiftInput()
     {
         // Get both hand x-axis thumbstick value [-1, 1]
-        // TODO to have both, you need a flag that sets which hand you are using at the start
-//		float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
+        // TODO enable both joysticks
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
         if (flexR > 0.5 && !_lerping)
@@ -60,9 +61,7 @@ public class RowController : MonoBehaviour
                 yield return null;
             }
             _lerping = false;
-            // TODO call Scroll somehow
-            transform.position = _rowInitPos;
-
+            ShiftFrame();
         }
     }
 
@@ -71,17 +70,44 @@ public class RowController : MonoBehaviour
         // Reset position of row
         transform.position = _rowInitPos;
 
+        // Shift units internally to compensate
+        Unit invalidUnit = null;
+        foreach (Unit unit in _activeUnits)
+        {
+            unit.transform.Translate(Vector3.right * Width);
+            unit.Position--;
+            if (unit.Position < 0)
+            {
+                invalidUnit = unit;
+            }
+        }
 
+        // Remove invalid units
+        if (invalidUnit)
+        {
+            _activeUnits.Remove(invalidUnit);
+            Destroy(invalidUnit.gameObject);
+        }
+
+        // Instantiate a new unit
+        Unit newUnit = Instantiate(FirstUnit, _lastPos, Quaternion.identity, transform);
+        newUnit.Position = RowSize - 1;
+        _activeUnits.Add(newUnit);
     }
 
     private void InstantiateArray(int size)
     {
+        // Register first unit
+        FirstUnit.Position = 0;
+        FirstUnit.Row = this;
+        _activeUnits.Add(FirstUnit);
+
         // Instantiate units in correct position and add to _activeUnits
         for (int i = 1; i < size; i++)
         {
-            // Create unitController
-            Vector3 position = firstUnit.transform.position + Vector3.left * i * Width;
-            Unit item = Instantiate(firstUnit, position, Quaternion.identity, transform);
+            // Create unit
+            Vector3 position = FirstUnit.transform.position + Vector3.left * i * Width;
+            Unit item = Instantiate(FirstUnit, position, Quaternion.identity, transform);
 
             // Register script and assign position
             item.Position = i;
