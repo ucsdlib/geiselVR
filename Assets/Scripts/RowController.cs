@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.VR.WSA;
+
+// TODO make scrolling go both left and right
+// TODO optimize
 
 public class RowController : MonoBehaviour
 {
@@ -44,18 +42,34 @@ public class RowController : MonoBehaviour
         float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
+        // Scroll Right
         if ((flexL > 0.5 || flexR > 0.5) && !_lerping)
         {
-            Vector3 destination = transform.position + Vector3.right * Width;
-            StartCoroutine(SmoothMove(transform.position, destination, ScrollTime));
+            StartCoroutine(Scroll(true, ScrollTime));
+        }
+        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping)
+        {
+            StartCoroutine(Scroll(false, ScrollTime));
         }
     }
 
-    IEnumerator SmoothMove(Vector3 start, Vector3 end, float time)
+    IEnumerator Scroll(bool right, float time)
     {
         if (!_lerping)
         {
             _lerping = true;
+            // Calculate direction dependent parameters
+            Vector3 start = transform.position;
+            Vector3 end;
+            if (right)
+            {
+                end = transform.position + Vector3.right * Width;
+            }
+            else
+            {
+                end = transform.position + Vector3.left * Width;
+            }
+            // Lerp
             float t = 0f;
             while (t < 1.0f)
             {
@@ -63,39 +77,61 @@ public class RowController : MonoBehaviour
                 transform.position = Vector3.Slerp(start, end, t);
                 yield return null;
             }
+            ShiftFrame(right);
             _lerping = false;
-            ShiftFrame();
         }
     }
 
-    private void ShiftFrame()
+    private void ShiftFrame(bool right)
     {
         // Reset position of row
         transform.position = _rowInitPos;
 
-        // Shift units internally to compensate
-        Unit invalidUnit = null;
-        foreach (Unit unit in _activeUnits)
+        // Shift units to compensate
+        if (right) // FIXME redundant with Scroll()
         {
-            unit.transform.Translate(Vector3.right * Width);
-            unit.Index--;
-            if (unit.Index < 0)
+            Unit invalidUnit = null;
+            foreach (Unit unit in _activeUnits)
             {
-                invalidUnit = unit;
+                unit.transform.Translate(Vector3.right * Width);
+                unit.Index--; // field based system because list order is not guaranteed
+                if (unit.Index < 0)
+                {
+                    invalidUnit = unit;
+                }
+            }
+            // Remove invalid unit
+            if (invalidUnit)
+            {
+                _activeUnits.Remove(invalidUnit);
+                Destroy(invalidUnit.gameObject);
+                // Instantiate new unit
+                Unit newUnit = InstantiateUnit(_lastPos);
+                newUnit.Index = RowSize - 1;
+                _activeUnits.Add(newUnit);
             }
         }
-
-        // Remove any invalid unit
-        if (invalidUnit)
+        else
         {
-            _activeUnits.Remove(invalidUnit);
-            Destroy(invalidUnit.gameObject);
+            Unit invalidUnit = null;
+            foreach (Unit unit in _activeUnits)
+            {
+                unit.transform.Translate(Vector3.left * Width);
+                unit.Index++;
+                if (unit.Index >= RowSize)
+                {
+                    invalidUnit = unit;
+                }
+            }
+            if (invalidUnit)
+            {
+                _activeUnits.Remove(invalidUnit);
+                Destroy(invalidUnit.gameObject);
+                Unit newUnit = InstantiateUnit(_firstPos);
+                newUnit.Index = 0;
+                _activeUnits.Add(newUnit);
+            }
         }
-
-        // Instantiate a new unit
-        Unit newUnit = InstantiateUnit(_lastPos);
-        newUnit.Index = RowSize - 1;
-        _activeUnits.Add(newUnit);
     }
 
     private void InstantiateArray(int size)

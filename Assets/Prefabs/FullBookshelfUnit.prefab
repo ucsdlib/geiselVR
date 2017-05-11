@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 4645343573421276}
   - component: {fileID: 114863197646008106}
   m_Layer: 0
-  m_Name: Full Bookshelf 1
+  m_Name: FullBookshelfUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
