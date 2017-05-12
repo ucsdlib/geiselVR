@@ -10,8 +10,7 @@ using UnityEngine;
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit;
-    [CanBeNull] public GameObject ReferenceUnit;
-    public float Width = 1.2f; // TODO find programatically
+    public GameObject ReferenceUnit;
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
 
@@ -21,6 +20,7 @@ public class RowController : MonoBehaviour
     private Vector3 _firstPos; // first position in array
     private Vector3 _lastPos; // last position in array
     private Vector3 _rowInitPos; // initial position of row in world
+    private float _width;
 
 
     private void Start()
@@ -28,10 +28,10 @@ public class RowController : MonoBehaviour
 
         // Compute initial positions
         _firstPos = Vector3.zero;
-        _lastPos = _firstPos + Vector3.left * (RowSize - 1) * Width;
+        _lastPos = _firstPos + Vector3.left * (RowSize - 1) * _width;
         _rowInitPos = transform.position;
-//        Width = CalculateLocalBounds(ReferenceUnit).size.x;
-//        Destroy(ReferenceUnit);
+        _width = CalculateLocalBounds(ReferenceUnit).size.x;
+        Destroy(ReferenceUnit);
 
         // Create the row
         InstantiateArray(RowSize);
@@ -69,11 +69,11 @@ public class RowController : MonoBehaviour
             Vector3 end;
             if (right)
             {
-                end = transform.position + Vector3.right * Width;
+                end = transform.position + Vector3.right * _width;
             }
             else
             {
-                end = transform.position + Vector3.left * Width;
+                end = transform.position + Vector3.left * _width;
             }
             // Lerp
             float t = 0f;
@@ -99,7 +99,7 @@ public class RowController : MonoBehaviour
             Unit invalidUnit = null;
             foreach (Unit unit in _activeUnits)
             {
-                unit.transform.Translate(Vector3.right * Width);
+                unit.transform.Translate(Vector3.right * _width);
                 unit.Index--; // field based system because list order is not guaranteed
                 if (unit.Index < 0)
                 {
@@ -122,7 +122,7 @@ public class RowController : MonoBehaviour
             Unit invalidUnit = null;
             foreach (Unit unit in _activeUnits)
             {
-                unit.transform.Translate(Vector3.left * Width);
+                unit.transform.Translate(Vector3.left * _width);
                 unit.Index++;
                 if (unit.Index >= RowSize)
                 {
@@ -143,11 +143,10 @@ public class RowController : MonoBehaviour
     private void InstantiateArray(int size)
     {
         // TODO maybe have one template objects in the scene for convenience
-
         for (int i = 0; i < size; i++)
         {
             // Create unit with correct offset
-            Unit unit = InstantiateUnit(_firstPos + Vector3.left * i * Width);
+            Unit unit = InstantiateUnit(_firstPos + Vector3.left * i * _width);
 
             // Register script and assign position
             unit.Index = i;
