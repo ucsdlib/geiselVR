@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting;
@@ -10,7 +11,7 @@ using UnityEngine;
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit;
-    public GameObject ReferenceUnit;
+    [CanBeNull] public GameObject ReferenceUnit;
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
 
@@ -25,13 +26,22 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
-
         // Compute initial positions
+        if (ReferenceUnit)
+        {
+            _width = CalculateLocalBounds(ReferenceUnit).size.x;
+            Destroy(ReferenceUnit);
+        }
+        else
+        {
+            Unit unit = InstantiateUnit(Vector3.zero);
+            _width = CalculateLocalBounds(unit.gameObject).size.x;
+            Debug.Log("Calculated width: " + _width); // DEBUG
+            Destroy(unit.gameObject);
+        }
         _firstPos = Vector3.zero;
         _lastPos = _firstPos + Vector3.left * (RowSize - 1) * _width;
         _rowInitPos = transform.position;
-        _width = CalculateLocalBounds(ReferenceUnit).size.x;
-        Destroy(ReferenceUnit);
 
         // Create the row
         InstantiateArray(RowSize);
