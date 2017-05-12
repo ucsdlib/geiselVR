@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting;
+using JetBrains.Annotations;
 using UnityEngine;
 
-// TODO make scrolling go both left and right
 // TODO optimize
 
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit;
+    [CanBeNull] public GameObject ReferenceUnit;
     public float Width = 1.2f; // TODO find programatically
     public int RowSize = 2;
     public float ScrollTime = 0.12f;
@@ -22,10 +25,13 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
+
         // Compute initial positions
         _firstPos = Vector3.zero;
         _lastPos = _firstPos + Vector3.left * (RowSize - 1) * Width;
         _rowInitPos = transform.position;
+//        Width = CalculateLocalBounds(ReferenceUnit).size.x;
+//        Destroy(ReferenceUnit);
 
         // Create the row
         InstantiateArray(RowSize);
@@ -157,28 +163,37 @@ public class RowController : MonoBehaviour
         return unit;
     }
 
-
-    private void TestCalculateLocalBounds()
+    private Bounds CalculateLocalBounds(GameObject obj)
     {
-        // Capture the initial rotation and reset to 0
-        Quaternion currentRotation = transform.rotation;
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-
-        // Create new empty bounds
-        Bounds bounds = new Bounds(transform.position, Vector3.zero);
-
-        // Grow bounds based on all children
-        foreach (var childRenderer in GetComponents<MeshRenderer>())
+        // Get bounds of obj first
+        Bounds bounds;
+        Renderer render = obj.GetComponent<Renderer>();
+        if (render)
         {
-            bounds.Encapsulate(childRenderer.bounds);
+            bounds = render.bounds;
+        }
+        else
+        {
+            bounds = new Bounds(Vector3.zero, Vector3.zero);
         }
 
-        // Reset center
-        Vector3 localCenter = bounds.center - transform.position;
-        bounds.center = localCenter;
-
-        Debug.Log("Local bounds: " + bounds);
-
-        transform.rotation = currentRotation;
+        // Try to grow bounds if needed
+        if (Math.Abs(bounds.extents.x) < 0.000001f)
+        {
+            bounds = new Bounds(obj.transform.position, Vector3.zero);
+            foreach (Transform child in obj.transform)
+            {
+                Renderer childRender = child.GetComponent<Renderer>();
+                if (childRender)
+                {
+                    bounds.Encapsulate(childRender.bounds);
+                }
+                else
+                {
+                    bounds.Encapsulate(CalculateLocalBounds(child.gameObject));
+                }
+            }
+        }
+        return bounds;
     }
 }
