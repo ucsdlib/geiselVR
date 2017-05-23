@@ -8,17 +8,16 @@ using UnityEngine;
 
 public class TextRenderer : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
 		// Settings
 		TextGenerationSettings settings = new TextGenerationSettings();
 		settings.textAnchor = TextAnchor.MiddleCenter;
 		settings.color = Color.black;
-		settings.generationExtents = new Vector2(1, 1);
+		settings.generationExtents = new Vector2(10, 10);
 		settings.pivot = new Vector2(0.5f, 0.5f);
 		settings.richText = true;
 		settings.font = Font.CreateDynamicFontFromOSFont("Arial", 72);
-		settings.fontSize = 11;
+		settings.fontSize = 24;
 		settings.fontStyle = FontStyle.Normal;
 		settings.verticalOverflow = VerticalWrapMode.Overflow;
 		settings.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -39,7 +38,7 @@ public class TextRenderer : MonoBehaviour {
 		meshFilter.mesh = mesh;
 		renderer.material = settings.font.material;
 	}
-
+	
 	public void GetMesh(TextGenerator generator, Mesh mesh)
 	{
 		if (mesh == null) return;
