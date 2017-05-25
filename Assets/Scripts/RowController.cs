@@ -1,19 +1,18 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting;
 using JetBrains.Annotations;
 using UnityEngine;
 
-// TODO optimize
-
+/**
+Controlls a row of arbitrary units and allows endless scrolling in either direction
+*/
 public class RowController : MonoBehaviour
 {
-    public Unit TemplateUnit;
-    [CanBeNull] public GameObject ReferenceUnit;
-    public int RowSize = 2;
-    public float ScrollTime = 0.12f;
+    public Unit TemplateUnit; // unit from which to instantiate
+    [CanBeNull] public GameObject ReferenceUnit; // unit from which to calculate width
+    public int RowSize = 2; // number of units in this row at any given time
+    public float ScrollTime = 0.12f; // time period for scroll to complete
 
     private readonly List<Unit> _activeUnits = new List<Unit>();
     private bool _lerping;
@@ -21,7 +20,7 @@ public class RowController : MonoBehaviour
     private Vector3 _firstPos; // first position in array
     private Vector3 _lastPos; // last position in array
     private Vector3 _rowInitPos; // initial position of row in world
-    private float _width;
+    private float _width; // width of one unit
 
 
     private void Start()
@@ -52,6 +51,9 @@ public class RowController : MonoBehaviour
         HandleShiftInput();
     }
 
+    /**
+    Makes appropiate method calls based on input
+    */
     private void HandleShiftInput()
     {
         // Get both hand x-axis thumbstick value [-1, 1]
@@ -69,6 +71,9 @@ public class RowController : MonoBehaviour
         }
     }
 
+    /**
+    Handles scrolling animation of units
+    */
     IEnumerator Scroll(bool right, float time)
     {
         if (!_lerping)
@@ -98,6 +103,10 @@ public class RowController : MonoBehaviour
         }
     }
 
+    /**
+    Handles instantiation to create endless scrolling.
+    @param right    true if shifting right, false otherwise
+    */
     private void ShiftFrame(bool right)
     {
         // Reset position of row
@@ -150,6 +159,10 @@ public class RowController : MonoBehaviour
         }
     }
 
+    /**
+    Instantiates an array of units dynamically
+    @param size    number of units to instantiate
+    */
     private void InstantiateArray(int size)
     {
         // TODO maybe have one template objects in the scene for convenience
@@ -165,6 +178,9 @@ public class RowController : MonoBehaviour
         }
     }
 
+    /**
+    Creates one unit at the given position
+    */
     private Unit InstantiateUnit(Vector3 position)
     {
         Unit unit = Instantiate(TemplateUnit, transform);
@@ -172,6 +188,9 @@ public class RowController : MonoBehaviour
         return unit;
     }
 
+    /**
+    Calculates bounding box of any gameobject and its descendants
+    */
     private Bounds CalculateLocalBounds(GameObject obj)
     {
         // Get bounds of obj first

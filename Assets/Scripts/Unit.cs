@@ -6,9 +6,6 @@ public class Unit : MonoBehaviour {
 
 	public RowController Row;
 	public int Index { get; set; }
-
-	private void Update()
-	{
-
-	}
+	public DataPosition Position;
+	
 }
