@@ -29,23 +29,21 @@ public class RowController : MonoBehaviour
         _firstPos = Vector3.zero;
         _rowInitPos = transform.position;
         
-        // TODO make sure TemplateUnit is not null and has/is prefab
         // Instantiate array
         Transform refTranform = transform.Find(TemplateUnit.name);
-        if (refTranform) // reference object placed in scene
+        if (refTranform) 
         {
             _width = CalculateLocalBounds(refTranform.gameObject).size.x;
             
+            // Destroy after to instantiate array based on reference parameters
             InstantiateArray(RowSize);
             Destroy(refTranform.gameObject);
-            // note: destroy after to instantiate array based on reference parameters
             
-
             // Find prefab if not already prefab
             Unit prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
             if (prefab) TemplateUnit = prefab;
         }
-        else // no reference object in scene
+        else 
         {
             // Calculate bounds with sample instantiated prefab
             Unit unit = InstantiateUnit(Vector3.zero);

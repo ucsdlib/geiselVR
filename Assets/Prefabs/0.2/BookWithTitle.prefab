@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 54995165094421412}
   - component: {fileID: 65612996977855986}
   - component: {fileID: 114385504167359622}
+  - component: {fileID: 114110084169738494}
   m_Layer: 0
   m_Name: BookWithTitle
   m_TagString: Untagged
@@ -66,14 +67,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1718328964923502}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4151915197870856}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &23832001900190288
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -143,6 +144,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.030000001, y: 0.25, z: 0.19}
   m_Center: {x: 0.015000001, y: 0.125, z: 0.095}
+--- !u!114 &114110084169738494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718328964923502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a77d25e33a5ca41a1d2da874b2ddb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114279341663799690
 MonoBehaviour:
   m_ObjectHideFlags: 1
