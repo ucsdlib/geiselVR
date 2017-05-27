@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 /**
@@ -10,7 +11,6 @@ Controlls a row of arbitrary units and allows endless scrolling in either direct
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit; // unit from which to instantiate
-    [CanBeNull] public GameObject ReferenceUnit; // unit from which to calculate width
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
@@ -25,17 +25,22 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
+        // TODO make sure TemplateUnit is not null and has/is prefab
         // Compute initial positions
-        if (ReferenceUnit)
+        GameObject refObj = GameObject.Find(TemplateUnit.name);
+        if (refObj) // reference object placed in scene
         {
-            _width = CalculateLocalBounds(ReferenceUnit).size.x;
-            Destroy(ReferenceUnit);
+            _width = CalculateLocalBounds(refObj).size.x;
+            Destroy(refObj);
+
+            // Find prefab if not already prefab
+            Unit prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
+            if (prefab) TemplateUnit = prefab;
         }
-        else
+        else // no reference object in scene
         {
             Unit unit = InstantiateUnit(Vector3.zero);
             _width = CalculateLocalBounds(unit.gameObject).size.x;
-            Debug.Log("Calculated width: " + _width); // DEBUG
             Destroy(unit.gameObject);
         }
         _firstPos = Vector3.zero;
