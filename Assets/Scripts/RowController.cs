@@ -27,7 +27,7 @@ public class RowController : MonoBehaviour
     {
         // TODO make sure TemplateUnit is not null and has/is prefab
         // Compute initial positions
-        GameObject refObj = GameObject.Find(TemplateUnit.name);
+        GameObject refObj = GameObject.Find(TemplateUnit.name); // FIXME only search children
         if (refObj) // reference object placed in scene
         {
             _width = CalculateLocalBounds(refObj).size.x;
@@ -132,7 +132,7 @@ public class RowController : MonoBehaviour
 
             // Instantiate new unit
             Unit newUnit = InstantiateUnit(_lastPos);
-            newUnit.Index = RowSize - 1;
+            newUnit.UpdateContentsDelegate(_activeUnits.First.Value, false);
             _activeUnits.AddFirst(newUnit);
         }
         else
@@ -147,7 +147,7 @@ public class RowController : MonoBehaviour
             Destroy(invalidUnit.gameObject);
             
             Unit newUnit = InstantiateUnit(_firstPos);
-            newUnit.Index = 0;
+            newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
             _activeUnits.AddLast(newUnit);
         }
     }
@@ -159,14 +159,17 @@ public class RowController : MonoBehaviour
     private void InstantiateArray(int size)
     {
         // TODO maybe have one template objects in the scene for convenience
-        for (int i = 0; i < size; i++)
+        Unit unit = InstantiateUnit(_firstPos);
+        unit.Row = this;
+        _activeUnits.AddFirst(unit);
+        for (int i = 1; i < size; i++)
         {
             // Create unit with correct offset
-            Unit unit = InstantiateUnit(_firstPos + Vector3.left * i * _width);
+            unit = InstantiateUnit(_firstPos + Vector3.left * i * _width);
 
             // Register script and assign position
-            unit.Index = i;
             unit.Row = this;
+            unit.UpdateContentsDelegate(_activeUnits.First.Value, false);
             _activeUnits.AddFirst(unit);
         }
     }
@@ -187,16 +190,8 @@ public class RowController : MonoBehaviour
     private Bounds CalculateLocalBounds(GameObject obj)
     {
         // Get bounds of obj first
-        Bounds bounds;
         Renderer render = obj.GetComponent<Renderer>();
-        if (render)
-        {
-            bounds = render.bounds;
-        }
-        else
-        {
-            bounds = new Bounds(Vector3.zero, Vector3.zero);
-        }
+        Bounds bounds = render ? render.bounds : new Bounds(Vector3.zero, Vector3.zero);
 
         // Try to grow bounds if needed
         if (Math.Abs(bounds.extents.x) < 0.000001f)
@@ -205,14 +200,7 @@ public class RowController : MonoBehaviour
             foreach (Transform child in obj.transform)
             {
                 Renderer childRender = child.GetComponent<Renderer>();
-                if (childRender)
-                {
-                    bounds.Encapsulate(childRender.bounds);
-                }
-                else
-                {
-                    bounds.Encapsulate(CalculateLocalBounds(child.gameObject));
-                }
+                bounds.Encapsulate(childRender ? childRender.bounds : CalculateLocalBounds(child.gameObject));
             }
         }
         return bounds;

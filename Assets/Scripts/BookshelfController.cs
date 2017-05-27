@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class BookshelfController : MonoBehaviour {
-    
+public class BookshelfController : MonoBehaviour
+{
+    public int Id;
+ 
     private void Awake()
     {
-        Unit unit = GetComponent<Unit>();
-        
+        Unit unit = GetComponent<Unit>(); 
         if (unit != null)
         {
             unit.UpdateContentsDelegate += LoadBooks;
@@ -16,6 +18,10 @@ public class BookshelfController : MonoBehaviour {
 
     private void LoadBooks(Unit unit, bool right)
     {
-        Debug.Log("Load Books called"); // DEBUG
+        BookshelfController last = unit.GetComponent<BookshelfController>();
+        if (!last) return;
+
+        Id = right ? last.Id + 1 : last.Id - 1;
+        Debug.Log("Set Id to: " + Id);
     }
 }

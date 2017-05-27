@@ -108,7 +108,7 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &107118768
+--- !u!1001 &310320163
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -147,19 +147,24 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
+        type: 2}
+      propertyPath: Id
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70984355702a26c4b8d4fd5ec2531e30, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &339988041 stripped
+--- !u!4 &317506989 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4645343573421276, guid: 70984355702a26c4b8d4fd5ec2531e30,
     type: 2}
-  m_PrefabInternal: {fileID: 107118768}
---- !u!114 &339988042 stripped
+  m_PrefabInternal: {fileID: 310320163}
+--- !u!114 &317506991 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114004359149786742, guid: 70984355702a26c4b8d4fd5ec2531e30,
     type: 2}
-  m_PrefabInternal: {fileID: 107118768}
+  m_PrefabInternal: {fileID: 310320163}
   m_Script: {fileID: 11500000, guid: 7f06d93d108b56240ae4befe740d2e4a, type: 3}
 --- !u!1 &417514229
 GameObject:
@@ -310,7 +315,7 @@ Transform:
   m_LocalPosition: {x: 4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 339988041}
+  - {fileID: 317506989}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -325,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1000ff0d5e845ac44a20abb8926871b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TemplateUnit: {fileID: 339988042}
+  TemplateUnit: {fileID: 317506991}
   RowSize: 6
   ScrollTime: 0.23
 --- !u!1001 &1156289701
