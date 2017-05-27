@@ -9,5 +9,5 @@ public class Unit : MonoBehaviour
 
     public delegate void UpdateContents(Unit unit, bool right);
 
-    public UpdateContents UnitUpdateContents;
+    public UpdateContents UpdateContentsDelegate;
 }

@@ -26,7 +26,6 @@ public class TextRenderer : MonoBehaviour
         TextGenerationSettings settings = GetDefSettings();
         TextGenerator generator = new TextGenerator();
         generator.Populate(text, settings);
-        Debug.Log("Generator made " + generator.vertexCount + " vertices."); // DEBUG
 
         Mesh mesh = new Mesh();
         GetMesh(generator, mesh);

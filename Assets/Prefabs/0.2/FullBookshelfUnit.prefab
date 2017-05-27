@@ -164,6 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4645343573421276}
   - component: {fileID: 114004359149786742}
+  - component: {fileID: 114611483520937716}
   m_Layer: 0
   m_Name: FullBookshelfUnit
   m_TagString: Untagged
@@ -4686,6 +4687,17 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+--- !u!114 &114611483520937716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137474976226190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af0a8eb73055df4897eb6bfd29786bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114652573864434576
 MonoBehaviour:
   m_ObjectHideFlags: 1
