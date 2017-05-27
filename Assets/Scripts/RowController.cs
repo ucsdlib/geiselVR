@@ -14,7 +14,7 @@ public class RowController : MonoBehaviour
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
-    private readonly List<Unit> _activeUnits = new List<Unit>();
+    private readonly LinkedList<Unit> _activeUnits = new LinkedList<Unit>();
     private bool _lerping;
     private Vector3 _lerpDestPos;
     private Vector3 _firstPos; // first position in array
@@ -117,50 +117,38 @@ public class RowController : MonoBehaviour
         // Reset position of row
         transform.position = _rowInitPos;
 
-        // Shift units to compensate
         if (right) // FIXME redundant with Scroll()
         {
-            Unit invalidUnit = null;
+            // Shift units to compensate
             foreach (Unit unit in _activeUnits)
             {
                 unit.transform.Translate(Vector3.right * _width);
-                unit.Index--; // field based system because list order is not guaranteed
-                if (unit.Index < 0)
-                {
-                    invalidUnit = unit;
-                }
             }
+
             // Remove invalid unit
-            if (invalidUnit)
-            {
-                _activeUnits.Remove(invalidUnit);
-                Destroy(invalidUnit.gameObject);
-                // Instantiate new unit
-                Unit newUnit = InstantiateUnit(_lastPos);
-                newUnit.Index = RowSize - 1;
-                _activeUnits.Add(newUnit);
-            }
+            Unit invalidUnit = _activeUnits.Last.Value;
+            _activeUnits.RemoveLast();
+            Destroy(invalidUnit.gameObject);
+
+            // Instantiate new unit
+            Unit newUnit = InstantiateUnit(_lastPos);
+            newUnit.Index = RowSize - 1;
+            _activeUnits.AddFirst(newUnit);
         }
         else
         {
-            Unit invalidUnit = null;
             foreach (Unit unit in _activeUnits)
             {
                 unit.transform.Translate(Vector3.left * _width);
-                unit.Index++;
-                if (unit.Index >= RowSize)
-                {
-                    invalidUnit = unit;
-                }
             }
-            if (invalidUnit)
-            {
-                _activeUnits.Remove(invalidUnit);
-                Destroy(invalidUnit.gameObject);
-                Unit newUnit = InstantiateUnit(_firstPos);
-                newUnit.Index = 0;
-                _activeUnits.Add(newUnit);
-            }
+
+            Unit invalidUnit = _activeUnits.First.Value;
+            _activeUnits.RemoveFirst();
+            Destroy(invalidUnit.gameObject);
+            
+            Unit newUnit = InstantiateUnit(_firstPos);
+            newUnit.Index = 0;
+            _activeUnits.AddLast(newUnit);
         }
     }
 
@@ -179,7 +167,7 @@ public class RowController : MonoBehaviour
             // Register script and assign position
             unit.Index = i;
             unit.Row = this;
-            _activeUnits.Add(unit);
+            _activeUnits.AddFirst(unit);
         }
     }
 
