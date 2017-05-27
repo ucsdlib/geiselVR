@@ -25,13 +25,21 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
+        // Set starting positions
+        _firstPos = Vector3.zero;
+        _rowInitPos = transform.position;
+        
         // TODO make sure TemplateUnit is not null and has/is prefab
-        // Compute initial positions
-        GameObject refObj = GameObject.Find(TemplateUnit.name); // FIXME only search children
-        if (refObj) // reference object placed in scene
+        // Instantiate array
+        Transform refTranform = transform.Find(TemplateUnit.name);
+        if (refTranform) // reference object placed in scene
         {
-            _width = CalculateLocalBounds(refObj).size.x;
-            Destroy(refObj);
+            _width = CalculateLocalBounds(refTranform.gameObject).size.x;
+            
+            InstantiateArray(RowSize);
+            Destroy(refTranform.gameObject);
+            // note: destroy after to instantiate array based on reference parameters
+            
 
             // Find prefab if not already prefab
             Unit prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
@@ -39,16 +47,13 @@ public class RowController : MonoBehaviour
         }
         else // no reference object in scene
         {
+            // Calculate bounds with sample instantiated prefab
             Unit unit = InstantiateUnit(Vector3.zero);
             _width = CalculateLocalBounds(unit.gameObject).size.x;
             Destroy(unit.gameObject);
+            InstantiateArray(RowSize);
         }
-        _firstPos = Vector3.zero;
         _lastPos = _firstPos + Vector3.left * (RowSize - 1) * _width;
-        _rowInitPos = transform.position;
-
-        // Create the row
-        InstantiateArray(RowSize);
     }
 
     private void Update()
@@ -158,7 +163,6 @@ public class RowController : MonoBehaviour
     */
     private void InstantiateArray(int size)
     {
-        // TODO maybe have one template objects in the scene for convenience
         Unit unit = InstantiateUnit(_firstPos);
         unit.Row = this;
         _activeUnits.AddFirst(unit);
