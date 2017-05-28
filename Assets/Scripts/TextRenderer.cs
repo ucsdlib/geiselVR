@@ -12,10 +12,7 @@ public class TextRenderer : MonoBehaviour
 
     void Start()
     {
-        gameObject.AddComponent<MeshFilter>();
-        gameObject.AddComponent<MeshRenderer>();
         gameObject.transform.localScale = Vector3.one * Scale / 10000f;
-        GenerateText("HELLO WORLD");
     }
 
     public void GenerateText(string text)

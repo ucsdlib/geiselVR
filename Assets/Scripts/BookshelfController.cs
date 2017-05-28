@@ -16,7 +16,6 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
 
     private int _startCallNumber; // call number of first book
-    private int _endCallNumber; // call number of last book
     private int _callNumber; // temporary used during loading
 
     private void Awake()
@@ -32,7 +31,13 @@ public class BookshelfController : MonoBehaviour
     public void HandleUpdateEvent(Unit unit, bool right)
     {
         BookshelfController last = unit.GetComponent<BookshelfController>();
-        if (!last) return;
+        if (!last)
+        {
+            Debug.Log("Could not get last shelf");
+        }
+
+        _startCallNumber = last._startCallNumber - 27; // FIXME
+        _callNumber = _startCallNumber;
 
         LoadBooks();
     }
@@ -68,8 +73,5 @@ public class BookshelfController : MonoBehaviour
     }
 
     private void PutBackBook(Book book)
-    {
-        _callNumber--;
-        Destroy(book.gameObject);
-    }
+    { }
 }
