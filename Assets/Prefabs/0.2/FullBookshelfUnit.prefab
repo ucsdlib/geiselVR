@@ -841,11 +841,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af0a8eb73055df4897eb6bfd29786bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Position: 0
   BookTemplate: {fileID: 114110084169738494, guid: 9469b9f6df7ed9a44aa0390f918edde8,
     type: 2}
   BookWidth: 0.1
   ShelfCount: 3
-  ShelfHeight: 0.38
+  ShelfHeight: 0.39
   ShelfWidth: 1
   TopShelfY: 1.48
-  Offset: {x: 0, y: 0, z: -0.2}
+  Offset: {x: -0.1, y: 0, z: 0.1}

@@ -22,6 +22,6 @@ public class Book : MonoBehaviour
     {
         Debug.Log("Loading data for: " + callNumber); // DEBUG
         _callNumber = callNumber;
-        TitleRenderer.GenerateText("HELLO " + _callNumber);
+        TitleRenderer.GenerateText(_callNumber.ToString());
     }
 }

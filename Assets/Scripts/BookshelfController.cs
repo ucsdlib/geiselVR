@@ -18,7 +18,8 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
 
     private int _startCallNumber; // call number of first book
-    private int _callNumber; // temporary used during loading
+    private int _nextCallNumber; // points to the next
+    private readonly LinkedList<LinkedList<Book>> _table = new LinkedList<LinkedList<Book>>();
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class BookshelfController : MonoBehaviour
         {
             unit.UpdateContentsDelegate += HandleUpdateEvent;
         }
+
     }
 
     public void HandleUpdateEvent(Unit unit, bool right)
@@ -40,48 +42,48 @@ public class BookshelfController : MonoBehaviour
 
         if (right)
         {
-            Position = last.Position + 1;
-            Debug.Log("New position: " + Position); // DEBUG
+            _startCallNumber = last._nextCallNumber;
+            _nextCallNumber = _startCallNumber;
         }
         else
         {
-            Position = last.Position - 1;
-            Debug.Log("New Position: " + Position); // DEBUG
+            _startCallNumber = 0;
+            _nextCallNumber = _startCallNumber;
         }
 
-//        _startCallNumber = last._startCallNumber - 27; // FIXME
-//        _callNumber = _startCallNumber;
-
-//        LoadBooks();
+        LoadBooks();
     }
 
     private void LoadBooks()
     {
         for (int i = 0; i < ShelfCount; i++)
         {
-            Vector3 start = new Vector3(-ShelfWidth, TopShelfY - (i * ShelfHeight), 0);
-            InstantiateShelf(start, Vector3.right);
+            Vector3 start = new Vector3(0, TopShelfY - (i * ShelfHeight), 0);
+            _table.AddLast(InstantiateShelf(start, Vector3.right));
         }
     }
 
-    private void InstantiateShelf(Vector3 start, Vector3 direction)
+    private LinkedList<Book> InstantiateShelf(Vector3 start, Vector3 direction)
     {
         Vector3 current = start;
         Vector3 end = current + direction * (ShelfWidth - BookWidth);
+        LinkedList<Book> books = new LinkedList<Book>();
         while (Vector3.Dot(current, direction) < Vector3.Dot(end, direction))
         {
             Book book = NextBook();
             book.transform.localPosition = current;
             book.transform.Translate(Offset);
+            books.AddLast(book);
             current += direction * BookWidth;
         }
+        return books;
     }
 
     private Book NextBook()
     {
         Book book = Instantiate(BookTemplate, transform);
-        book.LoadData(_callNumber);
-        _callNumber++;
+        book.LoadData(_nextCallNumber);
+        _nextCallNumber++;
         return book;
     }
 
