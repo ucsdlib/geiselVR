@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class BookshelfController : MonoBehaviour
 {
+    public int Position;
+    
     public Book BookTemplate;
     public float BookWidth = 0.1f;
     public int ShelfCount = 3;
@@ -36,10 +38,21 @@ public class BookshelfController : MonoBehaviour
             Debug.Log("Could not get last shelf");
         }
 
-        _startCallNumber = last._startCallNumber - 27; // FIXME
-        _callNumber = _startCallNumber;
+        if (right)
+        {
+            Position = last.Position + 1;
+            Debug.Log("New position: " + Position); // DEBUG
+        }
+        else
+        {
+            Position = last.Position - 1;
+            Debug.Log("New Position: " + Position); // DEBUG
+        }
 
-        LoadBooks();
+//        _startCallNumber = last._startCallNumber - 27; // FIXME
+//        _callNumber = _startCallNumber;
+
+//        LoadBooks();
     }
 
     private void LoadBooks()

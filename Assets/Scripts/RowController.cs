@@ -31,11 +31,11 @@ public class RowController : MonoBehaviour
         
         // Instantiate array
         Transform refTranform = transform.Find(TemplateUnit.name);
-        if (refTranform) 
+        if (refTranform) // reference unit found as child
         {
             _width = CalculateLocalBounds(refTranform.gameObject).size.x;
             
-            // Destroy after to instantiate array based on reference parameters
+            // Destroy refrence after to instantiate array based on reference parameters
             InstantiateArray(RowSize);
             Destroy(refTranform.gameObject);
             
@@ -51,7 +51,7 @@ public class RowController : MonoBehaviour
             Destroy(unit.gameObject);
             InstantiateArray(RowSize);
         }
-        _lastPos = _firstPos + Vector3.left * (RowSize - 1) * _width;
+        _lastPos = _firstPos + Vector3.right * (RowSize - 1) * _width;
     }
 
     private void Update()
@@ -134,7 +134,7 @@ public class RowController : MonoBehaviour
             Destroy(invalidUnit.gameObject);
 
             // Instantiate new unit
-            Unit newUnit = InstantiateUnit(_lastPos);
+            Unit newUnit = InstantiateUnit(_firstPos);
             newUnit.UpdateContentsDelegate(_activeUnits.First.Value, false);
             _activeUnits.AddFirst(newUnit);
         }
@@ -149,7 +149,7 @@ public class RowController : MonoBehaviour
             _activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
             
-            Unit newUnit = InstantiateUnit(_firstPos);
+            Unit newUnit = InstantiateUnit(_lastPos);
             newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
             _activeUnits.AddLast(newUnit);
         }
@@ -163,16 +163,16 @@ public class RowController : MonoBehaviour
     {
         Unit unit = InstantiateUnit(_firstPos);
         unit.Row = this;
-        _activeUnits.AddFirst(unit);
+        _activeUnits.AddLast(unit);
         for (int i = 1; i < size; i++)
         {
             // Create unit with correct offset
-            unit = InstantiateUnit(_firstPos + Vector3.left * i * _width);
+            unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
 
             // Register script and assign position
             unit.Row = this;
-            unit.UpdateContentsDelegate(_activeUnits.First.Value, false);
-            _activeUnits.AddFirst(unit);
+            unit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
+            _activeUnits.AddLast(unit);
         }
     }
 
