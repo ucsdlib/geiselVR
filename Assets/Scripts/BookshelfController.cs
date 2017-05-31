@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 
 public class BookshelfController : MonoBehaviour
@@ -28,7 +29,7 @@ public class BookshelfController : MonoBehaviour
 
     }
 
-    public void HandleUpdateEvent(Unit unit, bool right)
+    public void HandleUpdateEvent(Unit unit, Direction direction)
     {
         BookshelfController last = unit.GetComponent<BookshelfController>();
         if (!last)
@@ -36,7 +37,7 @@ public class BookshelfController : MonoBehaviour
             Debug.Log("Could not get last shelf");
         }
 
-        if (right)
+        if (direction == Direction.Right)
         {
             _startCallNumber = last._nextCallNumber;
             _nextCallNumber = _startCallNumber;

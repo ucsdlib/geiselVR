@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -70,18 +71,18 @@ public class RowController : MonoBehaviour
         // Scroll Right
         if ((flexL > 0.5 || flexR > 0.5) && !_lerping)
         {
-            StartCoroutine(Scroll(true, ScrollTime));
+            StartCoroutine(Scroll(Direction.Right, ScrollTime));
         }
         else if ((flexL < -0.5 || flexR < -0.5) && !_lerping)
         {
-            StartCoroutine(Scroll(false, ScrollTime));
+            StartCoroutine(Scroll(Direction.Left, ScrollTime));
         }
     }
 
     /**
     Handles scrolling animation of units
     */
-    IEnumerator Scroll(bool right, float time)
+    IEnumerator Scroll(Direction direction, float time)
     {
         if (!_lerping)
         {
@@ -89,7 +90,7 @@ public class RowController : MonoBehaviour
             // Calculate direction dependent parameters
             Vector3 start = transform.position;
             Vector3 end;
-            if (right)
+            if (direction == Direction.Right)
             {
                 end = transform.position + Vector3.right * _width;
             }
@@ -105,7 +106,7 @@ public class RowController : MonoBehaviour
                 transform.position = Vector3.Slerp(start, end, t);
                 yield return null;
             }
-            ShiftFrame(right);
+            ShiftFrame(direction);
             _lerping = false;
         }
     }
@@ -114,12 +115,12 @@ public class RowController : MonoBehaviour
     Handles instantiation to create endless scrolling.
     @param right    true if shifting right, false otherwise
     */
-    private void ShiftFrame(bool right)
+    private void ShiftFrame(Direction direction)
     {
         // Reset position of row
         transform.position = _rowInitPos;
 
-        if (right) // FIXME redundant with Scroll()
+        if (direction == Direction.Right) // FIXME redundant with Scroll()
         {
             // Shift units to compensate
             foreach (Unit unit in _activeUnits)
@@ -134,7 +135,7 @@ public class RowController : MonoBehaviour
 
             // Instantiate new unit
             Unit newUnit = InstantiateUnit(_firstPos);
-            newUnit.UpdateContentsDelegate(_activeUnits.First.Value, false);
+            newUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
             _activeUnits.AddFirst(newUnit);
         }
         else
@@ -149,7 +150,7 @@ public class RowController : MonoBehaviour
             Destroy(invalidUnit.gameObject);
             
             Unit newUnit = InstantiateUnit(_lastPos);
-            newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
+            newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
             _activeUnits.AddLast(newUnit);
         }
     }
@@ -170,12 +171,12 @@ public class RowController : MonoBehaviour
 
             // Register script and assign position
             unit.Row = this;
-            unit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
+            unit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
             _activeUnits.AddLast(unit);
         }
         
         // Regenerate 1st unit based on 2nd one
-        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, false);
+        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
         // FIXME first unit does not start on assigned value, only second unit does
     }
 
