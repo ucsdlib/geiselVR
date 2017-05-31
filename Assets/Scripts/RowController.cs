@@ -160,19 +160,23 @@ public class RowController : MonoBehaviour
     */
     private void InstantiateArray(int size)
     {
-        Unit unit = InstantiateUnit(_firstPos);
-        unit.Row = this;
-        _activeUnits.AddLast(unit);
+        Unit firstUnit = InstantiateUnit(_firstPos); // only for reference
+        firstUnit.Row = this;
+        _activeUnits.AddFirst(firstUnit);
         for (int i = 1; i < size; i++)
         {
             // Create unit with correct offset
-            unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
+            Unit unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
 
             // Register script and assign position
             unit.Row = this;
             unit.UpdateContentsDelegate(_activeUnits.Last.Value, true);
             _activeUnits.AddLast(unit);
         }
+        
+        // Regenerate 1st unit based on 2nd one
+        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, false);
+        // FIXME first unit does not start on assigned value, only second unit does
     }
 
     /**
