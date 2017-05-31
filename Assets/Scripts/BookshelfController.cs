@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Deployment.Internal;
 using Assets.Scripts;
 using UnityEngine;
 
 public class BookshelfController : MonoBehaviour
 {
     public int Position;
-    
+
     public Book BookTemplate;
-    public float BookWidth = 0.1f;
     public int ShelfCount = 3;
     public float ShelfHeight = 0.37f;
     public float ShelfWidth = 1.0f;
@@ -26,7 +26,6 @@ public class BookshelfController : MonoBehaviour
         {
             unit.UpdateContentsDelegate += HandleUpdateEvent;
         }
-
     }
 
     public void HandleUpdateEvent(Unit unit, Direction direction)
@@ -48,31 +47,53 @@ public class BookshelfController : MonoBehaviour
             _nextCallNumber = _startCallNumber;
         }
 
-        LoadBooks();
+        LoadBooks(direction);
     }
 
-    private void LoadBooks()
+    private void LoadBooks(Direction direction)
     {
-        for (int i = 0; i < ShelfCount; i++)
+        if (direction == Direction.Right)
         {
-            Vector3 start = new Vector3(0, TopShelfY - (i * ShelfHeight), 0);
-            _table.AddLast(InstantiateShelf(start, Vector3.right));
+            for (int i = 0; i < ShelfCount; i++)
+            {
+                Vector3 start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
+                _table.AddLast(InstantiateShelf(start, Vector3.right));
+            }
+        }
+        else
+        {
+            for (int i = ShelfCount - 1; i >= 0; i--)
+            {
+                Vector3 start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
+                _table.AddFirst(InstantiateShelf(start, Vector3.left));
+            }
         }
     }
 
-    private LinkedList<Book> InstantiateShelf(Vector3 start, Vector3 direction)
+    private LinkedList<Book> InstantiateShelf(Vector3 start, Vector3 u)
     {
         Vector3 current = start;
-        Vector3 end = current + direction * (ShelfWidth - BookWidth);
         LinkedList<Book> books = new LinkedList<Book>();
-        while (Vector3.Dot(current, direction) < Vector3.Dot(end, direction))
+        float totalWidth = 0.0f;
+        
+        while (totalWidth < ShelfWidth)
         {
+            // Create and place new book
             Book book = NextBook();
             book.transform.localPosition = current;
             book.transform.Translate(Offset);
-            books.AddLast(book);
-            current += direction * BookWidth;
+            
+            // Bookkeeping
+            books.AddLast(book); // FIXME the internal order of the linked list is not guaranteed
+            current += u * book.Width;
+            totalWidth += book.Width;
         }
+        
+        // Put back last book that went over
+        // FIXME this is too expensive, use NextWidth()
+        PutBackBook(books.Last.Value);
+        books.RemoveLast();
+        
         return books;
     }
 
@@ -85,5 +106,8 @@ public class BookshelfController : MonoBehaviour
     }
 
     private void PutBackBook(Book book)
-    { }
+    {
+        Destroy(book.gameObject);
+        _nextCallNumber--;
+    }
 }
