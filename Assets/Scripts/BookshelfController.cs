@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Deployment.Internal;
 using Assets.Scripts;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class BookshelfController : MonoBehaviour
     public float ShelfWidth = 1.0f;
     public float TopShelfY = 1.6f;
     public Vector3 Offset = Vector3.zero;
+    public bool ShowGuides = false;
 
     private int _startCallNumber; // call number of first book
     private int _nextCallNumber; // points to the next
@@ -25,6 +27,28 @@ public class BookshelfController : MonoBehaviour
         if (unit != null)
         {
             unit.UpdateContentsDelegate += HandleUpdateEvent;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Draw guides if needed
+        if (ShowGuides)
+        {
+            Gizmos.color = Color.green;
+            for (int i = 0; i < ShelfCount; i++)
+            {
+                Vector3 center = Vector3.zero;
+                center.x = ShelfWidth / 2;
+                center.y = TopShelfY - i * ShelfHeight;
+                center.z = -0.14f;
+                center += transform.TransformDirection(Offset);
+                center = transform.TransformPoint(center);
+
+                Vector3 size = new Vector3(ShelfWidth, 0, 0.28f);
+                
+                Gizmos.DrawCube(center, size);
+            }
         }
     }
 
@@ -65,6 +89,7 @@ public class BookshelfController : MonoBehaviour
             for (int i = ShelfCount - 1; i >= 0; i--)
             {
                 Vector3 start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
+                InstantiateShelf(start, Vector3.left); // DEBUG
                 _table.AddFirst(InstantiateShelf(start, Vector3.left));
             }
         }
@@ -78,10 +103,14 @@ public class BookshelfController : MonoBehaviour
         
         while (totalWidth < ShelfWidth)
         {
-            // Create and place new book
+            // Create book
             Book book = NextBook();
             book.transform.localPosition = current;
-            book.transform.Translate(Offset);
+            
+            // Offset book
+            Vector3 bookOffset = book.transform.InverseTransformDirection(
+                transform.TransformDirection(Offset));
+            book.transform.Translate(bookOffset);
             
             // Bookkeeping
             books.AddLast(book); // FIXME the internal order of the linked list is not guaranteed
@@ -89,10 +118,11 @@ public class BookshelfController : MonoBehaviour
             totalWidth += book.Width;
         }
         
+        // FIXME 
         // Put back last book that went over
         // FIXME this is too expensive, use NextWidth()
-        PutBackBook(books.Last.Value);
-        books.RemoveLast();
+//        PutBackBook(books.Last.Value);
+//        books.RemoveLast();
         
         return books;
     }

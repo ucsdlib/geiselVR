@@ -21,6 +21,7 @@ public class RowController : MonoBehaviour
     private Vector3 _lastPos; // last position in array
     private Vector3 _rowInitPos; // initial position of row in world
     private float _width; // width of one unit
+    
 
 
     private void Start()
