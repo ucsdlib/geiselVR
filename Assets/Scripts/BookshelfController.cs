@@ -114,22 +114,23 @@ public class BookshelfController : MonoBehaviour
     {
         var books = new LinkedList<Book>();
         var totalWidth = 0.0f;
+        var shelfGameObj = new GameObject("Shelf");
+        shelfGameObj.transform.parent = transform;
+        shelfGameObj.transform.localPosition = start;
 
         if (direction == Direction.Right)
         {
-            var current = start;
-            while (totalWidth < ShelfWidth)
+            var current = Vector3.zero;
+            while (totalWidth <= ShelfWidth)
             {
                 // Create book
                 var book = Instantiate(BookTemplate, transform);
                 book.LoadData(_nextCallNumber);
                 _nextCallNumber++;
+                book.transform.parent = shelfGameObj.transform;
 
                 // Place book
-                var bookOffset = book.transform.InverseTransformDirection(
-                    transform.TransformDirection(Offset));
                 book.transform.localPosition = current;
-                book.transform.Translate(bookOffset);
 
                 // Bookkeeping
                 books.AddLast(book);
@@ -142,20 +143,21 @@ public class BookshelfController : MonoBehaviour
             books.RemoveLast();
             Destroy(lastBook.gameObject);
             _nextCallNumber--;
+            
+            // Apply offset
+            shelfGameObj.transform.Translate(Offset);
         }
         else if (direction == Direction.Left)
         {
-            var current = start;
-            while (totalWidth < ShelfWidth)
+            var current = Vector3.zero;
+            while (totalWidth <= ShelfWidth)
             {
                 var book = Instantiate(BookTemplate, transform);
                 book.LoadData(_nextCallNumber);
                 _nextCallNumber--;
+                book.transform.parent = shelfGameObj.transform;
 
-                var bookOffset = book.transform.InverseTransformDirection(
-                    transform.TransformDirection(Offset));
                 book.transform.localPosition = current;
-                book.transform.Translate(bookOffset);
 
                 books.AddFirst(book);
                 current += book.Width * Vector3.left;
@@ -170,10 +172,7 @@ public class BookshelfController : MonoBehaviour
 
             // Shift shelf over by width of first book
             var shiftWidth = books.Last.Value.Width;
-            foreach (var book in books)
-            {
-                book.transform.Translate(shiftWidth * Vector3.left);
-            }
+            shelfGameObj.transform.Translate(shiftWidth * Vector3.left);
         }
         else
         {

@@ -19,7 +19,8 @@ public class Book : MonoBehaviour
 
     private void Awake()
     {
-        TitleRenderer = transform.Find("Title").GetComponent<TextRenderer>();
+        TitleRenderer = transform
+            .Find("BookWithTitle").Find("Title").GetComponent<TextRenderer>();
         if (!TitleRenderer)
         {
             Debug.Log("Could not find title renderer"); // DEBUG
@@ -30,7 +31,7 @@ public class Book : MonoBehaviour
     {
         Debug.Log("Loading data for: " + callNumber); // DEBUG
         _callNumber = callNumber;
-        _width = 0.05f;
+        _width = 0.1f;
         TitleRenderer.GenerateText(_callNumber.ToString());
     }
 }
