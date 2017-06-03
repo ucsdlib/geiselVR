@@ -29,7 +29,7 @@ public class Book : MonoBehaviour
     {
         Debug.Log("Loading data for: " + callNumber); // DEBUG
         _callNumber = callNumber;
-        _width = 0.05f;
+        _width = 0.3f;
         TitleRenderer.GenerateText(_callNumber.ToString());
     }
 }

@@ -177,7 +177,7 @@ public class RowController : MonoBehaviour
         }
         
         // Regenerate 1st unit based on 2nd one
-        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
+//        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
         // FIXME first unit does not start on assigned value, only second unit does
     }
 

@@ -121,8 +121,8 @@ public class BookshelfController : MonoBehaviour
         // FIXME 
         // Put back last book that went over
         // FIXME this is too expensive, use NextWidth()
-//        PutBackBook(books.Last.Value);
-//        books.RemoveLast();
+        PutBackBook(books.Last.Value);
+        books.RemoveLast();
         
         return books;
     }
