@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Deployment.Internal;
 using Assets.Scripts;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BookshelfController : MonoBehaviour
 {
@@ -64,14 +66,21 @@ public class BookshelfController : MonoBehaviour
         {
             _startCallNumber = last._nextCallNumber;
             _nextCallNumber = _startCallNumber;
+            LoadBooks(direction);
         }
-        else
+        else if (direction == Direction.Left)
         {
             _startCallNumber = 0;
             _nextCallNumber = _startCallNumber;
+            LoadBooks(direction);
+        }
+        else if (direction == Direction.Identity)
+        {
+            _startCallNumber = last._startCallNumber;
+            _nextCallNumber = _startCallNumber;
+            LoadBooks(Direction.Right);
         }
 
-        LoadBooks(direction);
     }
 
     private void LoadBooks(Direction direction)
@@ -118,7 +127,6 @@ public class BookshelfController : MonoBehaviour
             totalWidth += book.Width;
         }
         
-        // FIXME 
         // Put back last book that went over
         // FIXME this is too expensive, use NextWidth()
         PutBackBook(books.Last.Value);

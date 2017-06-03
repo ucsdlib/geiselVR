@@ -2,6 +2,6 @@ namespace Assets.Scripts
 {
     public enum Direction
     {
-        Right, Left
+        Right, Left, Identity
     }
 }

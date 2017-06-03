@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Assets.Scripts;
 using UnityEditor;
 using UnityEngine;
@@ -162,8 +163,9 @@ public class RowController : MonoBehaviour
     */
     private void InstantiateArray(int size)
     {
-        Unit firstUnit = InstantiateUnit(_firstPos); // only for reference
+        Unit firstUnit = InstantiateUnit(_firstPos); 
         firstUnit.Row = this;
+        firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity);
         _activeUnits.AddFirst(firstUnit);
         for (int i = 1; i < size; i++)
         {
