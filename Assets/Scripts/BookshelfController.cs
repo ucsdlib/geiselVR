@@ -125,7 +125,7 @@ public class BookshelfController : MonoBehaviour
             {
                 // Create book
                 var book = Instantiate(BookTemplate, transform);
-                book.LoadData(_nextCallNumber);
+                book.LoadMeta(_nextCallNumber);
                 _nextCallNumber++;
                 book.transform.parent = shelfGameObj.transform;
 
@@ -153,7 +153,7 @@ public class BookshelfController : MonoBehaviour
             while (totalWidth <= ShelfWidth)
             {
                 var book = Instantiate(BookTemplate, transform);
-                book.LoadData(_nextCallNumber);
+                book.LoadMeta(_nextCallNumber);
                 _nextCallNumber--;
                 book.transform.parent = shelfGameObj.transform;
 

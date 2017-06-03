@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Book : MonoBehaviour
 {
+    
     public TextRenderer TitleRenderer;
 
     public int CallNumber
@@ -16,8 +18,9 @@ public class Book : MonoBehaviour
 
     private int _callNumber;
     private float _width;
-
-    private void Awake()
+    private bool _loaded;
+    
+    void Awake()
     {
         TitleRenderer = transform
             .Find("BookWithTitle").Find("Title").GetComponent<TextRenderer>();
@@ -27,11 +30,16 @@ public class Book : MonoBehaviour
         }
     }
 
-    public void LoadData(int callNumber)
+    public void LoadMeta(int callNumber)
     {
-        Debug.Log("Loading data for: " + callNumber); // DEBUG
+        _loaded = true;
         _callNumber = callNumber;
         _width = 0.1f;
+    }
+    
+    public void LoadData()
+    {
+        if (!_loaded) return;
         TitleRenderer.GenerateText(_callNumber.ToString());
     }
 }
