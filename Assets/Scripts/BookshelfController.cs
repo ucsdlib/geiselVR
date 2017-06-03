@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Deployment.Internal;
+using System.Net.Sockets;
 using Assets.Scripts;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
+using UnitySampleAssets.Vehicles.Car;
+
+// ReSharper disable ConvertIfStatementToSwitchStatement
 
 public class BookshelfController : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class BookshelfController : MonoBehaviour
                 center = transform.TransformPoint(center);
 
                 Vector3 size = new Vector3(ShelfWidth, 0, 0.28f);
-                
+
                 Gizmos.DrawCube(center, size);
             }
         }
@@ -56,96 +57,130 @@ public class BookshelfController : MonoBehaviour
 
     public void HandleUpdateEvent(Unit unit, Direction direction)
     {
-        BookshelfController last = unit.GetComponent<BookshelfController>();
+        var last = unit.GetComponent<BookshelfController>();
         if (!last)
         {
             Debug.Log("Could not get last shelf");
         }
 
-        if (direction == Direction.Right)
+        switch (direction)
         {
-            _startCallNumber = last._nextCallNumber;
-            _nextCallNumber = _startCallNumber;
-            LoadBooks(direction);
+            case Direction.Right:
+                _startCallNumber = last._nextCallNumber;
+                _nextCallNumber = _startCallNumber;
+                LoadBooks(direction);
+                break;
+            case Direction.Left:
+                _startCallNumber = 0;
+                _nextCallNumber = _startCallNumber;
+                LoadBooks(direction);
+                break;
+            case Direction.Identity:
+                _startCallNumber = last._startCallNumber;
+                _nextCallNumber = _startCallNumber;
+                LoadBooks(Direction.Right);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("direction", direction, null);
         }
-        else if (direction == Direction.Left)
-        {
-            _startCallNumber = 0;
-            _nextCallNumber = _startCallNumber;
-            LoadBooks(direction);
-        }
-        else if (direction == Direction.Identity)
-        {
-            _startCallNumber = last._startCallNumber;
-            _nextCallNumber = _startCallNumber;
-            LoadBooks(Direction.Right);
-        }
-
     }
 
     private void LoadBooks(Direction direction)
     {
         if (direction == Direction.Right)
         {
-            for (int i = 0; i < ShelfCount; i++)
+            for (var i = 0; i < ShelfCount; i++)
             {
-                Vector3 start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-                _table.AddLast(InstantiateShelf(start, Vector3.right));
+                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
+                _table.AddLast(InstantiateShelf(start, Direction.Right));
+            }
+        }
+        else if (direction == Direction.Left)
+        {
+            for (var i = ShelfCount - 1; i >= 0; i--)
+            {
+                var start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
+                _table.AddFirst(InstantiateShelf(start, Direction.Left));
             }
         }
         else
         {
-            for (int i = ShelfCount - 1; i >= 0; i--)
+            const string msg = "Can only load books Left or Right";
+            throw new ArgumentOutOfRangeException("direction", direction, msg);
+        }
+    }
+
+    private LinkedList<Book> InstantiateShelf(Vector3 start, Direction direction)
+    {
+        var books = new LinkedList<Book>();
+        var totalWidth = 0.0f;
+
+        if (direction == Direction.Right)
+        {
+            var current = start;
+            while (totalWidth < ShelfWidth)
             {
-                Vector3 start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
-                InstantiateShelf(start, Vector3.left); // DEBUG
-                _table.AddFirst(InstantiateShelf(start, Vector3.left));
+                // Create book
+                var book = Instantiate(BookTemplate, transform);
+                book.LoadData(_nextCallNumber);
+                _nextCallNumber++;
+
+                // Place book
+                var bookOffset = book.transform.InverseTransformDirection(
+                    transform.TransformDirection(Offset));
+                book.transform.localPosition = current;
+                book.transform.Translate(bookOffset);
+
+                // Bookkeeping
+                books.AddLast(book);
+                current += book.Width * Vector3.right;
+                totalWidth += book.Width;
+            }
+
+            // Put back the book that went over
+            var lastBook = books.Last.Value;
+            books.RemoveLast();
+            Destroy(lastBook.gameObject);
+            _nextCallNumber--;
+        }
+        else if (direction == Direction.Left)
+        {
+            var current = start;
+            while (totalWidth < ShelfWidth)
+            {
+                var book = Instantiate(BookTemplate, transform);
+                book.LoadData(_nextCallNumber);
+                _nextCallNumber--;
+
+                var bookOffset = book.transform.InverseTransformDirection(
+                    transform.TransformDirection(Offset));
+                book.transform.localPosition = current;
+                book.transform.Translate(bookOffset);
+
+                books.AddFirst(book);
+                current += book.Width * Vector3.left;
+                totalWidth += book.Width;
+            }
+
+            // Put back the book that went over
+            var lastBook = books.First.Value;
+            books.RemoveFirst();
+            Destroy(lastBook.gameObject);
+            _nextCallNumber++;
+
+            // Shift shelf over by width of first book
+            var shiftWidth = books.Last.Value.Width;
+            foreach (var book in books)
+            {
+                book.transform.Translate(shiftWidth * Vector3.left);
             }
         }
-    }
-
-    private LinkedList<Book> InstantiateShelf(Vector3 start, Vector3 u)
-    {
-        Vector3 current = start;
-        LinkedList<Book> books = new LinkedList<Book>();
-        float totalWidth = 0.0f;
-        
-        while (totalWidth < ShelfWidth)
+        else
         {
-            // Create book
-            Book book = NextBook();
-            book.transform.localPosition = current;
-            
-            // Offset book
-            Vector3 bookOffset = book.transform.InverseTransformDirection(
-                transform.TransformDirection(Offset));
-            book.transform.Translate(bookOffset);
-            
-            // Bookkeeping
-            books.AddLast(book); // FIXME the internal order of the linked list is not guaranteed
-            current += u * book.Width;
-            totalWidth += book.Width;
+            const string msg = "Can only instantiate shelf Left or Right";
+            throw new ArgumentOutOfRangeException("direction", direction, msg);
         }
-        
-        // Put back last book that went over
-        // FIXME this is too expensive, use NextWidth()
-        PutBackBook(books.Last.Value);
-        books.RemoveLast();
-        
+
         return books;
-    }
-
-    private Book NextBook()
-    {
-        Book book = Instantiate(BookTemplate, transform);
-        book.LoadData(_nextCallNumber);
-        _nextCallNumber++;
-        return book;
-    }
-
-    private void PutBackBook(Book book)
-    {
-        Destroy(book.gameObject);
-        _nextCallNumber--;
     }
 }

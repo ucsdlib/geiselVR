@@ -163,24 +163,24 @@ public class RowController : MonoBehaviour
     */
     private void InstantiateArray(int size)
     {
-        Unit firstUnit = InstantiateUnit(_firstPos); 
-        firstUnit.Row = this;
-        firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity);
+        var firstUnit = InstantiateUnit(_firstPos); 
+        firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity); // load itself
         _activeUnits.AddFirst(firstUnit);
-        for (int i = 1; i < size; i++)
+        
+        // DEBUG
+        var debugUnit = InstantiateUnit(_firstPos + Vector3.left * _width);
+        debugUnit.UpdateContentsDelegate(firstUnit, Direction.Left);
+        _activeUnits.AddFirst(debugUnit);
+        
+        for (var i = 1; i < size; i++)
         {
             // Create unit with correct offset
-            Unit unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
+            var unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
 
             // Register script and assign position
-            unit.Row = this;
             unit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
             _activeUnits.AddLast(unit);
         }
-        
-        // Regenerate 1st unit based on 2nd one
-//        firstUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
-        // FIXME first unit does not start on assigned value, only second unit does
     }
 
     /**
@@ -190,6 +190,7 @@ public class RowController : MonoBehaviour
     {
         Unit unit = Instantiate(TemplateUnit, transform);
         unit.transform.localPosition = position;
+        unit.Row = this;
         return unit;
     }
 

@@ -8,6 +8,7 @@ public class Book : MonoBehaviour
     {
         get { return _callNumber; }
     }
+    
     public float Width
     {
         get { return _width; }
