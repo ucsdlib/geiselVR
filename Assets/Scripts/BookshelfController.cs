@@ -18,7 +18,8 @@ public class BookshelfController : MonoBehaviour
     public bool ShowGuides = false;
 
     private int _startCallNumber; // call number of first book
-    private int _nextCallNumber; // points to the next
+    private int _endCallNumber; // call number of last book
+    private int _nextCallNumber; // internal iteration
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
@@ -64,13 +65,13 @@ public class BookshelfController : MonoBehaviour
         switch (direction)
         {
             case Direction.Right:
-                _startCallNumber = last._nextCallNumber;
+                _startCallNumber = last._endCallNumber + 1;
                 _nextCallNumber = _startCallNumber;
                 LoadBooks(direction);
                 break;
             case Direction.Left:
-                _startCallNumber = 0;
-                _nextCallNumber = _startCallNumber;
+                _startCallNumber = 0; // determined after load
+                _nextCallNumber = last._startCallNumber - 1;
                 LoadBooks(direction);
                 break;
             case Direction.Identity:
@@ -150,12 +151,16 @@ public class BookshelfController : MonoBehaviour
             
             // Position and load
             InstantiateTable();
+            _startCallNumber = _table[0].First.Value.CallNumber;
         }
         else
         {
             const string msg = "Can only load books Left or Right";
             throw new ArgumentOutOfRangeException("direction", direction, msg);
         }
+
+        // Store call number of last book
+        _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
     }
 
     private void InstantiateTable()
