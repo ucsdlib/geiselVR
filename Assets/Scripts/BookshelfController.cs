@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using Assets.Scripts;
 using UnityEngine;
-using UnitySampleAssets.Vehicles.Car;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
@@ -21,7 +19,7 @@ public class BookshelfController : MonoBehaviour
 
     private int _startCallNumber; // call number of first book
     private int _nextCallNumber; // points to the next
-    private readonly LinkedList<LinkedList<Book>> _table = new LinkedList<LinkedList<Book>>();
+    private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
     {
@@ -89,10 +87,41 @@ public class BookshelfController : MonoBehaviour
     {
         if (direction == Direction.Right)
         {
+            // Generate shelf list
             for (var i = 0; i < ShelfCount; i++)
             {
+                var books = new LinkedList<Book>();
+                var totalWidth = 0.0f;
+
+                // Populate until over limit
+                while (totalWidth <= ShelfWidth)
+                {
+                    // Create book
+                    var book = Instantiate(BookTemplate);
+                    book.LoadMeta(_nextCallNumber);
+                    _nextCallNumber++;
+
+                    // Bookkeeping
+                    totalWidth += book.Width;
+                    books.AddLast(book);
+                }
+
+                // Put back offending book
+                if (books.Count != 0)
+                {
+                    Destroy(books.Last.Value.gameObject);
+                    books.RemoveLast();
+                    _nextCallNumber--;
+                }
+
+                _table.Add(books);
+            }
+
+            for (var i = 0; i < ShelfCount; i++)
+            {
+                // Instantiate each
                 var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-                _table.AddLast(InstantiateShelf(start, Direction.Right));
+                var shelfGameObj = InstantiateShelf(start, Vector3.right, _table[i]);
             }
         }
         else if (direction == Direction.Left)
@@ -100,7 +129,7 @@ public class BookshelfController : MonoBehaviour
             for (var i = ShelfCount - 1; i >= 0; i--)
             {
                 var start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
-                _table.AddFirst(InstantiateShelf(start, Direction.Left));
+                // TODO
             }
         }
         else
@@ -110,76 +139,24 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    private LinkedList<Book> InstantiateShelf(Vector3 start, Direction direction)
+    private GameObject InstantiateShelf(Vector3 start, Vector3 u, LinkedList<Book> books)
     {
-        var books = new LinkedList<Book>();
-        var totalWidth = 0.0f;
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;
         shelfGameObj.transform.localPosition = start;
+        shelfGameObj.transform.Translate(Offset);
 
-        if (direction == Direction.Right)
+        // Instantiate in order
+        var current = Vector3.zero;
+        foreach (var book in books)
         {
-            var current = Vector3.zero;
-            while (totalWidth <= ShelfWidth)
-            {
-                // Create book
-                var book = Instantiate(BookTemplate, transform);
-                book.LoadMeta(_nextCallNumber);
-                _nextCallNumber++;
-                book.transform.parent = shelfGameObj.transform;
+            book.transform.parent = shelfGameObj.transform;
+            book.transform.localPosition = current;
+            current += book.Width * u;
 
-                // Place book
-                book.transform.localPosition = current;
-
-                // Bookkeeping
-                books.AddLast(book);
-                current += book.Width * Vector3.right;
-                totalWidth += book.Width;
-            }
-
-            // Put back the book that went over
-            var lastBook = books.Last.Value;
-            books.RemoveLast();
-            Destroy(lastBook.gameObject);
-            _nextCallNumber--;
-            
-            // Apply offset
-            shelfGameObj.transform.Translate(Offset);
-        }
-        else if (direction == Direction.Left)
-        {
-            var current = Vector3.zero;
-            while (totalWidth <= ShelfWidth)
-            {
-                var book = Instantiate(BookTemplate, transform);
-                book.LoadMeta(_nextCallNumber);
-                _nextCallNumber--;
-                book.transform.parent = shelfGameObj.transform;
-
-                book.transform.localPosition = current;
-
-                books.AddFirst(book);
-                current += book.Width * Vector3.left;
-                totalWidth += book.Width;
-            }
-
-            // Put back the book that went over
-            var lastBook = books.First.Value;
-            books.RemoveFirst();
-            Destroy(lastBook.gameObject);
-            _nextCallNumber++;
-
-            // Shift shelf over by width of first book
-            var shiftWidth = books.Last.Value.Width;
-            shelfGameObj.transform.Translate(shiftWidth * Vector3.left);
-        }
-        else
-        {
-            const string msg = "Can only instantiate shelf Left or Right";
-            throw new ArgumentOutOfRangeException("direction", direction, msg);
+            book.LoadData();
         }
 
-        return books;
+        return shelfGameObj;
     }
 }
