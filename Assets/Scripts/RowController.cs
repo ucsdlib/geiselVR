@@ -167,11 +167,6 @@ public class RowController : MonoBehaviour
         firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity); // load itself
         _activeUnits.AddFirst(firstUnit);
         
-        // DEBUG
-//        var debugUnit = InstantiateUnit(_firstPos + Vector3.left * _width);
-//        debugUnit.UpdateContentsDelegate(firstUnit, Direction.Left);
-//        _activeUnits.AddFirst(debugUnit);
-        
         for (var i = 1; i < size; i++)
         {
             // Create unit with correct offset

@@ -100,7 +100,7 @@ public class BookshelfController : MonoBehaviour
                     var book = Instantiate(BookTemplate);
                     book.LoadMeta(_nextCallNumber);
                     _nextCallNumber++;
-
+                    
                     // Bookkeeping
                     totalWidth += book.Width;
                     books.AddLast(book);
@@ -113,24 +113,43 @@ public class BookshelfController : MonoBehaviour
                     books.RemoveLast();
                     _nextCallNumber--;
                 }
-
                 _table.Add(books);
             }
-
-            for (var i = 0; i < ShelfCount; i++)
-            {
-                // Instantiate each
-                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-                var shelfGameObj = InstantiateShelf(start, Vector3.right, _table[i]);
-            }
+            
+            // Position and load
+            InstantiateTable();
         }
         else if (direction == Direction.Left)
         {
-            for (var i = ShelfCount - 1; i >= 0; i--)
+            // Generate shelf list
+            for (var i = 0; i < ShelfCount; i++)
             {
-                var start = new Vector3(ShelfWidth, TopShelfY - i * ShelfHeight, 0);
-                // TODO
+                var books = new LinkedList<Book>();
+                var totalWidth = 0.0f;
+                
+                // Populate until over limit
+                while (totalWidth <= ShelfWidth)
+                {
+                    var book = Instantiate(BookTemplate);
+                    book.LoadMeta(_nextCallNumber);
+                    _nextCallNumber--;
+
+                    totalWidth += book.Width;
+                    books.AddFirst(book);
+                }
+                
+                // Put back offending book
+                if (books.Count != 0)
+                {
+                    Destroy(books.First.Value.gameObject);
+                    books.RemoveFirst();
+                    _nextCallNumber++;
+                }
+                _table.Insert(0, books); 
             }
+            
+            // Position and load
+            InstantiateTable();
         }
         else
         {
@@ -139,7 +158,16 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    private GameObject InstantiateShelf(Vector3 start, Vector3 u, LinkedList<Book> books)
+    private void InstantiateTable()
+    {
+        for (var i = 0; i < ShelfCount; i++)
+        {
+            var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
+            InstantiateShelf(start, Vector3.right, _table[i]);
+        }
+    }
+
+    private void InstantiateShelf(Vector3 start, Vector3 u, LinkedList<Book> books)
     {
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;
@@ -156,7 +184,5 @@ public class BookshelfController : MonoBehaviour
 
             book.LoadData();
         }
-
-        return shelfGameObj;
     }
 }
