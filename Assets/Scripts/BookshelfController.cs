@@ -101,7 +101,7 @@ public class BookshelfController : MonoBehaviour
                     var book = Instantiate(BookTemplate);
                     book.LoadMeta(_nextCallNumber);
                     _nextCallNumber++;
-                    
+
                     // Bookkeeping
                     totalWidth += book.Width;
                     books.AddLast(book);
@@ -116,7 +116,7 @@ public class BookshelfController : MonoBehaviour
                 }
                 _table.Add(books);
             }
-            
+
             // Position and load
             InstantiateTable();
         }
@@ -127,7 +127,7 @@ public class BookshelfController : MonoBehaviour
             {
                 var books = new LinkedList<Book>();
                 var totalWidth = 0.0f;
-                
+
                 // Populate until over limit
                 while (totalWidth <= ShelfWidth)
                 {
@@ -138,7 +138,7 @@ public class BookshelfController : MonoBehaviour
                     totalWidth += book.Width;
                     books.AddFirst(book);
                 }
-                
+
                 // Put back offending book
                 if (books.Count != 0)
                 {
@@ -146,9 +146,9 @@ public class BookshelfController : MonoBehaviour
                     books.RemoveFirst();
                     _nextCallNumber++;
                 }
-                _table.Insert(0, books); 
+                _table.Insert(0, books);
             }
-            
+
             // Position and load
             InstantiateTable();
             _startCallNumber = _table[0].First.Value.CallNumber;
