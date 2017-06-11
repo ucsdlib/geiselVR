@@ -24,6 +24,11 @@ LOCATION = 17
 
 SIZE = 18  # number of entries per line
 
+# Useful queries
+'''SELECT * FROM main
+WHERE call >= ? and call <= ?
+ORDER BY call'''
+
 
 def process_line(line):
     if (len(line) != SIZE):
@@ -34,6 +39,7 @@ def process_line(line):
 
 def store_data(data: tuple, db: sqlite3.Cursor):
     db.execute('INSERT INTO main VALUES (?,?)', data)
+
 
 def main(argv):
     with open(argv[1], newline='') as csvfile:
