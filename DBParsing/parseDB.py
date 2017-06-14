@@ -1,28 +1,8 @@
 import csv
 import sys
 import sqlite3
+import util
 
-# Positions in CSV file
-ITEM_NUM = 0
-BIB_NUM = 1
-TITLE = 2
-AUTHOR = 3
-O_AUTHOR = 4
-PUBLISHER = 5
-YEAR = 6
-ISBN = 7
-EXT_OR_DESC = 8
-DIM_OR_DESC = 9
-SUBJECT = 10
-GENRE = 11
-SUMMARY = 12
-TOC = 13
-CALL_NUM = 14
-COPY_NUM = 15
-VOL = 16
-LOCATION = 17
-
-SIZE = 18  # number of entries per line
 
 # Useful queries
 '''SELECT * FROM main
@@ -31,10 +11,10 @@ ORDER BY call'''
 
 
 def process_line(line):
-    if (len(line) != SIZE):
+    if len(line) != util.SIZE:
         return None
 
-    return (line[CALL_NUM], line[TITLE])
+    return line[util.CALL_NUM], line[util.TITLE]
 
 
 def store_data(data: tuple, db: sqlite3.Cursor):
@@ -49,13 +29,12 @@ def main(argv):
         cursor = conn.cursor()
         cursor.execute('DELETE FROM main')
 
-
         # Populate dat
         count = 0
         for row in reader:
             dataTuple = process_line(row)
             store_data(dataTuple, cursor)
-            if (count % 100000 == 0):
+            if count % 100000 == 0:
                 print(count)
             count += 1
         conn.commit()
