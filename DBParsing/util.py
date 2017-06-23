@@ -5,24 +5,24 @@ import sqlite3
 from fractions import Fraction
 
 # Positions in CSV file
-ITEM_NUM = 0
-BIB_NUM = 1
-TITLE = 2
-AUTHOR = 3
-O_AUTHOR = 4
-PUBLISHER = 5
-YEAR = 6
-ISBN = 7
-EXT_OR_DESC = 8
-DIM_OR_DESC = 9
-SUBJECT = 10
-GENRE = 11
-SUMMARY = 12
-TOC = 13
-CALL_NUM = 14
-COPY_NUM = 15
-VOL = 16
-LOCATION = 17
+ITEM_NUM = 0        # item number
+BIB_NUM = 1         # library number
+TITLE = 2           # title
+AUTHOR = 3          # author
+O_AUTHOR = 4        # other author
+PUBLISHER = 5       # publisher
+YEAR = 6            # years
+ISBN = 7            # isbn
+EXT_OR_DESC = 8     # extent / description
+DIM_OR_DESC = 9     # dimension / description
+SUBJECT = 10        # subject
+GENRE = 11          # genre
+SUMMARY = 12        # summary
+TOC = 13            # TOC
+CALL_NUM = 14       # call number
+COPY_NUM = 15       # copy number
+VOL = 16            # volume
+LOCATION = 17       # location
 
 SIZE = 18  # number of entries per line
 
