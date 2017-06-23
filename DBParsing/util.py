@@ -24,8 +24,8 @@ LOCATION = 17
 SIZE = 18  # number of entries per line
 
 
-def print_col(path, col):
+def process_col(path, col, processor, *args):
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
-            print(row[col])
+            processor(row[col], *args)
