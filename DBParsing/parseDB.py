@@ -14,11 +14,13 @@ def process_line(line):
     if len(line) != util.SIZE:
         return None
 
-    return line[util.CALL_NUM], line[util.TITLE]
+    width = util.extract_dim(line[util.DIM_OR_DESC])
+
+    return line[util.CALL_NUM], line[util.TITLE], width
 
 
 def store_data(data: tuple, db: sqlite3.Cursor):
-    db.execute('INSERT INTO main VALUES (?,?)', data)
+    db.execute('INSERT INTO testing VALUES (?,?,?)', data)
 
 
 def main(argv):
@@ -27,13 +29,13 @@ def main(argv):
         reader = csv.reader(csvfile, delimiter='\t')
         conn = sqlite3.connect('call-only.db')
         cursor = conn.cursor()
-        cursor.execute('DELETE FROM main')
+        cursor.execute('DELETE FROM testing')
 
         # Populate dat
         count = 0
         for row in reader:
-            dataTuple = process_line(row)
-            store_data(dataTuple, cursor)
+            data_tuple = process_line(row)
+            store_data(data_tuple, cursor)
             if count % 100000 == 0:
                 print(count)
             count += 1
