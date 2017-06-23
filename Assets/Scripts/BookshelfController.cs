@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts;
 using UnityEngine;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -15,7 +14,7 @@ public class BookshelfController : MonoBehaviour
     public float ShelfWidth = 1.0f;
     public float TopShelfY = 1.6f;
     public Vector3 Offset = Vector3.zero;
-    public bool ShowGuides = false;
+    public bool ShowGuides;
 
     private int _startCallNumber; // call number of first book
     private int _endCallNumber; // call number of last book

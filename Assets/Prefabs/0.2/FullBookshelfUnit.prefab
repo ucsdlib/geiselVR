@@ -846,7 +846,7 @@ MonoBehaviour:
     type: 2}
   ShelfCount: 3
   ShelfHeight: 0.4
-  ShelfWidth: 0.97
+  ShelfWidth: 0.93
   TopShelfY: 1.505
-  Offset: {x: 0.02, y: 0, z: -0.04}
+  Offset: {x: 0.05, y: 0, z: -0.04}
   ShowGuides: 1
