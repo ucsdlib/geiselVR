@@ -1,8 +1,8 @@
 import re
-import util
 
-from util import process_col
+from util import *
 
 PATH = 'data.tsv'
 
-process_col(PATH, util.DIM_OR_DESC, print)
+for data in process_col_iter(PATH, DIM_OR_DESC):
+    print(data)

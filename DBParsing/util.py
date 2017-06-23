@@ -23,9 +23,18 @@ LOCATION = 17
 
 SIZE = 18  # number of entries per line
 
+dim_regex = '(\d+(?:\s+\d+\/\d+)?)\s?'  # get dimension
+
 
 def process_col(path, col, processor, *args):
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
             processor(row[col], *args)
+
+
+def process_col_iter(path, col):
+    with open(path) as file:
+        reader = csv.reader(file, delimiter='\t')
+        for row in reader:
+            yield row[col]
