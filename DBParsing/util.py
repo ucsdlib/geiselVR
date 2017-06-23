@@ -1,5 +1,8 @@
 import csv
+import re
 import sqlite3
+
+from fractions import Fraction
 
 # Positions in CSV file
 ITEM_NUM = 0
@@ -23,7 +26,7 @@ LOCATION = 17
 
 SIZE = 18  # number of entries per line
 
-dim_regex = '(\d+(?:\s+\d+\/\d+)?)\s?'  # get dimension
+dim_regex = re.compile('(\d+(?:\s+\d+\/\d+)?)\s?')  # get dimension
 
 
 def process_col(path, col, processor, *args):
@@ -38,3 +41,13 @@ def process_col_iter(path, col):
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
             yield row[col]
+
+
+def extract_dim(data):
+    dim_match = dim_regex.match(data)
+    if dim_match is not None:
+        dim_parts = dim_match.group(0).strip().split()
+        return float(sum(Fraction(s) for s in dim_parts))
+    else:
+        return 0
+
