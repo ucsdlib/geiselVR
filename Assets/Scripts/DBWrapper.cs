@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using Mono.Data.Sqlite;
-using UnityEditor;
 using UnityEngine;
 
 public class DBWrapper : MonoBehaviour
@@ -49,4 +48,11 @@ public class DBWrapper : MonoBehaviour
         reader.Close();
         command.Dispose();
     }
+}
+
+public class DataEntry
+{
+    public string CallNum;
+    public string Title;
+    public double Width;
 }
