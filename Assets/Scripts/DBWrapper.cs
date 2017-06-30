@@ -15,10 +15,10 @@ public class DBWrapper
     private static DBWrapper _instance;
     private const string DataBasePath = "call-only.db"; // within the Assets folder
     private const string TableName = "testing";
-    
+
     private IDbConnection _connection;
     private string _dbPath;
-    
+
     private bool Connected
     {
         get { return _connection.State == ConnectionState.Open; }
@@ -49,9 +49,10 @@ public class DBWrapper
 
         // Read results
         reader.Read();
-        var call = reader.GetString(0);
-        var title = reader.GetString(1);
-        var width = reader.GetDouble(2);
+        var entry = new DataEntry();
+        entry.Read(reader);
+        
+        // output data in some way
 
         reader.Close();
         command.Dispose();
@@ -60,7 +61,7 @@ public class DBWrapper
     private List<DataEntry> QueryCount(string startCallNum, int count, bool startInclusive)
     {
         if (!Connected) Connect();
-        
+
         // constrct query
         var op = (startInclusive) ? ">=" : ">";
         var query = string.Format(
@@ -69,33 +70,24 @@ public class DBWrapper
             "ORDER BY call" +
             "LIMIT {3}",
             TableName, op, startCallNum, count);
-        
+
         // execute query
         var command = _connection.CreateCommand();
         command.CommandText = query;
         var reader = command.ExecuteReader();
-        
+
         // read results
         var results = new List<DataEntry>();
         while (reader.Read())
         {
-            var call = reader.GetString(0);
-            var title = reader.GetString(1);
-            var width = reader.GetDouble(2);
-
-            var entry = new DataEntry
-            {
-                CallNum = call,
-                Title = title,
-                Width = width
-            };
-            
+            var entry = new DataEntry();
+            entry.Read(reader);
             results.Add(entry);
         }
 
         return results;
     }
-    
+
     /// <summary>
     /// Returns the set of books within the call number range
     /// </summary>
@@ -127,17 +119,8 @@ public class DBWrapper
         var results = new List<DataEntry>();
         while (reader.Read())
         {
-            var call = reader.GetString(0);
-            var title = reader.GetString(1);
-            var width = reader.GetDouble(2);
-
-            var entry = new DataEntry
-            {
-                CallNum = call,
-                Title = title,
-                Width = width
-            };
-            
+            var entry = new DataEntry();
+            entry.Read(reader);
             results.Add(entry);
         }
 
@@ -150,6 +133,13 @@ public class DataEntry
     public string CallNum;
     public string Title;
     public double Width;
+
+    public void Read(IDataReader reader)
+    {
+        CallNum = reader.GetString(0);
+        Title = reader.GetString(1);
+        Width = reader.GetDouble(2);
+    }
 
     public override string ToString()
     {
