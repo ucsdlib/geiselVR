@@ -51,6 +51,14 @@ public class DBWrapper : MonoBehaviour
         command.Dispose();
     }
 
+    /// <summary>
+    /// Returns the set of books within the call number range
+    /// </summary>
+    /// <param name="startCallNum">starting call number</param>
+    /// <param name="endCallNum">ending call number</param>
+    /// <param name="startInclusive">controls whether to include startCallNum if there is a match</param>
+    /// <param name="endInclusive">controls whether to include endCallNum if there is a match</param>
+    /// <returns>a list of <see cref="DataEntry"/></returns>
     private List<DataEntry> QueryRange(string startCallNum, string endCallNum,
         bool startInclusive, bool endInclusive)
     {
