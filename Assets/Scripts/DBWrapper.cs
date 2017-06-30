@@ -57,6 +57,45 @@ public class DBWrapper
         command.Dispose();
     }
 
+    private List<DataEntry> QueryCount(string startCallNum, int count, bool startInclusive)
+    {
+        if (!Connected) Connect();
+        
+        // constrct query
+        var op = (startInclusive) ? ">=" : ">";
+        var query = string.Format(
+            "SELECT * FROM {0} " +
+            "WHERE call {1} '{2}' " +
+            "ORDER BY call" +
+            "LIMIT {3}",
+            TableName, op, startCallNum, count);
+        
+        // execute query
+        var command = _connection.CreateCommand();
+        command.CommandText = query;
+        var reader = command.ExecuteReader();
+        
+        // read results
+        var results = new List<DataEntry>();
+        while (reader.Read())
+        {
+            var call = reader.GetString(0);
+            var title = reader.GetString(1);
+            var width = reader.GetDouble(2);
+
+            var entry = new DataEntry
+            {
+                CallNum = call,
+                Title = title,
+                Width = width
+            };
+            
+            results.Add(entry);
+        }
+
+        return results;
+    }
+    
     /// <summary>
     /// Returns the set of books within the call number range
     /// </summary>
