@@ -37,7 +37,7 @@ public class DBWrapper
         _connection.Open();
     }
 
-    private void QueryCallNum(string callNum)
+    public void QueryCallNum(string callNum)
     {
         if (!Connected) Connect();
 
@@ -62,14 +62,15 @@ public class DBWrapper
     /// <summary>
     /// Returns a certain amount of entries starting from a call number
     /// </summary>
+    /// <param name="results">output list to append data to</param>
     /// <param name="startCallNum">call number to start from</param>
     /// <param name="count">number of entries to return</param>
     /// <param name="startInclusive">include entries with same call as startCallNum</param>
     /// <returns></returns>
-    private List<DataEntry> QueryCount(string startCallNum, int count, bool startInclusive)
+    public void QueryCount(ref List<DataEntry> results, string startCallNum, int count, bool startInclusive)
     {
         if (!Connected) Connect();
-
+        
         // construct query
         var op = (startInclusive) ? ">=" : ">";
         var query = string.Format(
@@ -85,7 +86,6 @@ public class DBWrapper
         var reader = command.ExecuteReader();
 
         // read results
-        var results = new List<DataEntry>();
         while (reader.Read())
         {
             var entry = new DataEntry();
@@ -95,18 +95,18 @@ public class DBWrapper
 
         reader.Close();
         command.Dispose();
-        return results;
     }
 
     /// <summary>
     /// Returns the set of books within the call number range
     /// </summary>
+    /// <param name="results">output list to append data to</param>
     /// <param name="startCallNum">starting call number</param>
     /// <param name="endCallNum">ending call number</param>
     /// <param name="startInclusive">controls whether to include startCallNum if there is a match</param>
     /// <param name="endInclusive">controls whether to include endCallNum if there is a match</param>
     /// <returns>a list of <see cref="DataEntry"/></returns>
-    private List<DataEntry> QueryRange(string startCallNum, string endCallNum,
+    public List<DataEntry> QueryRange(ref List<DataEntry> results, string startCallNum, string endCallNum,
         bool startInclusive, bool endInclusive)
     {
         if (!Connected) Connect();
@@ -126,7 +126,6 @@ public class DBWrapper
         var reader = command.ExecuteReader();
 
         // read results
-        var results = new List<DataEntry>();
         while (reader.Read())
         {
             var entry = new DataEntry();
