@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
@@ -85,6 +86,8 @@ public class DBWrapper
             results.Add(entry);
         }
 
+        reader.Close();
+        command.Dispose();
         return results;
     }
 
@@ -124,6 +127,8 @@ public class DBWrapper
             results.Add(entry);
         }
 
+        reader.Close();
+        command.Dispose();
         return results;
     }
 }
