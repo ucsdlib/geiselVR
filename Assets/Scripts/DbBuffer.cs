@@ -36,7 +36,7 @@ public class DbBuffer
     }
     
     [CanBeNull]
-    private DataEntry NextEntry()
+    public DataEntry NextEntry()
     {
         if (_buffer.Count == 0 && !LoadData()) return null;
 

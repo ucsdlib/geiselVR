@@ -27,7 +27,7 @@ public class Book : MonoBehaviour
             .Find("BookWithTitle").Find("Title").GetComponent<TextRenderer>();
         if (!TitleRenderer)
         {
-            Debug.Log("Could not find title renderer"); // DEBUG
+            Debug.Log("Could not find title renderer");
         }
     }
 
@@ -36,7 +36,7 @@ public class Book : MonoBehaviour
         _loaded = true;
         _callNumber = entry.CallNum;
         _title = entry.Title;
-        _width = (float) entry.Width;
+        _width = (float) entry.Width / 100; // convert cm -> m
     }
     
     public void LoadData()

@@ -9,6 +9,7 @@ public class BookshelfController : MonoBehaviour
     public int Position;
 
     public Book BookTemplate;
+    public int DbBufferSize = 50;
     public int ShelfCount = 3;
     public float ShelfHeight = 0.37f;
     public float ShelfWidth = 1.0f;
@@ -16,9 +17,8 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
 
-    private int _startCallNumber; // call number of first book
-    private int _endCallNumber; // call number of last book
-    private int _nextCallNumber; // internal iteration
+    private string _startCallNumber; // call number of first book
+    private string _endCallNumber; // call number of last book
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
@@ -64,29 +64,25 @@ public class BookshelfController : MonoBehaviour
         switch (direction)
         {
             case Direction.Right:
-                _startCallNumber = last._endCallNumber + 1;
-                _nextCallNumber = _startCallNumber;
-                LoadBooks(direction);
+                LoadBooks(direction, last._endCallNumber);
                 break;
             case Direction.Left:
-                _startCallNumber = 0; // determined after load
-                _nextCallNumber = last._startCallNumber - 1;
-                LoadBooks(direction);
+                LoadBooks(direction, last._startCallNumber);
                 break;
             case Direction.Identity:
-                _startCallNumber = last._startCallNumber;
-                _nextCallNumber = _startCallNumber;
-                LoadBooks(Direction.Right);
+                // TODO we need inclusive queries to do this
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, null);
         }
     }
 
-    private void LoadBooks(Direction direction)
+    private void LoadBooks(Direction direction, string startCallNum)
     {
         if (direction == Direction.Right)
         {
+            var buffer = new DbBuffer(startCallNum, DbBufferSize, forward: true);
+
             // Generate shelf list
             for (var i = 0; i < ShelfCount; i++)
             {
@@ -98,8 +94,7 @@ public class BookshelfController : MonoBehaviour
                 {
                     // Create book
                     var book = Instantiate(BookTemplate);
-                    book.LoadMeta(_nextCallNumber);
-                    _nextCallNumber++;
+                    book.LoadMeta(buffer.NextEntry());
 
                     // Bookkeeping
                     totalWidth += book.Width;
@@ -111,16 +106,21 @@ public class BookshelfController : MonoBehaviour
                 {
                     Destroy(books.Last.Value.gameObject);
                     books.RemoveLast();
-                    _nextCallNumber--;
                 }
                 _table.Add(books);
             }
+
+            // Set start and end books
+            _startCallNumber = _table[0].First.Value.CallNumber;
+            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
 
             // Position and load
             InstantiateTable();
         }
         else if (direction == Direction.Left)
         {
+            var buffer = new DbBuffer(startCallNum, DbBufferSize, forward: false);
+
             // Generate shelf list
             for (var i = 0; i < ShelfCount; i++)
             {
@@ -131,8 +131,7 @@ public class BookshelfController : MonoBehaviour
                 while (totalWidth <= ShelfWidth)
                 {
                     var book = Instantiate(BookTemplate);
-                    book.LoadMeta(_nextCallNumber);
-                    _nextCallNumber--;
+                    book.LoadMeta(buffer.NextEntry());
 
                     totalWidth += book.Width;
                     books.AddFirst(book);
@@ -143,10 +142,13 @@ public class BookshelfController : MonoBehaviour
                 {
                     Destroy(books.First.Value.gameObject);
                     books.RemoveFirst();
-                    _nextCallNumber++;
                 }
                 _table.Insert(0, books);
             }
+
+            // Set start and end books
+            _startCallNumber = _table[0].First.Value.CallNumber;
+            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
 
             // Position and load
             InstantiateTable();
