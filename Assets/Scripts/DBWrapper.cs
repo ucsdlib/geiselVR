@@ -5,10 +5,11 @@ using System.Linq;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
-public class DBWrapper : MonoBehaviour
+public class DBWrapper
 {
     private IDbConnection _connection;
 
+    private const string DataBasePath = "call-only.db"; // within the Assets folder
     private const string TableName = "testing";
 
     private bool Connected
@@ -16,16 +17,13 @@ public class DBWrapper : MonoBehaviour
         get { return _connection.State == ConnectionState.Open; }
     }
 
-    private void Awake()
+    public DBWrapper()
     {
-        Connect();
-        QueryCallNum("VK18 .G5");
-        QueryRange("CB161 .W54 1983b", "CB19 .B69 1985", true, true);
     }
 
     private void Connect()
     {
-        var dbUri = "URI=file:" + Application.dataPath + "/call-only.db";
+        var dbUri = "URI=file:" + Application.dataPath + "/" + DataBasePath;
         _connection = new SqliteConnection(dbUri);
         _connection.Open();
     }
