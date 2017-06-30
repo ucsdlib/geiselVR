@@ -52,7 +52,7 @@ public class DbWrapper
         reader.Read();
         var entry = new DataEntry();
         entry.Read(reader);
-        
+
         // output data in some way
 
         reader.Close();
@@ -67,12 +67,21 @@ public class DbWrapper
     /// <param name="count">number of entries to return</param>
     /// <param name="startInclusive">include entries with same call as startCallNum</param>
     /// <returns></returns>
-    public void QueryCount(ref List<DataEntry> results, string startCallNum, int count, bool startInclusive)
+    public void QueryCount(ref List<DataEntry> results, string startCallNum, int count, bool startInclusive,
+        bool forward)
     {
         if (!Connected) Connect();
-        
+
         // construct query
-        var op = (startInclusive) ? ">=" : ">";
+        string op;
+        if (forward)
+        {
+            op = (startInclusive) ? ">=" : ">";
+        }
+        else
+        {
+            op = (startInclusive) ? "<=" : "<";
+        }
         var query = string.Format(
             "SELECT * FROM {0} " +
             "WHERE call {1} '{2}' " +
