@@ -6,7 +6,7 @@ public class Book : MonoBehaviour
     
     public TextRenderer TitleRenderer;
 
-    public int CallNumber
+    public string CallNumber
     {
         get { return _callNumber; }
     }
@@ -16,10 +16,11 @@ public class Book : MonoBehaviour
         get { return _width; }
     }
 
-    private int _callNumber;
+    private string _callNumber;
     private float _width;
-    private bool _loaded;
+    private string _title;
     
+    private bool _loaded;
     void Awake()
     {
         TitleRenderer = transform
@@ -30,11 +31,12 @@ public class Book : MonoBehaviour
         }
     }
 
-    public void LoadMeta(int callNumber)
+    public void LoadMeta(DataEntry entry)
     {
         _loaded = true;
-        _callNumber = callNumber;
-        _width = 0.1f;
+        _callNumber = entry.CallNum;
+        _title = entry.Title;
+        _width = (float) entry.Width;
     }
     
     public void LoadData()
