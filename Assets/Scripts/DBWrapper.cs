@@ -59,11 +59,18 @@ public class DBWrapper
         command.Dispose();
     }
 
+    /// <summary>
+    /// Returns a certain amount of entries starting from a call number
+    /// </summary>
+    /// <param name="startCallNum">call number to start from</param>
+    /// <param name="count">number of entries to return</param>
+    /// <param name="startInclusive">include entries with same call as startCallNum</param>
+    /// <returns></returns>
     private List<DataEntry> QueryCount(string startCallNum, int count, bool startInclusive)
     {
         if (!Connected) Connect();
 
-        // constrct query
+        // construct query
         var op = (startInclusive) ? ">=" : ">";
         var query = string.Format(
             "SELECT * FROM {0} " +

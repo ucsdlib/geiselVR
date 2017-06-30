@@ -10,7 +10,14 @@ public class BookLoader
 
     public BookLoader(string startCallNum, int capacity)
     {
-        
+        _db = DBWrapper.Instance;
         _startCallNum = startCallNum;
+        _capacity = capacity;
+        _bookData = new List<DataEntry>(capacity);
+    }
+
+    private void LoadData()
+    {
+        
     }
 }
