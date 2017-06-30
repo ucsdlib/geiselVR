@@ -2,21 +2,30 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using UnityEditor;
 
 public class DbBuffer
 {
+    public bool Forward
+    {
+        get { return _forward; }
+    }
+
     private DbWrapper _db;
     private string _startCallNum;
     private int _capacity;
+    private bool _forward;
     private int _index;
     private List<DataEntry> _buffer;
 
-    public DbBuffer(string startCallNum, int capacity)
+    public DbBuffer(string startCallNum, int capacity, bool forward)
     {
         _db = DbWrapper.Instance;
         _startCallNum = startCallNum;
         _capacity = capacity;
+        _forward = forward;
         _index = 0;
+        _buffer = new List<DataEntry>(capacity);
     }
 
     private bool LoadNextData()
