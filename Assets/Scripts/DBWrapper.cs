@@ -6,14 +6,14 @@ using System.Runtime.InteropServices;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
-public class DBWrapper
+public class DbWrapper
 {
-    public static DBWrapper Instance
+    public static DbWrapper Instance
     {
-        get { return _instance ?? (_instance = new DBWrapper(DataBasePath)); }
+        get { return _instance ?? (_instance = new DbWrapper(DataBasePath)); }
     }
 
-    private static DBWrapper _instance;
+    private static DbWrapper _instance;
     private const string DataBasePath = "call-only.db"; // within the Assets folder
     private const string TableName = "testing";
 
@@ -25,7 +25,7 @@ public class DBWrapper
         get { return _connection.State == ConnectionState.Open; }
     }
 
-    public DBWrapper(string assetsDbPath)
+    public DbWrapper(string assetsDbPath)
     {
         _dbPath = assetsDbPath;
     }
