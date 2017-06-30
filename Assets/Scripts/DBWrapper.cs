@@ -7,23 +7,31 @@ using UnityEngine;
 
 public class DBWrapper
 {
-    private IDbConnection _connection;
+    public static DBWrapper Instance
+    {
+        get { return _instance ?? (_instance = new DBWrapper(DataBasePath)); }
+    }
 
+    private static DBWrapper _instance;
     private const string DataBasePath = "call-only.db"; // within the Assets folder
     private const string TableName = "testing";
-
+    
+    private IDbConnection _connection;
+    private string _dbPath;
+    
     private bool Connected
     {
         get { return _connection.State == ConnectionState.Open; }
     }
 
-    public DBWrapper()
+    public DBWrapper(string assetsDbPath)
     {
+        _dbPath = assetsDbPath;
     }
 
     private void Connect()
     {
-        var dbUri = "URI=file:" + Application.dataPath + "/" + DataBasePath;
+        var dbUri = "URI=file:" + Application.dataPath + "/" + _dbPath;
         _connection = new SqliteConnection(dbUri);
         _connection.Open();
     }
