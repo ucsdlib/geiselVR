@@ -4,5 +4,7 @@ from util import *
 
 PATH = 'data.tsv'
 
-for data in process_col_iter(PATH, DIM_OR_DESC):
-    print(extract_dim(data))
+count = 0
+for data in process_col_iter(PATH, ISBN):
+    print(count, data)
+    count += 1

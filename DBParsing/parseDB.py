@@ -27,9 +27,13 @@ def main(argv):
     with open(argv[1], newline='') as csvfile:
         csvfile.readline()  # skip header
         reader = csv.reader(csvfile, delimiter='\t')
-        conn = sqlite3.connect('call-only.db')
+        conn = sqlite3.connect(argv[2])
         cursor = conn.cursor()
         cursor.execute('DELETE FROM testing')
+
+        # Add call indexing
+        cursor.execute('DROP INDEX IF EXISTS call_index')
+        cursor.execute('CREATE INDEX call_index ON testing(call)')
 
         # Populate dat
         count = 0
@@ -39,6 +43,8 @@ def main(argv):
             if count % 100000 == 0:
                 print(count)
             count += 1
+
+
         conn.commit()
         conn.close()
 
