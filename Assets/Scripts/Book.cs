@@ -36,12 +36,12 @@ public class Book : MonoBehaviour
         _loaded = true;
         _callNumber = entry.CallNum;
         _title = entry.Title;
-        _width = (float) entry.Width / 100; // convert cm -> m
+        _width = (float) entry.Width / 1000 + 0.01f; // convert cm -> m
     }
     
     public void LoadData()
     {
         if (!_loaded) return;
-        TitleRenderer.GenerateText(_callNumber.ToString());
+        TitleRenderer.GenerateText(_title);
     }
 }

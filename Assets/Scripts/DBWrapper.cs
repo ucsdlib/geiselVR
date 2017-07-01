@@ -29,6 +29,7 @@ public class DbWrapper
     public DbWrapper(string assetsDbPath)
     {
         _dbPath = assetsDbPath;
+        Connect();
     }
 
     private void Connect()

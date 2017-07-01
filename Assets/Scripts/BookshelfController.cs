@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class BookshelfController : MonoBehaviour
 {
-    public int Position;
-
+    public string CallNumber;
     public Book BookTemplate;
     public int DbBufferSize = 50;
     public int ShelfCount = 3;
@@ -29,6 +28,8 @@ public class BookshelfController : MonoBehaviour
         {
             unit.UpdateContentsDelegate += HandleUpdateEvent;
         }
+
+        _startCallNumber = CallNumber; // DEBUG
     }
 
     private void OnDrawGizmos()
@@ -61,6 +62,7 @@ public class BookshelfController : MonoBehaviour
             Debug.Log("Could not get last shelf");
         }
 
+        // NOTE: The Identity direction does not include the starting book when populating
         switch (direction)
         {
             case Direction.Right:
@@ -70,10 +72,10 @@ public class BookshelfController : MonoBehaviour
                 LoadBooks(direction, last._startCallNumber);
                 break;
             case Direction.Identity:
-                // TODO we need inclusive queries to do this
+                LoadBooks(Direction.Right, last._startCallNumber);
                 break;
             default:
-                throw new ArgumentOutOfRangeException("direction", direction, null);
+                throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
     }
 
