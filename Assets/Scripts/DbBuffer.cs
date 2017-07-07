@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using UnityEditor;
 
 public class DbBuffer
 {
@@ -30,9 +27,10 @@ public class DbBuffer
 
     private bool LoadData()
     {
-        var initCount = _buffer.Count;
+        _buffer.Clear();
+        _index = 0;
         _db.QueryCount(ref _buffer, _startCallNum, _capacity, forward: _forward);
-        return _buffer.Count > initCount; // check if we added data
+        return _buffer.Count > 0; // check if we added data
     }
     
     [CanBeNull]
