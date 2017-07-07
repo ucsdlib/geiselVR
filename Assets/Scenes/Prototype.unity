@@ -325,41 +325,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: ShowGuides
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: ShelfHeight
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: ShelfWidth
-      value: 0.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: TopShelfY
-      value: 1.505
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: ShelfCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: Offset.x
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611483520937716, guid: 70984355702a26c4b8d4fd5ec2531e30,
-        type: 2}
-      propertyPath: Offset.z
-      value: -0.04
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70984355702a26c4b8d4fd5ec2531e30, type: 2}
   m_IsPrefabParent: 0
