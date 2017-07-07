@@ -841,12 +841,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af0a8eb73055df4897eb6bfd29786bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: 0
+  CallNumber: 
   BookTemplate: {fileID: 114414007736247262, guid: 40b0f26b0b334aa45b6c27ffdaca2750,
     type: 2}
+  DbBufferSize: 50
   ShelfCount: 3
   ShelfHeight: 0.4
   ShelfWidth: 0.93
   TopShelfY: 1.505
   Offset: {x: 0.05, y: 0, z: -0.04}
-  ShowGuides: 1
+  ShowGuides: 0

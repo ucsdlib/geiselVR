@@ -5,6 +5,30 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+/// <summary>
+/// Wrapper class to keep only one instance of default text generation settings.
+/// </summary>
+public class TextRendererSettings
+{
+    public static readonly TextGenerationSettings DefaultSettings = new TextGenerationSettings
+    {
+        textAnchor = TextAnchor.MiddleCenter,
+        color = Color.black,
+        generationExtents = new Vector2(10, 10),
+        pivot = new Vector2(0f, 0f),
+        richText = true,
+        font = Font.CreateDynamicFontFromOSFont("Arial", 72),
+        fontSize = 24,
+        fontStyle = FontStyle.Normal,
+        verticalOverflow = VerticalWrapMode.Overflow,
+        horizontalOverflow = HorizontalWrapMode.Overflow,
+        lineSpacing = 1,
+        generateOutOfBounds = true,
+        resizeTextForBestFit = true,
+        scaleFactor = 1f
+    };
+}
+
 
 public class TextRenderer : MonoBehaviour
 {
@@ -20,7 +44,7 @@ public class TextRenderer : MonoBehaviour
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
         MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
-        TextGenerationSettings settings = GetDefSettings();
+        TextGenerationSettings settings = TextRendererSettings.DefaultSettings;
         TextGenerator generator = new TextGenerator();
         generator.Populate(text, settings);
 
