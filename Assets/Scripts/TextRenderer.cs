@@ -24,6 +24,12 @@ public class TextRendererSettings
         resizeTextForBestFit = true,
         scaleFactor = 1f
     };
+
+    static TextRendererSettings()
+    {
+        DefaultSettings.font.material.shader = Shader.Find("GUI/Cull Back Text Shader");
+        DefaultSettings.font.material.color = Color.black;
+    }
 }
 
 
