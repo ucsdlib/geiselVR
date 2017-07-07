@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
+/// <summary>
+/// Wraps SQL queries and handles database connection
+/// </summary>
 public class DbWrapper
 {
     public static DbWrapper Instance
@@ -61,6 +64,13 @@ public class DbWrapper
         command.Dispose();
     }
 
+    /// <summary>
+    /// Gets a certain number of data points starting at a call number
+    /// </summary>
+    /// <param name="results">where to append data points to</param>
+    /// <param name="startCallNum">starting call number</param>
+    /// <param name="count">how many data points to load</param>
+    /// <param name="forward">if true then loading is in increasing call num direction</param>
     public void QueryCount(ref List<DataEntry> results, string startCallNum, int count, bool forward)
     {
         if (!Connected) Connect();
