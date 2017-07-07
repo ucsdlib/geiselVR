@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Wrapper class to keep only one instance of default text generation settings.
@@ -51,6 +48,7 @@ public class TextRenderer : MonoBehaviour
         Mesh mesh = new Mesh();
         GetMesh(generator, mesh);
         meshFilter.mesh = mesh;
+        
         meshRenderer.material = settings.font.material;
     }
 

@@ -19,8 +19,8 @@ public class Book : MonoBehaviour
     private string _callNumber;
     private float _width;
     private string _title;
-    
     private bool _loaded;
+    
     void Awake()
     {
         TitleRenderer = transform
@@ -42,6 +42,6 @@ public class Book : MonoBehaviour
     public void LoadData()
     {
         if (!_loaded) return;
-        TitleRenderer.GenerateText(_title);
+        TitleRenderer.GenerateText(_callNumber);
     }
 }
