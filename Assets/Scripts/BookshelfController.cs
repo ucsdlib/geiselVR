@@ -16,8 +16,8 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
 
-    private string _startCallNumber; // call number of first book
-    private string _endCallNumber; // call number of last book
+    private string _startCallNumber; 
+    private string _endCallNumber; 
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
@@ -62,7 +62,7 @@ public class BookshelfController : MonoBehaviour
             Debug.Log("Could not get last shelf");
         }
 
-        // NOTE: The Identity direction does not include the starting book when populating
+        // FIXME The Identity direction does not include the starting book when populating
         switch (direction)
         {
             case Direction.Right:
@@ -94,11 +94,8 @@ public class BookshelfController : MonoBehaviour
                 // Populate until over limit
                 while (totalWidth <= ShelfWidth)
                 {
-                    // Create book
                     var book = Instantiate(BookTemplate);
                     book.LoadMeta(buffer.NextEntry());
-
-                    // Bookkeeping
                     totalWidth += book.Width;
                     books.AddLast(book);
                 }
@@ -112,7 +109,6 @@ public class BookshelfController : MonoBehaviour
                 _table.Add(books);
             }
 
-            // Set start and end books
             _startCallNumber = _table[0].First.Value.CallNumber;
             _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
 
@@ -134,7 +130,6 @@ public class BookshelfController : MonoBehaviour
                 {
                     var book = Instantiate(BookTemplate);
                     book.LoadMeta(buffer.NextEntry());
-
                     totalWidth += book.Width;
                     books.AddFirst(book);
                 }
@@ -148,7 +143,6 @@ public class BookshelfController : MonoBehaviour
                 _table.Insert(0, books);
             }
 
-            // Set start and end books
             _startCallNumber = _table[0].First.Value.CallNumber;
             _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
 
@@ -162,7 +156,6 @@ public class BookshelfController : MonoBehaviour
             throw new ArgumentOutOfRangeException("direction", direction, msg);
         }
 
-        // Store call number of last book
         _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
     }
 
