@@ -9,6 +9,7 @@ public class BookshelfController : MonoBehaviour
     public string CallNumber;
     public Book BookTemplate;
     public int DbBufferSize = 50;
+    public float MaxBookSize = 500f;
     public int ShelfCount = 3;
     public float ShelfHeight = 0.37f;
     public float ShelfWidth = 1.0f;
@@ -16,8 +17,8 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
 
-    private string _startCallNumber; 
-    private string _endCallNumber; 
+    private string _startCallNumber;
+    private string _endCallNumber;
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
@@ -95,7 +96,15 @@ public class BookshelfController : MonoBehaviour
                 while (totalWidth <= ShelfWidth)
                 {
                     var book = Instantiate(BookTemplate);
-                    book.LoadMeta(buffer.NextEntry());
+
+                    // Find an entry with good size if there's any left
+                    DataEntry entry;
+                    do
+                    {
+                        if ((entry = buffer.NextEntry()) == null) return;
+                    } while (entry.Width > MaxBookSize);
+                        
+                    book.LoadMeta(entry);
                     totalWidth += book.Width;
                     books.AddLast(book);
                 }
@@ -109,7 +118,7 @@ public class BookshelfController : MonoBehaviour
                 _table.Add(books);
             }
 
-            _startCallNumber = _table[0].First.Value.CallNumber;
+            _startCallNumber = _table[0].First.Value.CallNumber; // FIXME unsafe
             _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
 
             // Position and load
