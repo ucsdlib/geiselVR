@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -67,105 +69,94 @@ public class BookshelfController : MonoBehaviour
         switch (direction)
         {
             case Direction.Right:
-                LoadBooks(direction, last._endCallNumber);
+                GenerateBooks(direction, last._endCallNumber);
                 break;
             case Direction.Left:
-                LoadBooks(direction, last._startCallNumber);
+                GenerateBooks(direction, last._startCallNumber);
                 break;
             case Direction.Identity:
-                LoadBooks(Direction.Right, last._startCallNumber);
+                GenerateBooks(Direction.Right, last._startCallNumber);
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
     }
 
-    private void LoadBooks(Direction direction, string startCallNum)
+    private void GenerateBooks(Direction direction, string startCallNum)
     {
-        if (direction == Direction.Right)
-        {
-            var buffer = new DbBuffer(startCallNum, DbBufferSize, forward: true);
-
-            // Generate shelf list
-            for (var i = 0; i < ShelfCount; i++)
-            {
-                var books = new LinkedList<Book>();
-                var totalWidth = 0.0f;
-
-                // Populate until over limit
-                while (totalWidth <= ShelfWidth)
-                {
-                    var book = Instantiate(BookTemplate);
-
-                    // Find an entry with good size if there's any left
-                    DataEntry entry;
-                    do
-                    {
-                        if ((entry = buffer.NextEntry()) == null) return;
-                    } while (entry.Width > MaxBookSize);
-                        
-                    book.LoadMeta(entry);
-                    totalWidth += book.Width;
-                    books.AddLast(book);
-                }
-
-                // Put back offending book
-                if (books.Count != 0)
-                {
-                    Destroy(books.Last.Value.gameObject);
-                    books.RemoveLast();
-                }
-                _table.Add(books);
-            }
-
-            _startCallNumber = _table[0].First.Value.CallNumber; // FIXME unsafe
-            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-
-            // Position and load
-            InstantiateTable();
-        }
-        else if (direction == Direction.Left)
-        {
-            var buffer = new DbBuffer(startCallNum, DbBufferSize, forward: false);
-
-            // Generate shelf list
-            for (var i = 0; i < ShelfCount; i++)
-            {
-                var books = new LinkedList<Book>();
-                var totalWidth = 0.0f;
-
-                // Populate until over limit
-                while (totalWidth <= ShelfWidth)
-                {
-                    var book = Instantiate(BookTemplate);
-                    book.LoadMeta(buffer.NextEntry());
-                    totalWidth += book.Width;
-                    books.AddFirst(book);
-                }
-
-                // Put back offending book
-                if (books.Count != 0)
-                {
-                    Destroy(books.First.Value.gameObject);
-                    books.RemoveFirst();
-                }
-                _table.Insert(0, books);
-            }
-
-            _startCallNumber = _table[0].First.Value.CallNumber;
-            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-
-            // Position and load
-            InstantiateTable();
-            _startCallNumber = _table[0].First.Value.CallNumber;
-        }
+        bool forward;
+        if (direction == Direction.Right) forward = true;
+        else if (direction == Direction.Left) forward = false;
         else
         {
             const string msg = "Can only load books Left or Right";
             throw new ArgumentOutOfRangeException("direction", direction, msg);
         }
 
+        var buffer = new DbBuffer(startCallNum, DbBufferSize, forward);
+
+        // generate shelf list
+        for (var i = 0; i < ShelfCount; i++)
+        {
+            var books = GenerateShelf(buffer, direction);
+
+            if (books != null) _table.Add(books);
+            else return; // TODO tell the row controller we are out of books to load
+        }
+
+        // FIXME what if we were going left and didn't get to the end?
+        _startCallNumber = _table[0].First.Value.CallNumber;
         _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
+        
+        InstantiateTable();
+    }
+
+
+    /// <summary>
+    /// Loads a shelf's worth of books from the database and returns as a list.
+    /// Only book meta is loaded.
+    /// </summary>
+    /// <param name="buffer">data base buffer</param>
+    /// <param name="direction">which direction the shelf should be populated in</param>
+    /// <returns>a list of the books representing the shelf from left to right
+    /// (not neccesarily full), or null if not even one book could be placed</returns>
+    private LinkedList<Book> GenerateShelf(DbBuffer buffer, Direction direction)
+    {
+        var books = new LinkedList<Book>();
+        var totalWidth = 0.0f;
+
+        while (totalWidth <= ShelfWidth)
+        {
+            var book = Instantiate(BookTemplate);
+
+            // find entry with good size if it exsists
+            DataEntry entry;
+            if ((entry = buffer.NextEntry()) == null) return null;
+            while (entry.Width > MaxBookSize)
+            {
+                if ((entry = buffer.NextEntry()) == null) return books;
+            }
+
+            book.LoadMeta(entry);
+            totalWidth += book.Width;
+
+            if (direction == Direction.Left)
+            {
+                books.AddFirst(book);
+            }
+            else
+            {
+                books.AddLast(book);
+            }
+        }
+
+        // put back offending book
+        if (books.Count != 0)
+        {
+            Destroy(books.Last.Value.gameObject);
+            books.RemoveLast();
+        }
+        return books;
     }
 
     private void InstantiateTable()
