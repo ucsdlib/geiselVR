@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 public class DbBuffer
@@ -15,12 +16,23 @@ public class DbBuffer
     private int _index;
     private List<DataEntry> _buffer;
 
-    public DbBuffer(string startCallNum, int capacity, bool forward)
+    public DbBuffer(string startCallNum, int capacity, Direction direction)
     {
+        switch (direction)
+        {
+            case Direction.Left:
+                _forward = false;
+                break;
+            case Direction.Right:
+                _forward = true;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(
+                    "direction", direction, message: null);
+        }
         _db = DbWrapper.Instance;
         _startCallNum = startCallNum;
         _capacity = capacity;
-        _forward = forward;
         _index = 0;
         _buffer = new List<DataEntry>(capacity);
     }
@@ -32,7 +44,7 @@ public class DbBuffer
         _db.QueryCount(ref _buffer, _startCallNum, _capacity, forward: _forward);
         return _buffer.Count > 0; // check if we added data
     }
-    
+
     [CanBeNull]
     public DataEntry NextEntry()
     {
