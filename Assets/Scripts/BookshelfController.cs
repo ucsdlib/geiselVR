@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.AccessControl;
 using UnityEngine;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -85,8 +86,14 @@ public class BookshelfController : MonoBehaviour
     private void GenerateBooks(Direction direction, string startCallNum)
     {
         bool forward;
-        if (direction == Direction.Right) forward = true;
-        else if (direction == Direction.Left) forward = false;
+        if (direction == Direction.Right)
+        {
+            forward = true;
+        }
+        else if (direction == Direction.Left)
+        {
+            forward = false;
+        }
         else
         {
             const string msg = "Can only load books Left or Right";
@@ -95,31 +102,30 @@ public class BookshelfController : MonoBehaviour
 
         var buffer = new DbBuffer(startCallNum, DbBufferSize, forward);
 
-        // generate shelf list
+        // generate shelf list // FIXME on left, this loop should be going the other way
         for (var i = 0; i < ShelfCount; i++)
         {
             var books = GenerateShelf(buffer, direction);
 
-            if (books != null) _table.Add(books);
-            else return; // TODO tell the row controller we are out of books to load
+            if (books.Count == 0) break;
+
+            _table.Add(books);
         }
 
-        // FIXME what if we were going left and didn't get to the end?
-        _startCallNumber = _table[0].First.Value.CallNumber;
-        _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-        
-        InstantiateTable();
+        // make sure we actually loaded some books
+        if (_table.Count > 0)
+        {
+            _startCallNumber = _table[0].First.Value.CallNumber;
+            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
+        }
+        else
+        {
+            // TODO tell the row controller we are out of books in this direction
+        }
+
+        InstantiateTable(); // FIXME this needs to be aware of direction
     }
 
-
-    /// <summary>
-    /// Loads a shelf's worth of books from the database and returns as a list.
-    /// Only book meta is loaded.
-    /// </summary>
-    /// <param name="buffer">data base buffer</param>
-    /// <param name="direction">which direction the shelf should be populated in</param>
-    /// <returns>a list of the books representing the shelf from left to right
-    /// (not neccesarily full), or null if not even one book could be placed</returns>
     private LinkedList<Book> GenerateShelf(DbBuffer buffer, Direction direction)
     {
         var books = new LinkedList<Book>();
@@ -127,16 +133,15 @@ public class BookshelfController : MonoBehaviour
 
         while (totalWidth <= ShelfWidth)
         {
-            var book = Instantiate(BookTemplate);
 
             // find entry with good size if it exsists
             DataEntry entry;
-            if ((entry = buffer.NextEntry()) == null) return null;
-            while (entry.Width > MaxBookSize)
+            do
             {
                 if ((entry = buffer.NextEntry()) == null) return books;
-            }
+            } while (entry.Width > MaxBookSize);
 
+            var book = Instantiate(BookTemplate);
             book.LoadMeta(entry);
             totalWidth += book.Width;
 
@@ -161,7 +166,7 @@ public class BookshelfController : MonoBehaviour
 
     private void InstantiateTable()
     {
-        for (var i = 0; i < ShelfCount; i++)
+        for (var i = 0; i < _table.Count; i++)
         {
             var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
             InstantiateShelf(start, Vector3.right, _table[i]);
