@@ -16,6 +16,11 @@ public class Book : MonoBehaviour
         get { return _width; }
     }
 
+    public static float ConvertWidthToLocalScale(double width)
+    {
+        return (float) width / 1000 + 0.01f; // convert cm -> m
+    }
+
     private string _callNumber;
     private float _width;
     private string _title;
@@ -36,7 +41,7 @@ public class Book : MonoBehaviour
         _loaded = true;
         _callNumber = entry.CallNum;
         _title = entry.Title;
-        _width = (float) entry.Width / 1000 + 0.01f; // convert cm -> m
+        _width = ConvertWidthToLocalScale(entry.Width);
     }
     
     public void LoadData()

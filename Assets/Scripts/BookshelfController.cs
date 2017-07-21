@@ -138,16 +138,13 @@ public class BookshelfController : MonoBehaviour
             {
                 if ((entry = buffer.NextEntry()) == null) return books;
             } while (entry.Width > MaxBookSize);
+            
+            totalWidth += Book.ConvertWidthToLocalScale(entry.Width);
+            if (totalWidth > ShelfWidth) break;
 
             var book = Instantiate(BookTemplate);
-            book.LoadMeta(entry);
-            totalWidth += book.Width;
+            book.LoadMeta(entry); // TODO create a MetaBook class and load from there
             
-            if (totalWidth > ShelfWidth)
-            {
-                Destroy(book);
-                break;
-            }
             
             _addShelf(books, book);
         }
