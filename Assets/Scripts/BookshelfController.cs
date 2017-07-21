@@ -23,15 +23,16 @@ public class BookshelfController : MonoBehaviour
     private string _startCallNumber;
     private string _endCallNumber;
     private Direction _direction;
+    private Unit _unit;
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
     {
         // Establish connection to Unit
-        Unit unit = GetComponent<Unit>();
-        if (unit != null)
+        _unit = GetComponent<Unit>();
+        if (_unit != null)
         {
-            unit.UpdateContentsDelegate += HandleUpdateEvent;
+            _unit.UpdateContentsDelegate += HandleUpdateEvent;
         }
 
         _startCallNumber = CallNumber; // DEBUG
@@ -90,7 +91,7 @@ public class BookshelfController : MonoBehaviour
     {
         var buffer = new DbBuffer(startCallNum, DbBufferSize, _direction);
 
-        // generate shelf list // FIXME on left, this loop should be going the other way
+        // generate shelf list 
         for (var i = 0; i < ShelfCount; i++)
         {
             var books = GenerateShelf(buffer);
@@ -105,13 +106,13 @@ public class BookshelfController : MonoBehaviour
         {
             _startCallNumber = _table[0].First.Value.CallNumber;
             _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
+            InstantiateTable(); // FIXME this needs to be aware of direction
         }
         else
         {
-            // TODO tell the row controller we are out of books in this direction
+            if (_direction == Direction.Right) _unit.Row.CanScrollRight = false;
+            else if (_direction == Direction.Left) _unit.Row.CanScrollLeft = false;
         }
-
-        InstantiateTable(); // FIXME this needs to be aware of direction
     }
 
     private LinkedList<Book> GenerateShelf(DbBuffer buffer)
@@ -153,14 +154,18 @@ public class BookshelfController : MonoBehaviour
                 var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
                 InstantiateShelf(start, Vector3.right, _table[i]);
             }
+            _startCallNumber = _table[0].First.Value.CallNumber;
+            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
         }
         else if (_direction == Direction.Left)
         {
-            for (var i = _table.Count - 1; i >= 0; i++)
+            for (var i = _table.Count - 1; i >= 0; i--)
             {
                 var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
                 InstantiateShelf(start, Vector3.right, _table[i]);
             }
+            _startCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
+            _endCallNumber = _table[0].First.Value.CallNumber;
         }
     }
 

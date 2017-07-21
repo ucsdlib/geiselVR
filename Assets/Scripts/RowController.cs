@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
 Controlls a row of arbitrary units and allows endless scrolling in either direction
@@ -13,6 +14,17 @@ public class RowController : MonoBehaviour
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
+    public bool CanScrollLeft
+    {
+        get { return _canScrollLeft; }
+        set { _canScrollLeft = value; }
+    }
+    public bool CanScrollRight
+    {
+        get { return _canScrollRight; }
+        set { _canScrollRight = value; }
+    }
+
     private readonly LinkedList<Unit> _activeUnits = new LinkedList<Unit>();
     private bool _lerping;
     private Vector3 _lerpDestPos;
@@ -20,9 +32,9 @@ public class RowController : MonoBehaviour
     private Vector3 _lastPos; // last position in array
     private Vector3 _rowInitPos; // initial position of row in world
     private float _width; // width of one unit
+    private bool _canScrollRight = true;
+    private bool _canScrollLeft = true;
     
-
-
     private void Start()
     {
         // Set starting positions
@@ -68,14 +80,25 @@ public class RowController : MonoBehaviour
         float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
-        // Scroll Right
-        if ((flexL > 0.5 || flexR > 0.5) && !_lerping)
+        // right scroll
+        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && CanScrollRight)
         {
             StartCoroutine(Scroll(Direction.Right, ScrollTime));
+            CanScrollLeft = true;
         }
-        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping)
+        // left scroll
+        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && CanScrollLeft)
         {
             StartCoroutine(Scroll(Direction.Left, ScrollTime));
+            CanScrollRight = true;
+        }
+        // DEBUG
+        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping)
+        {
+            if (!CanScrollLeft)
+            {
+                Debug.Log("Can't scroll left!!");
+            }
         }
     }
 
