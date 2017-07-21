@@ -325,6 +325,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1137474976226190, guid: 70984355702a26c4b8d4fd5ec2531e30, type: 2}
+      propertyPath: m_Name
+      value: BookshelfUnit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70984355702a26c4b8d4fd5ec2531e30, type: 2}
   m_IsPrefabParent: 0

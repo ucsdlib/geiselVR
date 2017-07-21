@@ -22,6 +22,7 @@ public class BookshelfController : MonoBehaviour
 
     private string _startCallNumber;
     private string _endCallNumber;
+    private Direction _direction;
     private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
 
     private void Awake()
@@ -67,45 +68,32 @@ public class BookshelfController : MonoBehaviour
         }
 
         // FIXME The Identity direction does not include the starting book when populating
+        _direction = direction;
         switch (direction)
         {
             case Direction.Right:
-                GenerateBooks(direction, last._endCallNumber);
+                GenerateBooks(last._endCallNumber);
                 break;
             case Direction.Left:
-                GenerateBooks(direction, last._startCallNumber);
+                GenerateBooks(last._startCallNumber);
                 break;
             case Direction.Identity:
-                GenerateBooks(Direction.Right, last._startCallNumber);
+                _direction = Direction.Right; // build up right from the same start num
+                GenerateBooks(last._startCallNumber);
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
     }
 
-    private void GenerateBooks(Direction direction, string startCallNum)
+    private void GenerateBooks(string startCallNum)
     {
-        bool forward;
-        if (direction == Direction.Right)
-        {
-            forward = true;
-        }
-        else if (direction == Direction.Left)
-        {
-            forward = false;
-        }
-        else
-        {
-            const string msg = "Can only load books Left or Right";
-            throw new ArgumentOutOfRangeException("direction", direction, msg);
-        }
-
-        var buffer = new DbBuffer(startCallNum, DbBufferSize, forward);
+        var buffer = new DbBuffer(startCallNum, DbBufferSize, _direction);
 
         // generate shelf list // FIXME on left, this loop should be going the other way
         for (var i = 0; i < ShelfCount; i++)
         {
-            var books = GenerateShelf(buffer, direction);
+            var books = GenerateShelf(buffer);
 
             if (books.Count == 0) break;
 
@@ -126,14 +114,13 @@ public class BookshelfController : MonoBehaviour
         InstantiateTable(); // FIXME this needs to be aware of direction
     }
 
-    private LinkedList<Book> GenerateShelf(DbBuffer buffer, Direction direction)
+    private LinkedList<Book> GenerateShelf(DbBuffer buffer)
     {
         var books = new LinkedList<Book>();
         var totalWidth = 0.0f;
 
         while (totalWidth <= ShelfWidth)
         {
-
             // find entry with good size if it exsists
             DataEntry entry;
             do
@@ -145,14 +132,7 @@ public class BookshelfController : MonoBehaviour
             book.LoadMeta(entry);
             totalWidth += book.Width;
 
-            if (direction == Direction.Left)
-            {
-                books.AddFirst(book);
-            }
-            else
-            {
-                books.AddLast(book);
-            }
+            books.AddLast(book);
         }
 
         // put back offending book
@@ -166,10 +146,21 @@ public class BookshelfController : MonoBehaviour
 
     private void InstantiateTable()
     {
-        for (var i = 0; i < _table.Count; i++)
+        if (_direction == Direction.Right)
         {
-            var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-            InstantiateShelf(start, Vector3.right, _table[i]);
+            for (var i = 0; i < _table.Count; i++)
+            {
+                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
+                InstantiateShelf(start, Vector3.right, _table[i]);
+            }
+        }
+        else if (_direction == Direction.Left)
+        {
+            for (var i = _table.Count - 1; i >= 0; i++)
+            {
+                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
+                InstantiateShelf(start, Vector3.right, _table[i]);
+            }
         }
     }
 
@@ -182,13 +173,37 @@ public class BookshelfController : MonoBehaviour
 
         // Instantiate in order
         var current = Vector3.zero;
-        foreach (var book in books)
+        if (_direction == Direction.Right)
         {
-            book.transform.parent = shelfGameObj.transform;
-            book.transform.localPosition = current;
-            current += book.Width * u;
+            foreach (var book in books)
+            {
+                book.transform.parent = shelfGameObj.transform;
+                book.transform.localPosition = current;
+                current += book.Width * u;
 
-            book.LoadData();
+                book.LoadData();
+            }
+        }
+        else if (_direction == Direction.Left)
+        {
+            foreach (var book in Reverse(books))
+            {
+                book.transform.parent = shelfGameObj.transform;
+                book.transform.localPosition = current;
+                current += book.Width * u;
+
+                book.LoadData();
+            }
+        }
+    }
+
+    private IEnumerable<T> Reverse<T>(LinkedList<T> list)
+    {
+        var itr = list.Last;
+        while (itr != null)
+        {
+            yield return itr.Value;
+            itr = itr.Previous;
         }
     }
 }
