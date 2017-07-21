@@ -20,11 +20,17 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
 
+    private delegate void ShelfAdder(LinkedList<Book> books, Book book);
+
+    private delegate void TableAdder(LinkedList<LinkedList<Book>> table, LinkedList<Book> shelf);
+
     private string _startCallNumber;
     private string _endCallNumber;
-    private Direction _direction;
     private Unit _unit;
-    private readonly List<LinkedList<Book>> _table = new List<LinkedList<Book>>();
+    private readonly LinkedList<LinkedList<Book>> _table = new LinkedList<LinkedList<Book>>();
+    private ShelfAdder _addShelf;
+    private TableAdder _addTable;
+
 
     private void Awake()
     {
@@ -41,78 +47,82 @@ public class BookshelfController : MonoBehaviour
     private void OnDrawGizmos()
     {
         // Draw guides if needed
-        if (ShowGuides)
+        if (!ShowGuides) return;
+        Gizmos.color = Color.green;
+        for (int i = 0; i < ShelfCount; i++)
         {
-            Gizmos.color = Color.green;
-            for (int i = 0; i < ShelfCount; i++)
-            {
-                Vector3 center = Vector3.zero;
-                center.x = ShelfWidth / 2;
-                center.y = TopShelfY - i * ShelfHeight;
-                center.z = -0.14f;
-                center += transform.TransformDirection(Offset);
-                center = transform.TransformPoint(center);
+            Vector3 center = Vector3.zero;
+            center.x = ShelfWidth / 2;
+            center.y = TopShelfY - i * ShelfHeight;
+            center.z = -0.14f;
+            center += transform.TransformDirection(Offset);
+            center = transform.TransformPoint(center);
 
-                Vector3 size = new Vector3(ShelfWidth, 0, 0.28f);
+            Vector3 size = new Vector3(ShelfWidth, 0, 0.28f);
 
-                Gizmos.DrawCube(center, size);
-            }
+            Gizmos.DrawCube(center, size);
         }
     }
 
     public void HandleUpdateEvent(Unit unit, Direction direction)
     {
         var last = unit.GetComponent<BookshelfController>();
-        if (!last)
-        {
-            Debug.Log("Could not get last shelf");
-        }
+        if (!last) Debug.Log("Could not get last shelf");
 
         // FIXME The Identity direction does not include the starting book when populating
-        _direction = direction;
+        DbBuffer buffer;
         switch (direction)
         {
             case Direction.Right:
-                GenerateBooks(last._endCallNumber);
+                _addShelf = AddRight;
+                _addTable = AddRight;
+                buffer = new DbBuffer(last._endCallNumber, DbBufferSize, direction);
                 break;
             case Direction.Left:
-                GenerateBooks(last._startCallNumber);
+                _addShelf = AddLeft;
+                _addTable = AddLeft;
+                buffer = new DbBuffer(last._startCallNumber, DbBufferSize, direction);
                 break;
             case Direction.Identity:
-                _direction = Direction.Right; // build up right from the same start num
-                GenerateBooks(last._startCallNumber);
+                _addShelf = AddRight;
+                _addTable = AddRight;
+                buffer = new DbBuffer(last._startCallNumber, DbBufferSize, Direction.Right);
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
+
+        if (!PopulateTable(buffer)) _unit.Row.NotifyEnd(direction);
+        InstantiateTable();
+
+        if (_table.Count > 0)
+        {
+            // table should never be empty due to NotifyEnd() above
+            _startCallNumber = _table.First.Value.First.Value.CallNumber;
+            _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
+        }
+    } 
+
+    private void AddRight<T>(LinkedList<T> list, T item)
+    {
+        list.AddLast(item);
     }
 
-    private void GenerateBooks(string startCallNum)
+    private void AddLeft<T>(LinkedList<T> list, T item)
     {
-        var buffer = new DbBuffer(startCallNum, DbBufferSize, _direction);
+        list.AddFirst(item);
+    }
 
-        // generate shelf list 
+    private bool PopulateTable(DbBuffer buffer)
+    {
         for (var i = 0; i < ShelfCount; i++)
         {
             var books = GenerateShelf(buffer);
+            if (books.Count == 0) return false;
 
-            if (books.Count == 0) break;
-
-            _table.Add(books);
+            _addTable(_table, books);
         }
-
-        // make sure we actually loaded some books
-        if (_table.Count > 0)
-        {
-            _startCallNumber = _table[0].First.Value.CallNumber;
-            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-            InstantiateTable(); // FIXME this needs to be aware of direction
-        }
-        else
-        {
-            if (_direction == Direction.Right) _unit.Row.CanScrollRight = false;
-            else if (_direction == Direction.Left) _unit.Row.CanScrollLeft = false;
-        }
+        return true;
     }
 
     private LinkedList<Book> GenerateShelf(DbBuffer buffer)
@@ -120,7 +130,7 @@ public class BookshelfController : MonoBehaviour
         var books = new LinkedList<Book>();
         var totalWidth = 0.0f;
 
-        while (totalWidth <= ShelfWidth)
+        while (true)
         {
             // find entry with good size if it exsists
             DataEntry entry;
@@ -132,44 +142,29 @@ public class BookshelfController : MonoBehaviour
             var book = Instantiate(BookTemplate);
             book.LoadMeta(entry);
             totalWidth += book.Width;
-
-            books.AddLast(book);
-        }
-
-        // put back offending book
-        if (books.Count != 0)
-        {
-            Destroy(books.Last.Value.gameObject);
-            books.RemoveLast();
+            
+            if (totalWidth > ShelfWidth)
+            {
+                Destroy(book);
+                break;
+            }
+            
+            _addShelf(books, book);
         }
         return books;
     }
 
     private void InstantiateTable()
     {
-        if (_direction == Direction.Right)
+        var i = 0;
+        foreach (var shelf in _table)
         {
-            for (var i = 0; i < _table.Count; i++)
-            {
-                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-                InstantiateShelf(start, Vector3.right, _table[i]);
-            }
-            _startCallNumber = _table[0].First.Value.CallNumber;
-            _endCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-        }
-        else if (_direction == Direction.Left)
-        {
-            for (var i = _table.Count - 1; i >= 0; i--)
-            {
-                var start = new Vector3(0, TopShelfY - i * ShelfHeight, 0);
-                InstantiateShelf(start, Vector3.right, _table[i]);
-            }
-            _startCallNumber = _table[_table.Count - 1].Last.Value.CallNumber;
-            _endCallNumber = _table[0].First.Value.CallNumber;
+            var start = Vector3.up * (TopShelfY - i++ * ShelfHeight);
+            InstantiateShelf(shelf, start);
         }
     }
 
-    private void InstantiateShelf(Vector3 start, Vector3 u, LinkedList<Book> books)
+    private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
     {
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;
@@ -178,37 +173,13 @@ public class BookshelfController : MonoBehaviour
 
         // Instantiate in order
         var current = Vector3.zero;
-        if (_direction == Direction.Right)
+        foreach (var book in shelf)
         {
-            foreach (var book in books)
-            {
-                book.transform.parent = shelfGameObj.transform;
-                book.transform.localPosition = current;
-                current += book.Width * u;
+            book.transform.parent = shelfGameObj.transform;
+            book.transform.localPosition = current;
+            current += book.Width * Vector3.right;
 
-                book.LoadData();
-            }
-        }
-        else if (_direction == Direction.Left)
-        {
-            foreach (var book in Reverse(books))
-            {
-                book.transform.parent = shelfGameObj.transform;
-                book.transform.localPosition = current;
-                current += book.Width * u;
-
-                book.LoadData();
-            }
-        }
-    }
-
-    private IEnumerable<T> Reverse<T>(LinkedList<T> list)
-    {
-        var itr = list.Last;
-        while (itr != null)
-        {
-            yield return itr.Value;
-            itr = itr.Previous;
+            book.LoadData();
         }
     }
 }

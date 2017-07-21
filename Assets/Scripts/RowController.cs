@@ -14,17 +14,6 @@ public class RowController : MonoBehaviour
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
-    public bool CanScrollLeft
-    {
-        get { return _canScrollLeft; }
-        set { _canScrollLeft = value; }
-    }
-    public bool CanScrollRight
-    {
-        get { return _canScrollRight; }
-        set { _canScrollRight = value; }
-    }
-
     private readonly LinkedList<Unit> _activeUnits = new LinkedList<Unit>();
     private bool _lerping;
     private Vector3 _lerpDestPos;
@@ -34,28 +23,28 @@ public class RowController : MonoBehaviour
     private float _width; // width of one unit
     private bool _canScrollRight = true;
     private bool _canScrollLeft = true;
-    
+
     private void Start()
     {
         // Set starting positions
         _firstPos = Vector3.zero;
         _rowInitPos = transform.position;
-        
+
         // Instantiate array
         Transform refTranform = transform.Find(TemplateUnit.name);
         if (refTranform) // reference unit found as child
         {
             _width = CalculateLocalBounds(refTranform.gameObject).size.x;
-            
+
             // Destroy refrence after to instantiate array based on reference parameters
             InstantiateArray(RowSize);
             Destroy(refTranform.gameObject);
-            
+
             // Find prefab if not already prefab
             Unit prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
             if (prefab) TemplateUnit = prefab;
         }
-        else 
+        else
         {
             // Calculate bounds with sample instantiated prefab
             Unit unit = InstantiateUnit(Vector3.zero);
@@ -71,40 +60,44 @@ public class RowController : MonoBehaviour
         HandleShiftInput();
     }
 
-    /**
-    Makes appropiate method calls based on input
-    */
+    public void NotifyEnd(Direction direction)
+    {
+        Debug.Log("Notifying end for: " + direction);
+        switch (direction)
+        {
+            case Direction.Right:
+                _canScrollRight = false;
+                break;
+            case Direction.Left:
+                _canScrollLeft = false;
+                break;
+            case Direction.Identity:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("direction", direction, null);
+        }
+    }
+
     private void HandleShiftInput()
     {
         // Get both hand x-axis thumbstick value [-1, 1]
         float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
-        // right scroll
-        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && CanScrollRight)
+        // scroll to the left
+        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && _canScrollLeft)
         {
             StartCoroutine(Scroll(Direction.Right, ScrollTime));
-            CanScrollLeft = true;
+            _canScrollRight = true;
         }
-        // left scroll
-        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && CanScrollLeft)
+        // scroll to the right
+        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && _canScrollRight)
         {
             StartCoroutine(Scroll(Direction.Left, ScrollTime));
-            CanScrollRight = true;
-        }
-        // DEBUG
-        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping)
-        {
-            if (!CanScrollLeft)
-            {
-                Debug.Log("Can't scroll left!!");
-            }
+            _canScrollLeft = true;
         }
     }
 
-    /**
-    Handles scrolling animation of units
-    */
     IEnumerator Scroll(Direction direction, float time)
     {
         if (!_lerping)
@@ -171,7 +164,7 @@ public class RowController : MonoBehaviour
             Unit invalidUnit = _activeUnits.First.Value;
             _activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
-            
+
             Unit newUnit = InstantiateUnit(_lastPos);
             newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
             _activeUnits.AddLast(newUnit);
@@ -184,10 +177,10 @@ public class RowController : MonoBehaviour
     */
     private void InstantiateArray(int size)
     {
-        var firstUnit = InstantiateUnit(_firstPos); 
+        var firstUnit = InstantiateUnit(_firstPos);
         firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity); // load itself
         _activeUnits.AddFirst(firstUnit);
-        
+
         for (var i = 1; i < size; i++)
         {
             // Create unit with correct offset
