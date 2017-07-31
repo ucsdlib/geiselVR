@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.AccessControl;
 using UnityEngine;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -101,7 +98,7 @@ public class BookshelfController : MonoBehaviour
             _startCallNumber = _table.First.Value.First.Value.CallNumber;
             _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
         }
-    } 
+    }
 
     private void AddRight<T>(LinkedList<T> list, T item)
     {
@@ -138,14 +135,14 @@ public class BookshelfController : MonoBehaviour
             {
                 if ((entry = buffer.NextEntry()) == null) return books;
             } while (entry.Width > MaxBookSize);
-            
+
             totalWidth += Book.ConvertWidthToLocalScale(entry.Width);
             if (totalWidth > ShelfWidth) break;
 
             var book = Instantiate(BookTemplate);
             book.LoadMeta(entry); // TODO create a MetaBook class and load from there
-            
-            
+
+
             _addShelf(books, book);
         }
         return books;
