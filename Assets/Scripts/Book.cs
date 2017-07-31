@@ -8,23 +8,15 @@ public class Book : MonoBehaviour
 
     public string CallNumber
     {
-        get { return _callNumber; }
+        get { return _meta.CallNumber; }
     }
     
     public float Width
     {
-        get { return _width; }
+        get { return _meta.Width; }
     }
 
-    public static float ConvertWidthToLocalScale(double width)
-    {
-        return (float) width / 1000 + 0.01f; // convert cm -> m
-    }
-
-    private string _callNumber;
-    private float _width;
-    private string _title;
-    private bool _loaded;
+    private MetaBook _meta;
     
     void Awake()
     {
@@ -36,17 +28,14 @@ public class Book : MonoBehaviour
         }
     }
 
-    public void LoadMeta(DataEntry entry)
+    public void SetMeta(MetaBook meta)
     {
-        _loaded = true;
-        _callNumber = entry.CallNum;
-        _title = entry.Title;
-        _width = ConvertWidthToLocalScale(entry.Width);
+        _meta = meta;
     }
     
     public void LoadData()
     {
-        if (!_loaded) return;
-        TitleRenderer.GenerateText(_callNumber);
+        if (_meta == null) return;
+        TitleRenderer.GenerateText(_meta.CallNumber);
     }
 }
