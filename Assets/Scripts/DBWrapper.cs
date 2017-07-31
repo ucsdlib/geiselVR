@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Mono.Data.Sqlite;
 using UnityEngine;
@@ -93,13 +94,23 @@ public class DbWrapper
         // execute query
         var command = _connection.CreateCommand();
         command.CommandText = query;
-        var reader = command.ExecuteReader();
+        var reader = command.ExecuteReader(CommandBehavior.SingleResult);
 
-        // read results
-        while (reader.Read())
+        var table = new DataTable();
+        table.Load(reader);
+
+        var callCol = table.Columns["call"];
+        var titleCol = table.Columns["title"];
+        var widthCol = table.Columns["width"];
+
+        foreach (DataRow row in table.Rows)
         {
-            var entry = new DataEntry();
-            entry.Read(reader);
+            var entry = new DataEntry
+            {
+                CallNum = (string) row[callCol],
+                Title = (string) row[titleCol],
+                Width = Convert.ToDouble(row[widthCol])
+            };
             results.Add(entry);
         }
 
