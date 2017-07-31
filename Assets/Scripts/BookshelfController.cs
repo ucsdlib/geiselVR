@@ -17,14 +17,14 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
 
-    private delegate void ShelfAdder(LinkedList<Book> books, Book book);
+    private delegate void ShelfAdder(LinkedList<MetaBook> books, MetaBook book);
 
-    private delegate void TableAdder(LinkedList<LinkedList<Book>> table, LinkedList<Book> shelf);
+    private delegate void TableAdder(LinkedList<LinkedList<MetaBook>> table, LinkedList<MetaBook> shelf);
 
     private string _startCallNumber;
     private string _endCallNumber;
     private Unit _unit;
-    private readonly LinkedList<LinkedList<Book>> _table = new LinkedList<LinkedList<Book>>();
+    private readonly LinkedList<LinkedList<MetaBook>> _table = new LinkedList<LinkedList<MetaBook>>();
     private ShelfAdder _addShelf;
     private TableAdder _addTable;
 
@@ -122,9 +122,9 @@ public class BookshelfController : MonoBehaviour
         return true;
     }
 
-    private LinkedList<Book> GenerateShelf(DbBuffer buffer)
+    private LinkedList<MetaBook> GenerateShelf(DbBuffer buffer)
     {
-        var books = new LinkedList<Book>();
+        var books = new LinkedList<MetaBook>();
         var totalWidth = 0.0f;
 
         while (true)
@@ -135,13 +135,11 @@ public class BookshelfController : MonoBehaviour
             {
                 if ((entry = buffer.NextEntry()) == null) return books;
             } while (entry.Width > MaxBookSize);
+            
+            var book = new MetaBook(entry);
 
-            totalWidth += Book.ConvertWidthToLocalScale(entry.Width);
+            totalWidth += book.Width;
             if (totalWidth > ShelfWidth) break;
-
-            var book = Instantiate(BookTemplate);
-            book.LoadMeta(entry); // TODO create a MetaBook class and load from there
-
 
             _addShelf(books, book);
         }
@@ -158,7 +156,7 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
+    private void InstantiateShelf(LinkedList<MetaBook> shelf, Vector3 start)
     {
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;
@@ -167,8 +165,11 @@ public class BookshelfController : MonoBehaviour
 
         // Instantiate in order
         var current = Vector3.zero;
-        foreach (var book in shelf)
+        foreach (var meta in shelf)
         {
+            var book = Instantiate(BookTemplate);
+            book.SetMeta(meta);
+            
             book.transform.parent = shelfGameObj.transform;
             book.transform.localPosition = current;
             current += book.Width * Vector3.right;
