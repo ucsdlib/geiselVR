@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class BookshelfController : MonoBehaviour
 {
+    public bool MetaLoaded { get; private set; }
+
     public string CallNumber;
     public Book BookTemplate;
     public int DbBufferSize = 50;
@@ -29,7 +31,6 @@ public class BookshelfController : MonoBehaviour
     private readonly LinkedList<LinkedList<MetaBook>> _table = new LinkedList<LinkedList<MetaBook>>();
     private ShelfAdder _addShelf;
     private TableAdder _addTable;
-    private bool _metaLoaded;
 
     private void Awake()
     {
@@ -92,7 +93,7 @@ public class BookshelfController : MonoBehaviour
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
 
-        _metaLoaded = false;
+        MetaLoaded = false;
         var thread = new Thread(o => PopulateTable(buffer, direction));
         thread.Start();
         StartCoroutine(InstantiateTable());
@@ -129,7 +130,7 @@ public class BookshelfController : MonoBehaviour
             _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
         }
 
-        _metaLoaded = true;
+        MetaLoaded = true;
     }
 
     private LinkedList<MetaBook> GenerateShelf(DbBuffer buffer)
@@ -159,7 +160,7 @@ public class BookshelfController : MonoBehaviour
     private IEnumerator InstantiateTable()
     {
         // wait until we have loaded all meta
-        while (_metaLoaded == false)
+        while (MetaLoaded == false)
         {
             yield return null;
         }
