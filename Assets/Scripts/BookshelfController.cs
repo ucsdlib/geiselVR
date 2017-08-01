@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -27,7 +29,7 @@ public class BookshelfController : MonoBehaviour
     private readonly LinkedList<LinkedList<MetaBook>> _table = new LinkedList<LinkedList<MetaBook>>();
     private ShelfAdder _addShelf;
     private TableAdder _addTable;
-
+    private bool _metaLoaded;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class BookshelfController : MonoBehaviour
         }
 
         _startCallNumber = CallNumber; // DEBUG
+        _endCallNumber = CallNumber;
     }
 
     private void OnDrawGizmos()
@@ -89,15 +92,10 @@ public class BookshelfController : MonoBehaviour
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
 
-        if (!PopulateTable(buffer)) _unit.Row.NotifyEnd(direction);
-        InstantiateTable();
-
-        if (_table.Count > 0)
-        {
-            // table should never be empty due to NotifyEnd() above
-            _startCallNumber = _table.First.Value.First.Value.CallNumber;
-            _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
-        }
+        _metaLoaded = false;
+        var thread = new Thread(o => PopulateTable(buffer, direction));
+        thread.Start();
+        StartCoroutine(InstantiateTable());
     }
 
     private void AddRight<T>(LinkedList<T> list, T item)
@@ -110,16 +108,28 @@ public class BookshelfController : MonoBehaviour
         list.AddFirst(item);
     }
 
-    private bool PopulateTable(DbBuffer buffer)
+    private void PopulateTable(DbBuffer buffer, Direction direction)
     {
         for (var i = 0; i < ShelfCount; i++)
         {
             var books = GenerateShelf(buffer);
-            if (books.Count == 0) return false;
+            if (books.Count == 0)
+            {
+                _unit.Row.NotifyEnd(direction);
+                return;
+            }
 
             _addTable(_table, books);
         }
-        return true;
+        
+        if (_table.Count > 0)
+        {
+            // table should never be empty due to NotifyEnd() above
+            _startCallNumber = _table.First.Value.First.Value.CallNumber;
+            _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
+        }
+
+        _metaLoaded = true;
     }
 
     private LinkedList<MetaBook> GenerateShelf(DbBuffer buffer)
@@ -135,7 +145,7 @@ public class BookshelfController : MonoBehaviour
             {
                 if ((entry = buffer.NextEntry()) == null) return books;
             } while (entry.Width > MaxBookSize);
-            
+
             var book = new MetaBook(entry);
 
             totalWidth += book.Width;
@@ -146,8 +156,14 @@ public class BookshelfController : MonoBehaviour
         return books;
     }
 
-    private void InstantiateTable()
+    private IEnumerator InstantiateTable()
     {
+        // wait until we have loaded all meta
+        while (_metaLoaded == false)
+        {
+            yield return null;
+        }
+        
         var i = 0;
         foreach (var shelf in _table)
         {
@@ -169,7 +185,7 @@ public class BookshelfController : MonoBehaviour
         {
             var book = Instantiate(BookTemplate);
             book.SetMeta(meta);
-            
+
             book.transform.parent = shelfGameObj.transform;
             book.transform.localPosition = current;
             current += book.Width * Vector3.right;
