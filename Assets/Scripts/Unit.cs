@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class Unit : MonoBehaviour
     
     public bool DoneLoading { get; set; }
 
-    public delegate void UpdateContents(Unit unit, Direction direction);
+    public delegate IEnumerator UpdateContentsDelegate(Unit unit, Direction direction);
 
-    public UpdateContents UpdateContentsDelegate;
+    public UpdateContentsDelegate UpdateContents;
 }
