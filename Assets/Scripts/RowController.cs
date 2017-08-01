@@ -85,13 +85,15 @@ public class RowController : MonoBehaviour
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
         // scroll to the left
-        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && _canScrollLeft)
+        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && _canScrollLeft
+            && _activeUnits.Count > 0 && _activeUnits.First.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Right, ScrollTime));
             _canScrollRight = true;
         }
         // scroll to the right
-        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && _canScrollRight)
+        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && _canScrollRight
+                 && _activeUnits.Count > 0 && _activeUnits.Last.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Left, ScrollTime));
             _canScrollLeft = true;

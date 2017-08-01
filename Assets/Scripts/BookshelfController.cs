@@ -39,6 +39,7 @@ public class BookshelfController : MonoBehaviour
         if (_unit != null)
         {
             _unit.UpdateContentsDelegate += HandleUpdateEvent;
+            _unit.DoneLoading = false;
         }
 
         _startCallNumber = CallNumber; // DEBUG
@@ -171,6 +172,7 @@ public class BookshelfController : MonoBehaviour
             var start = Vector3.up * (TopShelfY - i++ * ShelfHeight);
             InstantiateShelf(shelf, start);
         }
+        _unit.DoneLoading = true;
     }
 
     private void InstantiateShelf(LinkedList<MetaBook> shelf, Vector3 start)
