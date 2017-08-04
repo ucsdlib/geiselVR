@@ -3,11 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-/**
-Controlls a row of arbitrary units and allows endless scrolling in either direction
-*/
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit; // unit from which to instantiate
@@ -127,16 +123,12 @@ public class RowController : MonoBehaviour
         }
     }
 
-    /**
-    Handles instantiation to create endless scrolling.
-    @param right    true if shifting right, false otherwise
-    */
     private void ShiftFrame(Direction direction)
     {
         // Reset position of row
         transform.position = _rowInitPos;
 
-        if (direction == Direction.Right) // FIXME redundant with Scroll()
+        if (direction == Direction.Right)
         {
             // Shift units to compensate
             foreach (Unit unit in _activeUnits)
@@ -171,10 +163,6 @@ public class RowController : MonoBehaviour
         }
     }
 
-    /**
-    Instantiates an array of units dynamically
-    @param size    number of units to instantiate
-    */
     private IEnumerator InstantiateArray(int size)
     {
         _canScrollLeft = _canScrollRight = false;
@@ -193,9 +181,6 @@ public class RowController : MonoBehaviour
         _canScrollLeft = _canScrollRight = true;
     }
 
-    /**
-    Creates one unit at the given position
-    */
     private Unit InstantiateUnit(Vector3 position)
     {
         Unit unit = Instantiate(TemplateUnit, transform);
@@ -204,9 +189,6 @@ public class RowController : MonoBehaviour
         return unit;
     }
 
-    /**
-    Calculates bounding box of any gameobject and its descendants
-    */
     private Bounds CalculateLocalBounds(GameObject obj)
     {
         // Get bounds of obj first
