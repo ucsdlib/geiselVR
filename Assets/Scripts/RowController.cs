@@ -26,31 +26,29 @@ public class RowController : MonoBehaviour
 
     private void Start()
     {
-        // Set starting positions
+        // set starting positions
         _firstPos = Vector3.zero;
         _rowInitPos = transform.position;
 
-        // Instantiate array
-        Transform refTranform = transform.Find(TemplateUnit.name);
+        var refTranform = transform.Find(TemplateUnit.name);
         if (refTranform) // reference unit found as child
         {
+            // get width and prefab from reference
             _width = CalculateLocalBounds(refTranform.gameObject).size.x;
-
-            // Destroy refrence after to instantiate array based on reference parameters
-            InstantiateArray(RowSize);
+            var prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
+            if (prefab) TemplateUnit = prefab;
             Destroy(refTranform.gameObject);
 
-            // Find prefab if not already prefab
-            Unit prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
-            if (prefab) TemplateUnit = prefab;
+            StartCoroutine(InstantiateArray(RowSize));
         }
         else
         {
-            // Calculate bounds with sample instantiated prefab
-            Unit unit = InstantiateUnit(Vector3.zero);
+            // get width from new unit
+            var unit = InstantiateUnit(Vector3.zero);
             _width = CalculateLocalBounds(unit.gameObject).size.x;
             Destroy(unit.gameObject);
-            InstantiateArray(RowSize);
+
+            StartCoroutine(InstantiateArray(RowSize));
         }
         _lastPos = _firstPos + Vector3.right * (RowSize - 1) * _width;
     }
@@ -80,18 +78,18 @@ public class RowController : MonoBehaviour
 
     private void HandleShiftInput()
     {
-        // Get both hand x-axis thumbstick value [-1, 1]
+        // get both hand x-axis thumbstick value [-2, 1]
         float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
-        // scroll to the left
+        // scroll to the left -> move shelf right
         if ((flexL > 0.5 || flexR > 0.5) && !_lerping && _canScrollLeft
             && _activeUnits.Count > 0 && _activeUnits.First.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Right, ScrollTime));
             _canScrollRight = true;
         }
-        // scroll to the right
+        // scroll to the right -> move shelf left
         else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && _canScrollRight
                  && _activeUnits.Count > 0 && _activeUnits.Last.Value.DoneLoading)
         {
@@ -147,13 +145,13 @@ public class RowController : MonoBehaviour
             }
 
             // Remove invalid unit
-            Unit invalidUnit = _activeUnits.Last.Value;
+            var invalidUnit = _activeUnits.Last.Value;
             _activeUnits.RemoveLast();
             Destroy(invalidUnit.gameObject);
 
             // Instantiate new unit
-            Unit newUnit = InstantiateUnit(_firstPos);
-            newUnit.UpdateContentsDelegate(_activeUnits.First.Value, Direction.Left);
+            var newUnit = InstantiateUnit(_firstPos);
+            StartCoroutine(newUnit.UpdateContents(_activeUnits.First.Value, Direction.Left));
             _activeUnits.AddFirst(newUnit);
         }
         else
@@ -163,12 +161,12 @@ public class RowController : MonoBehaviour
                 unit.transform.Translate(Vector3.left * _width);
             }
 
-            Unit invalidUnit = _activeUnits.First.Value;
+            var invalidUnit = _activeUnits.First.Value;
             _activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
 
-            Unit newUnit = InstantiateUnit(_lastPos);
-            newUnit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
+            var newUnit = InstantiateUnit(_lastPos);
+            StartCoroutine(newUnit.UpdateContents(_activeUnits.Last.Value, Direction.Right));
             _activeUnits.AddLast(newUnit);
         }
     }
@@ -177,21 +175,22 @@ public class RowController : MonoBehaviour
     Instantiates an array of units dynamically
     @param size    number of units to instantiate
     */
-    private void InstantiateArray(int size)
+    private IEnumerator InstantiateArray(int size)
     {
+        _canScrollLeft = _canScrollRight = false;
+        
         var firstUnit = InstantiateUnit(_firstPos);
-        firstUnit.UpdateContentsDelegate(firstUnit, Direction.Identity); // load itself
+        yield return firstUnit.UpdateContents(firstUnit, Direction.Identity); // load itself
         _activeUnits.AddFirst(firstUnit);
 
         for (var i = 1; i < size; i++)
         {
-            // Create unit with correct offset
             var unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
-
-            // Register script and assign position
-            unit.UpdateContentsDelegate(_activeUnits.Last.Value, Direction.Right);
+            yield return unit.UpdateContents(_activeUnits.Last.Value, Direction.Right);
             _activeUnits.AddLast(unit);
         }
+
+        _canScrollLeft = _canScrollRight = true;
     }
 
     /**

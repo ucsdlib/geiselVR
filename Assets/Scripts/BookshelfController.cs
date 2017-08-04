@@ -38,7 +38,7 @@ public class BookshelfController : MonoBehaviour
         _unit = GetComponent<Unit>();
         if (_unit != null)
         {
-            _unit.UpdateContentsDelegate += HandleUpdateEvent;
+            _unit.UpdateContents += HandleUpdateEvent;
             _unit.DoneLoading = false;
         }
 
@@ -66,7 +66,7 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    public void HandleUpdateEvent(Unit unit, Direction direction)
+    public IEnumerator HandleUpdateEvent(Unit unit, Direction direction)
     {
         var last = unit.GetComponent<BookshelfController>();
         if (!last) Debug.Log("Could not get last shelf");
@@ -97,7 +97,7 @@ public class BookshelfController : MonoBehaviour
         MetaLoaded = false;
         var thread = new Thread(o => PopulateTable(buffer, direction));
         thread.Start();
-        StartCoroutine(InstantiateTable());
+        yield return InstantiateTable();
     }
 
     private void AddRight<T>(LinkedList<T> list, T item)
