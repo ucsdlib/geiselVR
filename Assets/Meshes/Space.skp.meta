@@ -1,0 +1,389 @@
+fileFormatVersion: 2
+guid: 35451c8616b3a784c91f00a720c61f97
+timeCreated: 1501891355
+licenseType: Pro
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000dc000000dd000000de000000df000000e0000000e1000000e20000009b0100009c0100009d0100009e0100009f010000a0010000a1010000a2010000a3010000a4010000a5010000a6010000a7010000a8010000a9010000aa010000ab010000ac01000065020000660200006702000068020000690200006a0200006b0200006c0200006d0200006e0200006f020000700200007102000072020000730200007402000075020000760200002f030000300300003103000032030000330300003403000035030000360300003703000038030000390300003a0300003b0300003c0300003d0300003e0300003f03000040030000f9030000fa030000fb030000fc030000fd030000fe030000ff030000000400000104000002040000030400000404000005040000060400000704000008040000090400000a040000c3040000c4040000c5040000c6040000c7040000c8040000c9040000ca040000cb040000cc040000cd040000ce040000cf040000d0040000d1040000d2040000d3040000d40400008d0500008e0500008f0500009005000091050000920500009305000094050000
+  assetHash:
+    serializedVersion: 2
+    Hash: 7cb384576149083b7728a772a259675d
+  longitude: -105.242139
+  latitude: 40.018309
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 4.8115425, y: 19.647432, z: 31.913565}
+      lookAt: {x: 5.1657124, y: 10.031573, z: 19.672342}
+      up: {x: 0.017860498, y: 0.7865139, z: -0.6173142}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Chris
+    100002: Display
+    100004: Display 1
+    100006: Display 2
+    100008: Display 3
+    100010: Display 4
+    100012: Display 5
+    100014: Display 6
+    100016: Floor
+    100018: Full Bookshelf
+    100020: Full Bookshelf 1
+    100022: Full Bookshelf 2
+    100024: Full Bookshelf 3
+    100026: Full Bookshelf 4
+    100028: Full Bookshelf 5
+    100030: Full Bookshelf 6
+    100032: Housing
+    100034: Housing 1
+    100036: Housing#1
+    100038: Housing#1 1
+    100040: Modern Bookshelf
+    100042: Modern Bookshelf 1
+    100044: Modern Bookshelf 2
+    100046: Modern Bookshelf 3
+    100048: Modern Bookshelf 4
+    100050: Modern Bookshelf 5
+    100052: Modern Bookshelf 6
+    100054: Modern Bookshelf#1
+    100056: Modern Bookshelf#1 1
+    100058: Modern Bookshelf#1 2
+    100060: Modern Bookshelf#1 3
+    100062: Modern Bookshelf#1 4
+    100064: Modern Bookshelf#1 5
+    100066: Modern Bookshelf#1 6
+    100068: Shelf
+    100070: Shelf 1
+    100072: Shelf 10
+    100074: Shelf 11
+    100076: Shelf 12
+    100078: Shelf 13
+    100080: Shelf 14
+    100082: Shelf 15
+    100084: Shelf 16
+    100086: Shelf 17
+    100088: Shelf 18
+    100090: Shelf 19
+    100092: Shelf 2
+    100094: Shelf 20
+    100096: Shelf 21
+    100098: Shelf 22
+    100100: Shelf 23
+    100102: Shelf 24
+    100104: Shelf 25
+    100106: Shelf 26
+    100108: Shelf 27
+    100110: Shelf 3
+    100112: Shelf 4
+    100114: Shelf 5
+    100116: Shelf 6
+    100118: Shelf 7
+    100120: Shelf 8
+    100122: Shelf 9
+    100124: Side
+    100126: Side 1
+    100128: Side 10
+    100130: Side 11
+    100132: Side 12
+    100134: Side 13
+    100136: Side 2
+    100138: Side 3
+    100140: Side 4
+    100142: Side 5
+    100144: Side 6
+    100146: Side 7
+    100148: Side 8
+    100150: Side 9
+    100152: //RootNode
+    100154: Stairs
+    400000: Chris
+    400002: Display
+    400004: Display 1
+    400006: Display 2
+    400008: Display 3
+    400010: Display 4
+    400012: Display 5
+    400014: Display 6
+    400016: Floor
+    400018: Full Bookshelf
+    400020: Full Bookshelf 1
+    400022: Full Bookshelf 2
+    400024: Full Bookshelf 3
+    400026: Full Bookshelf 4
+    400028: Full Bookshelf 5
+    400030: Full Bookshelf 6
+    400032: Housing
+    400034: Housing 1
+    400036: Housing#1
+    400038: Housing#1 1
+    400040: Modern Bookshelf
+    400042: Modern Bookshelf 1
+    400044: Modern Bookshelf 2
+    400046: Modern Bookshelf 3
+    400048: Modern Bookshelf 4
+    400050: Modern Bookshelf 5
+    400052: Modern Bookshelf 6
+    400054: Modern Bookshelf#1
+    400056: Modern Bookshelf#1 1
+    400058: Modern Bookshelf#1 2
+    400060: Modern Bookshelf#1 3
+    400062: Modern Bookshelf#1 4
+    400064: Modern Bookshelf#1 5
+    400066: Modern Bookshelf#1 6
+    400068: Shelf
+    400070: Shelf 1
+    400072: Shelf 10
+    400074: Shelf 11
+    400076: Shelf 12
+    400078: Shelf 13
+    400080: Shelf 14
+    400082: Shelf 15
+    400084: Shelf 16
+    400086: Shelf 17
+    400088: Shelf 18
+    400090: Shelf 19
+    400092: Shelf 2
+    400094: Shelf 20
+    400096: Shelf 21
+    400098: Shelf 22
+    400100: Shelf 23
+    400102: Shelf 24
+    400104: Shelf 25
+    400106: Shelf 26
+    400108: Shelf 27
+    400110: Shelf 3
+    400112: Shelf 4
+    400114: Shelf 5
+    400116: Shelf 6
+    400118: Shelf 7
+    400120: Shelf 8
+    400122: Shelf 9
+    400124: Side
+    400126: Side 1
+    400128: Side 10
+    400130: Side 11
+    400132: Side 12
+    400134: Side 13
+    400136: Side 2
+    400138: Side 3
+    400140: Side 4
+    400142: Side 5
+    400144: Side 6
+    400146: Side 7
+    400148: Side 8
+    400150: Side 9
+    400152: //RootNode
+    400154: Stairs
+    2300000: Chris
+    2300002: Display
+    2300004: Display 1
+    2300006: Display 2
+    2300008: Display 3
+    2300010: Display 4
+    2300012: Display 5
+    2300014: Display 6
+    2300016: Floor
+    2300018: Housing
+    2300020: Housing 1
+    2300022: Housing#1
+    2300024: Housing#1 1
+    2300026: Modern Bookshelf
+    2300028: Modern Bookshelf 1
+    2300030: Modern Bookshelf 2
+    2300032: Modern Bookshelf 3
+    2300034: Modern Bookshelf 4
+    2300036: Modern Bookshelf 5
+    2300038: Modern Bookshelf 6
+    2300040: Shelf
+    2300042: Shelf 1
+    2300044: Shelf 10
+    2300046: Shelf 11
+    2300048: Shelf 12
+    2300050: Shelf 13
+    2300052: Shelf 14
+    2300054: Shelf 15
+    2300056: Shelf 16
+    2300058: Shelf 17
+    2300060: Shelf 18
+    2300062: Shelf 19
+    2300064: Shelf 2
+    2300066: Shelf 20
+    2300068: Shelf 21
+    2300070: Shelf 22
+    2300072: Shelf 23
+    2300074: Shelf 24
+    2300076: Shelf 25
+    2300078: Shelf 26
+    2300080: Shelf 27
+    2300082: Shelf 3
+    2300084: Shelf 4
+    2300086: Shelf 5
+    2300088: Shelf 6
+    2300090: Shelf 7
+    2300092: Shelf 8
+    2300094: Shelf 9
+    2300096: Side
+    2300098: Side 1
+    2300100: Side 10
+    2300102: Side 11
+    2300104: Side 12
+    2300106: Side 13
+    2300108: Side 2
+    2300110: Side 3
+    2300112: Side 4
+    2300114: Side 5
+    2300116: Side 6
+    2300118: Side 7
+    2300120: Side 8
+    2300122: Side 9
+    2300124: Stairs
+    3300000: Chris
+    3300002: Display
+    3300004: Display 1
+    3300006: Display 2
+    3300008: Display 3
+    3300010: Display 4
+    3300012: Display 5
+    3300014: Display 6
+    3300016: Floor
+    3300018: Housing
+    3300020: Housing 1
+    3300022: Housing#1
+    3300024: Housing#1 1
+    3300026: Modern Bookshelf
+    3300028: Modern Bookshelf 1
+    3300030: Modern Bookshelf 2
+    3300032: Modern Bookshelf 3
+    3300034: Modern Bookshelf 4
+    3300036: Modern Bookshelf 5
+    3300038: Modern Bookshelf 6
+    3300040: Shelf
+    3300042: Shelf 1
+    3300044: Shelf 10
+    3300046: Shelf 11
+    3300048: Shelf 12
+    3300050: Shelf 13
+    3300052: Shelf 14
+    3300054: Shelf 15
+    3300056: Shelf 16
+    3300058: Shelf 17
+    3300060: Shelf 18
+    3300062: Shelf 19
+    3300064: Shelf 2
+    3300066: Shelf 20
+    3300068: Shelf 21
+    3300070: Shelf 22
+    3300072: Shelf 23
+    3300074: Shelf 24
+    3300076: Shelf 25
+    3300078: Shelf 26
+    3300080: Shelf 27
+    3300082: Shelf 3
+    3300084: Shelf 4
+    3300086: Shelf 5
+    3300088: Shelf 6
+    3300090: Shelf 7
+    3300092: Shelf 8
+    3300094: Shelf 9
+    3300096: Side
+    3300098: Side 1
+    3300100: Side 10
+    3300102: Side 11
+    3300104: Side 12
+    3300106: Side 13
+    3300108: Side 2
+    3300110: Side 3
+    3300112: Side 4
+    3300114: Side 5
+    3300116: Side 6
+    3300118: Side 7
+    3300120: Side 8
+    3300122: Side 9
+    3300124: Stairs
+    4300000: Mesh Chris
+    4300002: Mesh Housing
+    4300004: Mesh Modern Bookshelf
+    4300006: Mesh Side
+    4300008: Mesh Side
+    4300010: Mesh Shelf
+    4300012: Mesh Display
+    4300014: Mesh Housing#1
+    4300016: Mesh Stairs
+    4300018: Mesh Floor
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
