@@ -1,0 +1,1028 @@
+fileFormatVersion: 2
+guid: fb4f77261e48753409529668b9d23bee
+timeCreated: 1502489406
+licenseType: Pro
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000006100000062000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a0000007b0000007c0000007d0000007e0000007f000000800000008100000082000000830000008400000085000000860000008700000088000000890000008a0000008b0000008c0000008d0000008e0000008f000000900000009100000092000000930000009400000095000000960000009700000098000000990000009a0000009b0000009c0000009d0000009e0000009f000000a0000000ae000000af000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c6000000c7000000c8000000c9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000dc000000dd000000de000000df000000e0000000e1000000e2000000e3000000e4000000e5000000e6000000e7000000e8000000e9000000ea000000eb000000ec000000ed000000fb000000fc0000000a0100000b0100000c0100000d0100000e0100000f010000100100001101000012010000130100001401000015010000160100001701000018010000190100001a0100001b0100001c0100001d0100001e0100001f010000200100002101000022010000230100002401000025010000260100002701000028010000290100002a0100002b0100002c0100002d0100002e0100002f010000300100003101000032010000330100003401000035010000360100003701000038010000390100003a0100003b0100003c0100003d0100003e0100003f010000400100004101000042010000430100004401000045010000
+  assetHash:
+    serializedVersion: 2
+    Hash: 76532350a7d19d53754ff074bdf96efa
+  longitude: -2.972674521882577
+  latitude: 53.63787088281473
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 18.546946, y: 17.495096, z: -4.7486033}
+      lookAt: {x: 15.403429, y: 13.821157, z: -4.7596383}
+      up: {x: -0.7598191, y: 0.6501292, z: -0.002667296}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Apple Monitor
+    100002: Apple Monitor 1
+    100004: Cabinet
+    100006: Chalk Board with Chalk
+    100008: Chalk Board with Chalk 1
+    100010: Component
+    100012: Component 1
+    100014: Component 2
+    100016: Component 3
+    100018: Component#8
+    100020: Component#8 1
+    100022: Component#8 2
+    100024: Cubicle 2shield
+    100026: Cubicle 2shield#1
+    100028: Cubicle with No Shield
+    100030: Cubicle with No Shield 1
+    100032: Dell Logo
+    100034: Dell Logo 1
+    100036: Dell Logo 2
+    100038: Dell Logo 3
+    100040: Dell UltraSharp U2711 27"
+    100042: Dell UltraSharp U2711 27" 1
+    100044: Doorknob Utility - Detailed
+    100046: Doorknob Utility - Detailed 1
+    100048: Furniture
+    100050: Group 174
+    100052: Group 18
+    100054: Group 251
+    100056: Group 35
+    100058: Group 97
+    100060: Group#1
+    100062: Group#1 1
+    100064: Group#124
+    100066: Group#124 1
+    100068: Group#124 10
+    100070: Group#124 11
+    100072: Group#124 12
+    100074: Group#124 13
+    100076: Group#124 14
+    100078: Group#124 15
+    100080: Group#124 16
+    100082: Group#124 17
+    100084: Group#124 18
+    100086: Group#124 19
+    100088: Group#124 2
+    100090: Group#124 20
+    100092: Group#124 21
+    100094: Group#124 22
+    100096: Group#124 23
+    100098: Group#124 24
+    100100: Group#124 25
+    100102: Group#124 26
+    100104: Group#124 27
+    100106: Group#124 28
+    100108: Group#124 29
+    100110: Group#124 3
+    100112: Group#124 4
+    100114: Group#124 5
+    100116: Group#124 6
+    100118: Group#124 7
+    100120: Group#124 8
+    100122: Group#124 9
+    100124: Group#139
+    100126: Group#139 1
+    100128: Group#139 10
+    100130: Group#139 11
+    100132: Group#139 12
+    100134: Group#139 13
+    100136: Group#139 14
+    100138: Group#139 2
+    100140: Group#139 3
+    100142: Group#139 4
+    100144: Group#139 5
+    100146: Group#139 6
+    100148: Group#139 7
+    100150: Group#139 8
+    100152: Group#139 9
+    100154: Group#2
+    100156: Group#2 1
+    100158: Group#3
+    100160: Group#3 1
+    100162: Group#4
+    100164: Group#4 1
+    100166: Group#5
+    100168: Group#5 1
+    100170: Group#6
+    100172: Group#6 1
+    100174: High Table
+    100176: High Table 1
+    100178: Imac Desktop Computer - Detailed
+    100180: Imac Desktop Computer - Detailed 1
+    100182: Monitor Stand
+    100184: Monitor Stand 1
+    100186: Obj_000001#1
+    100188: Obj_000001#1 1
+    100190: Obj_000001#1 2
+    100192: Obj_000002#1
+    100194: Obj_000002#1 1
+    100196: Obj_000002#1 2
+    100198: Obj_000002#1 3
+    100200: Obj_000002#1 4
+    100202: Obj_000002#1 5
+    100204: Obj_000002#1 6
+    100206: Obj_000002#1 7
+    100208: Obj_000002#1 8
+    100210: Obj_000027
+    100212: Obj_000027 1
+    100214: Obj_000027 2
+    100216: Obj_000028
+    100218: Obj_000028 1
+    100220: Obj_000028 2
+    100222: Obj_000029
+    100224: Obj_000029 1
+    100226: Obj_000029 2
+    100228: Obj_000030#1
+    100230: Obj_000030#1 1
+    100232: Obj_000030#1 2
+    100234: Obj_000031
+    100236: Obj_000031 1
+    100238: Obj_000031 2
+    100240: //RootNode
+    100242: Room updated
+    100244: SHELVS
+    100246: SHELVS 1
+    100248: SHELVS 2
+    100250: SHELVS 3
+    100252: Group 315
+    100254: Group 316
+    100256: Group 318
+    100258: Mouse Optico Apple 01
+    100260: Display
+    100262: Display 1
+    100264: Display 2
+    100266: Display 3
+    100268: Display 4
+    100270: Display 5
+    100272: Display 6
+    100274: Display 7
+    100276: Display 8
+    100278: Group 166
+    100280: Group 183
+    100282: Group 2
+    100284: Group 245
+    100286: Group 322
+    100288: Group 399
+    100290: Group 463
+    100292: Group 464
+    100294: Group 466
+    100296: Modern Bookshelf
+    100298: Modern Bookshelf 1
+    100300: Modern Bookshelf 2
+    100302: Modern Bookshelf 3
+    100304: Modern Bookshelf 4
+    100306: Modern Bookshelf 5
+    100308: Modern Bookshelf 6
+    100310: Modern Bookshelf 7
+    100312: Modern Bookshelf 8
+    100314: Modern Bookshelf#1
+    100316: Modern Bookshelf#1 1
+    100318: Modern Bookshelf#1 2
+    100320: Modern Bookshelf#1 3
+    100322: Modern Bookshelf#1 4
+    100324: Modern Bookshelf#1 5
+    100326: Modern Bookshelf#1 6
+    100328: Modern Bookshelf#1 7
+    100330: Modern Bookshelf#1 8
+    100332: Shelf
+    100334: Shelf 1
+    100336: Shelf 10
+    100338: Shelf 11
+    100340: Shelf 12
+    100342: Shelf 13
+    100344: Shelf 14
+    100346: Shelf 15
+    100348: Shelf 16
+    100350: Shelf 17
+    100352: Shelf 18
+    100354: Shelf 19
+    100356: Shelf 2
+    100358: Shelf 20
+    100360: Shelf 21
+    100362: Shelf 22
+    100364: Shelf 23
+    100366: Shelf 24
+    100368: Shelf 25
+    100370: Shelf 26
+    100372: Shelf 27
+    100374: Shelf 28
+    100376: Shelf 29
+    100378: Shelf 3
+    100380: Shelf 30
+    100382: Shelf 31
+    100384: Shelf 32
+    100386: Shelf 33
+    100388: Shelf 34
+    100390: Shelf 35
+    100392: Shelf 4
+    100394: Shelf 5
+    100396: Shelf 6
+    100398: Shelf 7
+    100400: Shelf 8
+    100402: Shelf 9
+    100404: Side
+    100406: Side 1
+    100408: Side 10
+    100410: Side 11
+    100412: Side 12
+    100414: Side 13
+    100416: Side 14
+    100418: Side 15
+    100420: Side 16
+    100422: Side 17
+    100424: Side 2
+    100426: Side 3
+    100428: Side 4
+    100430: Side 5
+    100432: Side 6
+    100434: Side 7
+    100436: Side 8
+    100438: Side 9
+    100440: Group 1
+    100442: Group 155
+    100444: Group 167
+    100446: Group 184
+    100448: Group 246
+    100450: Group 323
+    100452: Group 400
+    100454: Group 465
+    100456: Group 467
+    100458: Group 157
+    100460: Group 172
+    100462: Group 189
+    100464: Group 328
+    100466: Group 405
+    100468: Group 469
+    100470: Group 470
+    100472: Group 472
+    100474: High Table 2
+    100476: High Table 3
+    100478: Group 3
+    400000: Apple Monitor
+    400002: Apple Monitor 1
+    400004: Cabinet
+    400006: Chalk Board with Chalk
+    400008: Chalk Board with Chalk 1
+    400010: Component
+    400012: Component 1
+    400014: Component 2
+    400016: Component 3
+    400018: Component#8
+    400020: Component#8 1
+    400022: Component#8 2
+    400024: Cubicle 2shield
+    400026: Cubicle 2shield#1
+    400028: Cubicle with No Shield
+    400030: Cubicle with No Shield 1
+    400032: Dell Logo
+    400034: Dell Logo 1
+    400036: Dell Logo 2
+    400038: Dell Logo 3
+    400040: Dell UltraSharp U2711 27"
+    400042: Dell UltraSharp U2711 27" 1
+    400044: Doorknob Utility - Detailed
+    400046: Doorknob Utility - Detailed 1
+    400048: Furniture
+    400050: Group 174
+    400052: Group 18
+    400054: Group 251
+    400056: Group 35
+    400058: Group 97
+    400060: Group#1
+    400062: Group#1 1
+    400064: Group#124
+    400066: Group#124 1
+    400068: Group#124 10
+    400070: Group#124 11
+    400072: Group#124 12
+    400074: Group#124 13
+    400076: Group#124 14
+    400078: Group#124 15
+    400080: Group#124 16
+    400082: Group#124 17
+    400084: Group#124 18
+    400086: Group#124 19
+    400088: Group#124 2
+    400090: Group#124 20
+    400092: Group#124 21
+    400094: Group#124 22
+    400096: Group#124 23
+    400098: Group#124 24
+    400100: Group#124 25
+    400102: Group#124 26
+    400104: Group#124 27
+    400106: Group#124 28
+    400108: Group#124 29
+    400110: Group#124 3
+    400112: Group#124 4
+    400114: Group#124 5
+    400116: Group#124 6
+    400118: Group#124 7
+    400120: Group#124 8
+    400122: Group#124 9
+    400124: Group#139
+    400126: Group#139 1
+    400128: Group#139 10
+    400130: Group#139 11
+    400132: Group#139 12
+    400134: Group#139 13
+    400136: Group#139 14
+    400138: Group#139 2
+    400140: Group#139 3
+    400142: Group#139 4
+    400144: Group#139 5
+    400146: Group#139 6
+    400148: Group#139 7
+    400150: Group#139 8
+    400152: Group#139 9
+    400154: Group#2
+    400156: Group#2 1
+    400158: Group#3
+    400160: Group#3 1
+    400162: Group#4
+    400164: Group#4 1
+    400166: Group#5
+    400168: Group#5 1
+    400170: Group#6
+    400172: Group#6 1
+    400174: High Table
+    400176: High Table 1
+    400178: Imac Desktop Computer - Detailed
+    400180: Imac Desktop Computer - Detailed 1
+    400182: Monitor Stand
+    400184: Monitor Stand 1
+    400186: Obj_000001#1
+    400188: Obj_000001#1 1
+    400190: Obj_000001#1 2
+    400192: Obj_000002#1
+    400194: Obj_000002#1 1
+    400196: Obj_000002#1 2
+    400198: Obj_000002#1 3
+    400200: Obj_000002#1 4
+    400202: Obj_000002#1 5
+    400204: Obj_000002#1 6
+    400206: Obj_000002#1 7
+    400208: Obj_000002#1 8
+    400210: Obj_000027
+    400212: Obj_000027 1
+    400214: Obj_000027 2
+    400216: Obj_000028
+    400218: Obj_000028 1
+    400220: Obj_000028 2
+    400222: Obj_000029
+    400224: Obj_000029 1
+    400226: Obj_000029 2
+    400228: Obj_000030#1
+    400230: Obj_000030#1 1
+    400232: Obj_000030#1 2
+    400234: Obj_000031
+    400236: Obj_000031 1
+    400238: Obj_000031 2
+    400240: //RootNode
+    400242: Room updated
+    400244: SHELVS
+    400246: SHELVS 1
+    400248: SHELVS 2
+    400250: SHELVS 3
+    400252: Group 315
+    400254: Group 316
+    400256: Group 318
+    400258: Mouse Optico Apple 01
+    400260: Display
+    400262: Display 1
+    400264: Display 2
+    400266: Display 3
+    400268: Display 4
+    400270: Display 5
+    400272: Display 6
+    400274: Display 7
+    400276: Display 8
+    400278: Group 166
+    400280: Group 183
+    400282: Group 2
+    400284: Group 245
+    400286: Group 322
+    400288: Group 399
+    400290: Group 463
+    400292: Group 464
+    400294: Group 466
+    400296: Modern Bookshelf
+    400298: Modern Bookshelf 1
+    400300: Modern Bookshelf 2
+    400302: Modern Bookshelf 3
+    400304: Modern Bookshelf 4
+    400306: Modern Bookshelf 5
+    400308: Modern Bookshelf 6
+    400310: Modern Bookshelf 7
+    400312: Modern Bookshelf 8
+    400314: Modern Bookshelf#1
+    400316: Modern Bookshelf#1 1
+    400318: Modern Bookshelf#1 2
+    400320: Modern Bookshelf#1 3
+    400322: Modern Bookshelf#1 4
+    400324: Modern Bookshelf#1 5
+    400326: Modern Bookshelf#1 6
+    400328: Modern Bookshelf#1 7
+    400330: Modern Bookshelf#1 8
+    400332: Shelf
+    400334: Shelf 1
+    400336: Shelf 10
+    400338: Shelf 11
+    400340: Shelf 12
+    400342: Shelf 13
+    400344: Shelf 14
+    400346: Shelf 15
+    400348: Shelf 16
+    400350: Shelf 17
+    400352: Shelf 18
+    400354: Shelf 19
+    400356: Shelf 2
+    400358: Shelf 20
+    400360: Shelf 21
+    400362: Shelf 22
+    400364: Shelf 23
+    400366: Shelf 24
+    400368: Shelf 25
+    400370: Shelf 26
+    400372: Shelf 27
+    400374: Shelf 28
+    400376: Shelf 29
+    400378: Shelf 3
+    400380: Shelf 30
+    400382: Shelf 31
+    400384: Shelf 32
+    400386: Shelf 33
+    400388: Shelf 34
+    400390: Shelf 35
+    400392: Shelf 4
+    400394: Shelf 5
+    400396: Shelf 6
+    400398: Shelf 7
+    400400: Shelf 8
+    400402: Shelf 9
+    400404: Side
+    400406: Side 1
+    400408: Side 10
+    400410: Side 11
+    400412: Side 12
+    400414: Side 13
+    400416: Side 14
+    400418: Side 15
+    400420: Side 16
+    400422: Side 17
+    400424: Side 2
+    400426: Side 3
+    400428: Side 4
+    400430: Side 5
+    400432: Side 6
+    400434: Side 7
+    400436: Side 8
+    400438: Side 9
+    400440: Group 1
+    400442: Group 155
+    400444: Group 167
+    400446: Group 184
+    400448: Group 246
+    400450: Group 323
+    400452: Group 400
+    400454: Group 465
+    400456: Group 467
+    400458: Group 157
+    400460: Group 172
+    400462: Group 189
+    400464: Group 328
+    400466: Group 405
+    400468: Group 469
+    400470: Group 470
+    400472: Group 472
+    400474: High Table 2
+    400476: High Table 3
+    400478: Group 3
+    2300000: Apple Monitor
+    2300002: Apple Monitor 1
+    2300004: Cabinet
+    2300006: Chalk Board with Chalk
+    2300008: Chalk Board with Chalk 1
+    2300010: Cubicle 2shield
+    2300012: Cubicle 2shield#1
+    2300014: Cubicle with No Shield
+    2300016: Cubicle with No Shield 1
+    2300018: Dell Logo
+    2300020: Dell Logo 1
+    2300022: Dell Logo 2
+    2300024: Dell Logo 3
+    2300026: Doorknob Utility - Detailed
+    2300028: Doorknob Utility - Detailed 1
+    2300030: Group 174
+    2300032: Group 251
+    2300034: Group 97
+    2300036: Group#1
+    2300038: Group#1 1
+    2300040: Group#124
+    2300042: Group#124 1
+    2300044: Group#124 10
+    2300046: Group#124 11
+    2300048: Group#124 12
+    2300050: Group#124 13
+    2300052: Group#124 14
+    2300054: Group#124 15
+    2300056: Group#124 16
+    2300058: Group#124 17
+    2300060: Group#124 18
+    2300062: Group#124 19
+    2300064: Group#124 2
+    2300066: Group#124 20
+    2300068: Group#124 21
+    2300070: Group#124 22
+    2300072: Group#124 23
+    2300074: Group#124 24
+    2300076: Group#124 25
+    2300078: Group#124 26
+    2300080: Group#124 27
+    2300082: Group#124 28
+    2300084: Group#124 29
+    2300086: Group#124 3
+    2300088: Group#124 4
+    2300090: Group#124 5
+    2300092: Group#124 6
+    2300094: Group#124 7
+    2300096: Group#124 8
+    2300098: Group#124 9
+    2300100: Group#139
+    2300102: Group#139 1
+    2300104: Group#139 10
+    2300106: Group#139 11
+    2300108: Group#139 12
+    2300110: Group#139 13
+    2300112: Group#139 14
+    2300114: Group#139 2
+    2300116: Group#139 3
+    2300118: Group#139 4
+    2300120: Group#139 5
+    2300122: Group#139 6
+    2300124: Group#139 7
+    2300126: Group#139 8
+    2300128: Group#139 9
+    2300130: Group#2
+    2300132: Group#2 1
+    2300134: Group#3
+    2300136: Group#3 1
+    2300138: Group#4
+    2300140: Group#4 1
+    2300142: Group#5
+    2300144: Group#5 1
+    2300146: High Table
+    2300148: High Table 1
+    2300150: Monitor Stand
+    2300152: Monitor Stand 1
+    2300154: Obj_000001#1
+    2300156: Obj_000001#1 1
+    2300158: Obj_000001#1 2
+    2300160: Obj_000002#1
+    2300162: Obj_000002#1 1
+    2300164: Obj_000002#1 2
+    2300166: Obj_000002#1 3
+    2300168: Obj_000002#1 4
+    2300170: Obj_000002#1 5
+    2300172: Obj_000002#1 6
+    2300174: Obj_000002#1 7
+    2300176: Obj_000002#1 8
+    2300178: Obj_000027
+    2300180: Obj_000027 1
+    2300182: Obj_000027 2
+    2300184: Obj_000028
+    2300186: Obj_000028 1
+    2300188: Obj_000028 2
+    2300190: Obj_000029
+    2300192: Obj_000029 1
+    2300194: Obj_000029 2
+    2300196: Obj_000030#1
+    2300198: Obj_000030#1 1
+    2300200: Obj_000030#1 2
+    2300202: Obj_000031
+    2300204: Obj_000031 1
+    2300206: Obj_000031 2
+    2300208: //RootNode
+    2300210: Room updated
+    2300212: SHELVS
+    2300214: SHELVS 1
+    2300216: SHELVS 2
+    2300218: SHELVS 3
+    2300220: Group 316
+    2300222: Group 318
+    2300224: Display
+    2300226: Display 1
+    2300228: Display 2
+    2300230: Display 3
+    2300232: Display 4
+    2300234: Display 5
+    2300236: Display 6
+    2300238: Display 7
+    2300240: Display 8
+    2300242: Group 245
+    2300244: Group 322
+    2300246: Group 399
+    2300248: Group 464
+    2300250: Group 466
+    2300252: Modern Bookshelf
+    2300254: Modern Bookshelf 1
+    2300256: Modern Bookshelf 2
+    2300258: Modern Bookshelf 3
+    2300260: Modern Bookshelf 4
+    2300262: Modern Bookshelf 5
+    2300264: Modern Bookshelf 6
+    2300266: Modern Bookshelf 7
+    2300268: Modern Bookshelf 8
+    2300270: Shelf
+    2300272: Shelf 1
+    2300274: Shelf 10
+    2300276: Shelf 11
+    2300278: Shelf 12
+    2300280: Shelf 13
+    2300282: Shelf 14
+    2300284: Shelf 15
+    2300286: Shelf 16
+    2300288: Shelf 17
+    2300290: Shelf 18
+    2300292: Shelf 19
+    2300294: Shelf 2
+    2300296: Shelf 20
+    2300298: Shelf 21
+    2300300: Shelf 22
+    2300302: Shelf 23
+    2300304: Shelf 24
+    2300306: Shelf 25
+    2300308: Shelf 26
+    2300310: Shelf 27
+    2300312: Shelf 28
+    2300314: Shelf 29
+    2300316: Shelf 3
+    2300318: Shelf 30
+    2300320: Shelf 31
+    2300322: Shelf 32
+    2300324: Shelf 33
+    2300326: Shelf 34
+    2300328: Shelf 35
+    2300330: Shelf 4
+    2300332: Shelf 5
+    2300334: Shelf 6
+    2300336: Shelf 7
+    2300338: Shelf 8
+    2300340: Shelf 9
+    2300342: Side
+    2300344: Side 1
+    2300346: Side 10
+    2300348: Side 11
+    2300350: Side 12
+    2300352: Side 13
+    2300354: Side 14
+    2300356: Side 15
+    2300358: Side 16
+    2300360: Side 17
+    2300362: Side 2
+    2300364: Side 3
+    2300366: Side 4
+    2300368: Side 5
+    2300370: Side 6
+    2300372: Side 7
+    2300374: Side 8
+    2300376: Side 9
+    2300378: Group 155
+    2300380: Group 246
+    2300382: Group 323
+    2300384: Group 400
+    2300386: Group 465
+    2300388: Group 467
+    2300390: Group 328
+    2300392: Group 405
+    2300394: Group 470
+    2300396: Group 472
+    2300398: High Table 2
+    2300400: High Table 3
+    2300402: Group 1
+    3300000: Apple Monitor
+    3300002: Apple Monitor 1
+    3300004: Cabinet
+    3300006: Chalk Board with Chalk
+    3300008: Chalk Board with Chalk 1
+    3300010: Cubicle 2shield
+    3300012: Cubicle 2shield#1
+    3300014: Cubicle with No Shield
+    3300016: Cubicle with No Shield 1
+    3300018: Dell Logo
+    3300020: Dell Logo 1
+    3300022: Dell Logo 2
+    3300024: Dell Logo 3
+    3300026: Doorknob Utility - Detailed
+    3300028: Doorknob Utility - Detailed 1
+    3300030: Group 174
+    3300032: Group 251
+    3300034: Group 97
+    3300036: Group#1
+    3300038: Group#1 1
+    3300040: Group#124
+    3300042: Group#124 1
+    3300044: Group#124 10
+    3300046: Group#124 11
+    3300048: Group#124 12
+    3300050: Group#124 13
+    3300052: Group#124 14
+    3300054: Group#124 15
+    3300056: Group#124 16
+    3300058: Group#124 17
+    3300060: Group#124 18
+    3300062: Group#124 19
+    3300064: Group#124 2
+    3300066: Group#124 20
+    3300068: Group#124 21
+    3300070: Group#124 22
+    3300072: Group#124 23
+    3300074: Group#124 24
+    3300076: Group#124 25
+    3300078: Group#124 26
+    3300080: Group#124 27
+    3300082: Group#124 28
+    3300084: Group#124 29
+    3300086: Group#124 3
+    3300088: Group#124 4
+    3300090: Group#124 5
+    3300092: Group#124 6
+    3300094: Group#124 7
+    3300096: Group#124 8
+    3300098: Group#124 9
+    3300100: Group#139
+    3300102: Group#139 1
+    3300104: Group#139 10
+    3300106: Group#139 11
+    3300108: Group#139 12
+    3300110: Group#139 13
+    3300112: Group#139 14
+    3300114: Group#139 2
+    3300116: Group#139 3
+    3300118: Group#139 4
+    3300120: Group#139 5
+    3300122: Group#139 6
+    3300124: Group#139 7
+    3300126: Group#139 8
+    3300128: Group#139 9
+    3300130: Group#2
+    3300132: Group#2 1
+    3300134: Group#3
+    3300136: Group#3 1
+    3300138: Group#4
+    3300140: Group#4 1
+    3300142: Group#5
+    3300144: Group#5 1
+    3300146: High Table
+    3300148: High Table 1
+    3300150: Monitor Stand
+    3300152: Monitor Stand 1
+    3300154: Obj_000001#1
+    3300156: Obj_000001#1 1
+    3300158: Obj_000001#1 2
+    3300160: Obj_000002#1
+    3300162: Obj_000002#1 1
+    3300164: Obj_000002#1 2
+    3300166: Obj_000002#1 3
+    3300168: Obj_000002#1 4
+    3300170: Obj_000002#1 5
+    3300172: Obj_000002#1 6
+    3300174: Obj_000002#1 7
+    3300176: Obj_000002#1 8
+    3300178: Obj_000027
+    3300180: Obj_000027 1
+    3300182: Obj_000027 2
+    3300184: Obj_000028
+    3300186: Obj_000028 1
+    3300188: Obj_000028 2
+    3300190: Obj_000029
+    3300192: Obj_000029 1
+    3300194: Obj_000029 2
+    3300196: Obj_000030#1
+    3300198: Obj_000030#1 1
+    3300200: Obj_000030#1 2
+    3300202: Obj_000031
+    3300204: Obj_000031 1
+    3300206: Obj_000031 2
+    3300208: //RootNode
+    3300210: Room updated
+    3300212: SHELVS
+    3300214: SHELVS 1
+    3300216: SHELVS 2
+    3300218: SHELVS 3
+    3300220: Group 316
+    3300222: Group 318
+    3300224: Display
+    3300226: Display 1
+    3300228: Display 2
+    3300230: Display 3
+    3300232: Display 4
+    3300234: Display 5
+    3300236: Display 6
+    3300238: Display 7
+    3300240: Display 8
+    3300242: Group 245
+    3300244: Group 322
+    3300246: Group 399
+    3300248: Group 464
+    3300250: Group 466
+    3300252: Modern Bookshelf
+    3300254: Modern Bookshelf 1
+    3300256: Modern Bookshelf 2
+    3300258: Modern Bookshelf 3
+    3300260: Modern Bookshelf 4
+    3300262: Modern Bookshelf 5
+    3300264: Modern Bookshelf 6
+    3300266: Modern Bookshelf 7
+    3300268: Modern Bookshelf 8
+    3300270: Shelf
+    3300272: Shelf 1
+    3300274: Shelf 10
+    3300276: Shelf 11
+    3300278: Shelf 12
+    3300280: Shelf 13
+    3300282: Shelf 14
+    3300284: Shelf 15
+    3300286: Shelf 16
+    3300288: Shelf 17
+    3300290: Shelf 18
+    3300292: Shelf 19
+    3300294: Shelf 2
+    3300296: Shelf 20
+    3300298: Shelf 21
+    3300300: Shelf 22
+    3300302: Shelf 23
+    3300304: Shelf 24
+    3300306: Shelf 25
+    3300308: Shelf 26
+    3300310: Shelf 27
+    3300312: Shelf 28
+    3300314: Shelf 29
+    3300316: Shelf 3
+    3300318: Shelf 30
+    3300320: Shelf 31
+    3300322: Shelf 32
+    3300324: Shelf 33
+    3300326: Shelf 34
+    3300328: Shelf 35
+    3300330: Shelf 4
+    3300332: Shelf 5
+    3300334: Shelf 6
+    3300336: Shelf 7
+    3300338: Shelf 8
+    3300340: Shelf 9
+    3300342: Side
+    3300344: Side 1
+    3300346: Side 10
+    3300348: Side 11
+    3300350: Side 12
+    3300352: Side 13
+    3300354: Side 14
+    3300356: Side 15
+    3300358: Side 16
+    3300360: Side 17
+    3300362: Side 2
+    3300364: Side 3
+    3300366: Side 4
+    3300368: Side 5
+    3300370: Side 6
+    3300372: Side 7
+    3300374: Side 8
+    3300376: Side 9
+    3300378: Group 155
+    3300380: Group 246
+    3300382: Group 323
+    3300384: Group 400
+    3300386: Group 465
+    3300388: Group 467
+    3300390: Group 328
+    3300392: Group 405
+    3300394: Group 470
+    3300396: Group 472
+    3300398: High Table 2
+    3300400: High Table 3
+    3300402: Group 1
+    4300000: Mesh Room Summer 2017
+    4300002: Mesh Room updated
+    4300004: Mesh Doorknob Utility - Detailed
+    4300006: Mesh Cubicle 2shield
+    4300008: Mesh Cubicle with No Shield
+    4300010: Mesh High Table
+    4300012: Mesh Group#1
+    4300014: Mesh Group#2
+    4300016: Mesh Group#3
+    4300018: Mesh Group#4
+    4300020: Mesh Group#5
+    4300022: Mesh Dell Logo
+    4300024: Mesh Dell Logo
+    4300026: Mesh Cabinet
+    4300028: Mesh Cubicle 2shield#1
+    4300030: Mesh Apple Monitor
+    4300032: Mesh Monitor Stand
+    4300034: Mesh SHELVS
+    4300036: Mesh Chalk Board with Chalk
+    4300038: Mesh Group 97
+    4300040: Mesh Group#139
+    4300042: Mesh Group#124
+    4300044: Mesh Obj_000027
+    4300046: Mesh Obj_000031
+    4300048: Mesh Obj_000001#1
+    4300050: Mesh Obj_000002#1
+    4300052: Mesh Obj_000028
+    4300054: Mesh Obj_000030#1
+    4300056: Mesh Obj_000029
+    4300058: Mesh Group 316
+    4300060: Mesh Group 318
+    4300062: Mesh Modern Bookshelf
+    4300064: Mesh Side
+    4300066: Mesh Side
+    4300068: Mesh Shelf
+    4300070: Mesh Display
+    4300072: Mesh Group 245
+    4300074: Mesh Group 464
+    4300076: Mesh Group 466
+    4300078: Mesh Group 155
+    4300080: Mesh Group 246
+    4300082: Mesh Group 465
+    4300084: Mesh Group 467
+    4300086: Mesh Group 251
+    4300088: Mesh Group 470
+    4300090: Mesh Group 472
+    4300092: Mesh Group 1
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
