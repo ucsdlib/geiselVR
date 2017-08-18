@@ -180,6 +180,7 @@ public class BookshelfController : MonoBehaviour
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;
         shelfGameObj.transform.localPosition = start;
+        shelfGameObj.transform.rotation = transform.rotation;
         shelfGameObj.transform.Translate(Offset);
 
         // Instantiate in order
@@ -191,6 +192,7 @@ public class BookshelfController : MonoBehaviour
 
             book.transform.parent = shelfGameObj.transform;
             book.transform.localPosition = current;
+            book.transform.rotation = shelfGameObj.transform.rotation;
             current += book.Width * Vector3.right;
 
             book.LoadData();
