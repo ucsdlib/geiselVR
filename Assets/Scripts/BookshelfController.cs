@@ -123,7 +123,7 @@ public class BookshelfController : MonoBehaviour
 
             _addTable(_table, books);
         }
-        
+
         if (_table.Count > 0)
         {
             // table should never be empty due to NotifyEnd() above
@@ -165,7 +165,7 @@ public class BookshelfController : MonoBehaviour
         {
             yield return null;
         }
-        
+
         var i = 0;
         foreach (var shelf in _table)
         {

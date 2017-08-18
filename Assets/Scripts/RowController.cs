@@ -96,31 +96,30 @@ public class RowController : MonoBehaviour
 
     IEnumerator Scroll(Direction direction, float time)
     {
-        if (!_lerping)
+        if (_lerping) yield break;
+        
+        _lerping = true;
+        // Calculate direction dependent parameters
+        Vector3 start = transform.position;
+        Vector3 end;
+        if (direction == Direction.Right)
         {
-            _lerping = true;
-            // Calculate direction dependent parameters
-            Vector3 start = transform.position;
-            Vector3 end;
-            if (direction == Direction.Right)
-            {
-                end = transform.position + Vector3.right * _width;
-            }
-            else
-            {
-                end = transform.position + Vector3.left * _width;
-            }
-            // Lerp
-            float t = 0f;
-            while (t < 1.0f)
-            {
-                t += Time.deltaTime / time; // scale by time factor
-                transform.position = Vector3.Slerp(start, end, t);
-                yield return null;
-            }
-            ShiftFrame(direction);
-            _lerping = false;
+            end = transform.position + Vector3.right * _width;
         }
+        else
+        {
+            end = transform.position + Vector3.left * _width;
+        }
+        // Lerp
+        float t = 0f;
+        while (t < 1.0f)
+        {
+            t += Time.deltaTime / time; // scale by time factor
+            transform.position = Vector3.Slerp(start, end, t);
+            yield return null;
+        }
+        ShiftFrame(direction);
+        _lerping = false;
     }
 
     private void ShiftFrame(Direction direction)
@@ -133,7 +132,7 @@ public class RowController : MonoBehaviour
             // Shift units to compensate
             foreach (Unit unit in _activeUnits)
             {
-                unit.transform.Translate(Vector3.right * _width);
+                unit.transform.localPosition += Vector3.right * _width;
             }
 
             // Remove invalid unit
@@ -150,7 +149,7 @@ public class RowController : MonoBehaviour
         {
             foreach (Unit unit in _activeUnits)
             {
-                unit.transform.Translate(Vector3.left * _width);
+                unit.transform.localPosition += Vector3.left *_width;
             }
 
             var invalidUnit = _activeUnits.First.Value;
