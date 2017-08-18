@@ -26,26 +26,21 @@ public class RowController : MonoBehaviour
         _firstPos = Vector3.zero;
         _rowInitPos = transform.position;
 
+
         var refTranform = transform.Find(TemplateUnit.name);
         if (refTranform) // reference unit found as child
         {
-            // get width and prefab from reference
-            _width = CalculateLocalBounds(refTranform.gameObject).size.x;
             var prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
             if (prefab) TemplateUnit = prefab;
             Destroy(refTranform.gameObject);
-
-            StartCoroutine(InstantiateArray(RowSize));
         }
-        else
-        {
-            // get width from new unit
-            var unit = InstantiateUnit(Vector3.zero);
-            _width = CalculateLocalBounds(unit.gameObject).size.x;
-            Destroy(unit.gameObject);
+        
+        var unit = InstantiateUnit(Vector3.zero);
+        unit.transform.rotation = Quaternion.Euler(0, 0, 0);
+        _width = CalculateLocalBounds(unit.gameObject).size.x;
+        Destroy(unit.gameObject);
 
-            StartCoroutine(InstantiateArray(RowSize));
-        }
+        StartCoroutine(InstantiateArray(RowSize));
         _lastPos = _firstPos + Vector3.right * (RowSize - 1) * _width;
     }
 
@@ -97,7 +92,7 @@ public class RowController : MonoBehaviour
     IEnumerator Scroll(Direction direction, float time)
     {
         if (_lerping) yield break;
-        
+
         _lerping = true;
         // Calculate direction dependent parameters
         Vector3 start = transform.position;
@@ -149,7 +144,7 @@ public class RowController : MonoBehaviour
         {
             foreach (Unit unit in _activeUnits)
             {
-                unit.transform.localPosition += Vector3.left *_width;
+                unit.transform.localPosition += Vector3.left * _width;
             }
 
             var invalidUnit = _activeUnits.First.Value;
@@ -165,7 +160,7 @@ public class RowController : MonoBehaviour
     private IEnumerator InstantiateArray(int size)
     {
         _canScrollLeft = _canScrollRight = false;
-        
+
         var firstUnit = InstantiateUnit(_firstPos);
         yield return firstUnit.UpdateContents(firstUnit, Direction.Identity); // load itself
         _activeUnits.AddFirst(firstUnit);
