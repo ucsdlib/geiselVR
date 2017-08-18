@@ -57,12 +57,13 @@ public class BookshelfController : MonoBehaviour
             center.x = ShelfWidth / 2;
             center.y = TopShelfY - i * ShelfHeight;
             center.z = -0.14f;
-            center += transform.TransformDirection(Offset);
-            center = transform.TransformPoint(center);
+            center += Offset;
 
             Vector3 size = new Vector3(ShelfWidth, 0, 0.28f);
 
+            Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.DrawCube(center, size);
+            Gizmos.matrix = Matrix4x4.identity;
         }
     }
 
