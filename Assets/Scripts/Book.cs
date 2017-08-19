@@ -36,6 +36,6 @@ public class Book : MonoBehaviour
     public void LoadData()
     {
         if (_meta == null) return;
-        TitleRenderer.GenerateText(_meta.CallNumber);
+//        TitleRenderer.GenerateText(_meta.CallNumber);
     }
 }
