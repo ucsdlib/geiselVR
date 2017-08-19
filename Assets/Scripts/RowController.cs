@@ -19,6 +19,7 @@ public class RowController : MonoBehaviour
     private float _width; // width of one unit
     private bool _canScrollRight = true;
     private bool _canScrollLeft = true;
+    private GameObject _container;
 
     private void Start()
     {
@@ -26,6 +27,11 @@ public class RowController : MonoBehaviour
         _firstPos = Vector3.zero;
         _rowInitPos = transform.position;
 
+        // set up container for shifting
+        _container = new GameObject("Container");
+        _container.transform.parent = transform;
+        _container.transform.localPosition = Vector3.zero;
+        _container.transform.rotation = transform.rotation;
 
         var refTranform = transform.Find(TemplateUnit.name);
         if (refTranform) // reference unit found as child
@@ -34,7 +40,7 @@ public class RowController : MonoBehaviour
             if (prefab) TemplateUnit = prefab;
             Destroy(refTranform.gameObject);
         }
-        
+
         var unit = InstantiateUnit(Vector3.zero);
         unit.transform.rotation = Quaternion.Euler(0, 0, 0);
         _width = CalculateLocalBounds(unit.gameObject).size.x;
@@ -95,33 +101,32 @@ public class RowController : MonoBehaviour
 
         _lerping = true;
         // Calculate direction dependent parameters
-        Vector3 start = transform.position;
         Vector3 end;
         if (direction == Direction.Right)
         {
-            end = transform.position + Vector3.right * _width;
+            end = _container.transform.localPosition + Vector3.right * _width;
         }
         else
         {
-            end = transform.position + Vector3.left * _width;
+            end = _container.transform.localPosition + Vector3.left * _width;
         }
         // Lerp
         float t = 0f;
         while (t < 1.0f)
         {
             t += Time.deltaTime / time; // scale by time factor
-            transform.position = Vector3.Slerp(start, end, t);
+            _container.transform.localPosition = Vector3.Slerp(Vector3.zero, end, t);
             yield return null;
         }
+
+        _container.transform.localPosition = Vector3.zero; // reset position
+        
         ShiftFrame(direction);
         _lerping = false;
     }
 
     private void ShiftFrame(Direction direction)
     {
-        // Reset position of row
-        transform.position = _rowInitPos;
-
         if (direction == Direction.Right)
         {
             // Shift units to compensate
@@ -177,7 +182,7 @@ public class RowController : MonoBehaviour
 
     private Unit InstantiateUnit(Vector3 position)
     {
-        Unit unit = Instantiate(TemplateUnit, transform);
+        var unit = Instantiate(TemplateUnit, _container.transform);
         unit.transform.localPosition = position;
         unit.Row = this;
         return unit;
