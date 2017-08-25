@@ -20,8 +20,7 @@ public class Book : MonoBehaviour
     
     void Awake()
     {
-        TitleRenderer = transform
-            .Find("BookWithTitle").Find("Title").GetComponent<TextRenderer>();
+        TitleRenderer = GetComponentInChildren<TextRenderer>();
         if (!TitleRenderer)
         {
             Debug.Log("Could not find title renderer");
