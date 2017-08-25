@@ -712,4 +712,4 @@ MonoBehaviour:
   ShelfWidth: 1.12
   TopShelfY: 1.7
   Offset: {x: 0.04, y: 0, z: 0}
-  ShowGuides: 1
+  ShowGuides: 0
