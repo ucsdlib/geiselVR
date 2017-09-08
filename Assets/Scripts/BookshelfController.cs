@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
@@ -20,6 +21,7 @@ public class BookshelfController : MonoBehaviour
     public float TopShelfY = 1.6f;
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
+    public Text Display;
 
     private delegate void ShelfAdder(LinkedList<MetaBook> books, MetaBook book);
 
@@ -99,6 +101,7 @@ public class BookshelfController : MonoBehaviour
         var thread = new Thread(o => PopulateTable(buffer, direction));
         thread.Start();
         yield return InstantiateTable();
+        Display.text = _startCallNumber;
     }
 
     private void AddRight<T>(LinkedList<T> list, T item)
