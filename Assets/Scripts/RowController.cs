@@ -12,8 +12,7 @@ public class RowController : MonoBehaviour
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
     private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>();    // current active units
-    private bool lerping;        
-    private Vector3 lerpDestPos;
+    private bool lerping;
     private Vector3 firstPos; // first position in array
     private Vector3 lastPos; // last position in array
     private float width; // width of one unit
