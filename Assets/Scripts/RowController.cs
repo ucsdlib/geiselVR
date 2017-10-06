@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,28 +11,26 @@ public class RowController : MonoBehaviour
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
-    private readonly LinkedList<Unit> _activeUnits = new LinkedList<Unit>();
-    private bool _lerping;
-    private Vector3 _lerpDestPos;
-    private Vector3 _firstPos; // first position in array
-    private Vector3 _lastPos; // last position in array
-    private Vector3 _rowInitPos; // initial position of row in world
-    private float _width; // width of one unit
-    private bool _canScrollRight = true;
-    private bool _canScrollLeft = true;
-    private GameObject _container;
+    private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>();    // current active units
+    private bool lerping;        
+    private Vector3 lerpDestPos;
+    private Vector3 firstPos; // first position in array
+    private Vector3 lastPos; // last position in array
+    private float width; // width of one unit
+    private bool canScrollRight = true;
+    private bool canScrollLeft = true;
+    private GameObject container;
 
     private void Start()
     {
         // set starting positions
-        _firstPos = Vector3.zero;
-        _rowInitPos = transform.position;
+        firstPos = Vector3.zero;
 
         // set up container for shifting
-        _container = new GameObject("Container");
-        _container.transform.parent = transform;
-        _container.transform.localPosition = Vector3.zero;
-        _container.transform.rotation = transform.rotation;
+        container = new GameObject("Container");
+        container.transform.parent = transform;
+        container.transform.localPosition = Vector3.zero;
+        container.transform.rotation = transform.rotation;
 
         var refTranform = transform.Find(TemplateUnit.name);
         if (refTranform) // reference unit found as child
@@ -43,11 +42,11 @@ public class RowController : MonoBehaviour
 
         var unit = InstantiateUnit(Vector3.zero);
         unit.transform.rotation = Quaternion.Euler(0, 0, 0);
-        _width = CalculateLocalBounds(unit.gameObject).size.x;
+        width = CalculateLocalBounds(unit.gameObject).size.x;
         Destroy(unit.gameObject);
 
         StartCoroutine(InstantiateArray(RowSize));
-        _lastPos = _firstPos + Vector3.right * (RowSize - 1) * _width;
+        lastPos = firstPos + Vector3.right * (RowSize - 1) * width;
     }
 
     private void Update()
@@ -61,10 +60,10 @@ public class RowController : MonoBehaviour
         switch (direction)
         {
             case Direction.Right:
-                _canScrollRight = false;
+                canScrollRight = false;
                 break;
             case Direction.Left:
-                _canScrollLeft = false;
+                canScrollLeft = false;
                 break;
             case Direction.Identity:
                 break;
@@ -80,49 +79,49 @@ public class RowController : MonoBehaviour
         float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
         // scroll to the left -> move shelf right
-        if ((flexL > 0.5 || flexR > 0.5) && !_lerping && _canScrollLeft
-            && _activeUnits.Count > 0 && _activeUnits.First.Value.DoneLoading)
+        if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScrollLeft
+            && activeUnits.Count > 0 && activeUnits.First.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Right, ScrollTime));
-            _canScrollRight = true;
+            canScrollRight = true;
         }
         // scroll to the right -> move shelf left
-        else if ((flexL < -0.5 || flexR < -0.5) && !_lerping && _canScrollRight
-                 && _activeUnits.Count > 0 && _activeUnits.Last.Value.DoneLoading)
+        else if ((flexL < -0.5 || flexR < -0.5) && !lerping && canScrollRight
+                 && activeUnits.Count > 0 && activeUnits.Last.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Left, ScrollTime));
-            _canScrollLeft = true;
+            canScrollLeft = true;
         }
     }
 
     IEnumerator Scroll(Direction direction, float time)
     {
-        if (_lerping) yield break;
+        if (lerping) yield break;
 
-        _lerping = true;
+        lerping = true;
         // Calculate direction dependent parameters
         Vector3 end;
         if (direction == Direction.Right)
         {
-            end = _container.transform.localPosition + Vector3.right * _width;
+            end = container.transform.localPosition + Vector3.right * width;
         }
         else
         {
-            end = _container.transform.localPosition + Vector3.left * _width;
+            end = container.transform.localPosition + Vector3.left * width;
         }
         // Lerp
         float t = 0f;
         while (t < 1.0f)
         {
             t += Time.deltaTime / time; // scale by time factor
-            _container.transform.localPosition = Vector3.Slerp(Vector3.zero, end, t);
+            container.transform.localPosition = Vector3.Slerp(Vector3.zero, end, t);
             yield return null;
         }
 
-        _container.transform.localPosition = Vector3.zero; // reset position
+        container.transform.localPosition = Vector3.zero; // reset position
         
         ShiftFrame(direction);
-        _lerping = false;
+        lerping = false;
     }
 
     private void ShiftFrame(Direction direction)
@@ -130,59 +129,59 @@ public class RowController : MonoBehaviour
         if (direction == Direction.Right)
         {
             // Shift units to compensate
-            foreach (Unit unit in _activeUnits)
+            foreach (Unit unit in activeUnits)
             {
-                unit.transform.localPosition += Vector3.right * _width;
+                unit.transform.localPosition += Vector3.right * width;
             }
 
             // Remove invalid unit
-            var invalidUnit = _activeUnits.Last.Value;
-            _activeUnits.RemoveLast();
+            var invalidUnit = activeUnits.Last.Value;
+            activeUnits.RemoveLast();
             Destroy(invalidUnit.gameObject);
 
             // Instantiate new unit
-            var newUnit = InstantiateUnit(_firstPos);
-            StartCoroutine(newUnit.UpdateContents(_activeUnits.First.Value, Direction.Left));
-            _activeUnits.AddFirst(newUnit);
+            var newUnit = InstantiateUnit(firstPos);
+            StartCoroutine(newUnit.UpdateContents(activeUnits.First.Value, Direction.Left));
+            activeUnits.AddFirst(newUnit);
         }
         else
         {
-            foreach (Unit unit in _activeUnits)
+            foreach (Unit unit in activeUnits)
             {
-                unit.transform.localPosition += Vector3.left * _width;
+                unit.transform.localPosition += Vector3.left * width;
             }
 
-            var invalidUnit = _activeUnits.First.Value;
-            _activeUnits.RemoveFirst();
+            var invalidUnit = activeUnits.First.Value;
+            activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
 
-            var newUnit = InstantiateUnit(_lastPos);
-            StartCoroutine(newUnit.UpdateContents(_activeUnits.Last.Value, Direction.Right));
-            _activeUnits.AddLast(newUnit);
+            var newUnit = InstantiateUnit(lastPos);
+            StartCoroutine(newUnit.UpdateContents(activeUnits.Last.Value, Direction.Right));
+            activeUnits.AddLast(newUnit);
         }
     }
 
     private IEnumerator InstantiateArray(int size)
     {
-        _canScrollLeft = _canScrollRight = false;
+        canScrollLeft = canScrollRight = false;
 
-        var firstUnit = InstantiateUnit(_firstPos);
+        var firstUnit = InstantiateUnit(firstPos);
         yield return firstUnit.UpdateContents(firstUnit, Direction.Identity); // load itself
-        _activeUnits.AddFirst(firstUnit);
+        activeUnits.AddFirst(firstUnit);
 
         for (var i = 1; i < size; i++)
         {
-            var unit = InstantiateUnit(_firstPos + Vector3.right * i * _width);
-            yield return unit.UpdateContents(_activeUnits.Last.Value, Direction.Right);
-            _activeUnits.AddLast(unit);
+            var unit = InstantiateUnit(firstPos + Vector3.right * i * width);
+            yield return unit.UpdateContents(activeUnits.Last.Value, Direction.Right);
+            activeUnits.AddLast(unit);
         }
 
-        _canScrollLeft = _canScrollRight = true;
+        canScrollLeft = canScrollRight = true;
     }
 
     private Unit InstantiateUnit(Vector3 position)
     {
-        var unit = Instantiate(TemplateUnit, _container.transform);
+        var unit = Instantiate(TemplateUnit, container.transform);
         unit.transform.localPosition = position;
         unit.Row = this;
         return unit;
