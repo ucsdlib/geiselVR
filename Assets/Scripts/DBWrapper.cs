@@ -15,7 +15,7 @@ public class DbWrapper
     }
 
     private static DbWrapper _instance;
-    private const string DataBasePath = "call-only.db"; // within the Assets folder
+    private const string DataBasePath = "testdb.db"; // within the Assets folder
     private const string TableName = "testing";
 
     private IDbConnection _connection;
