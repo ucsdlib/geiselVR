@@ -7,14 +7,4 @@ public class SelectionUI : MonoBehaviour
 {
 	public Text Title;
 	public Slider Slider;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
