@@ -204,4 +204,11 @@ public class RowController : MonoBehaviour
         }
         return bounds;
     }
+    
+    // UI Communication
+
+    public void SetPosition(string key)
+    {
+        // TODO
+    }
 }
