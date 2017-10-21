@@ -27,25 +27,25 @@ public class BookshelfController : MonoBehaviour
 
     private delegate void TableAdder(LinkedList<LinkedList<MetaBook>> table, LinkedList<MetaBook> shelf);
 
-    private string _startCallNumber;
-    private string _endCallNumber;
-    private Unit _unit;
-    private readonly LinkedList<LinkedList<MetaBook>> _table = new LinkedList<LinkedList<MetaBook>>();
-    private ShelfAdder _addShelf;
-    private TableAdder _addTable;
+    private string startCallNumber;
+    private string endCallNumber;
+    private Unit unit;
+    private readonly LinkedList<LinkedList<MetaBook>> table = new LinkedList<LinkedList<MetaBook>>();
+    private ShelfAdder addShelf;
+    private TableAdder addTable;
 
     private void Awake()
     {
         // Establish connection to Unit
-        _unit = GetComponent<Unit>();
-        if (_unit != null)
+        unit = GetComponent<Unit>();
+        if (unit != null)
         {
-            _unit.UpdateContents += HandleUpdateEvent;
-            _unit.DoneLoading = false;
+            unit.UpdateContents += HandleUpdateEvent;
+            unit.DoneLoading = false;
         }
 
-        _startCallNumber = CallNumber; // DEBUG
-        _endCallNumber = CallNumber;
+        startCallNumber = CallNumber; // DEBUG
+        endCallNumber = CallNumber;
     }
 
     private void OnDrawGizmos()
@@ -79,19 +79,19 @@ public class BookshelfController : MonoBehaviour
         switch (direction)
         {
             case Direction.Right:
-                _addShelf = AddRight;
-                _addTable = AddRight;
-                buffer = new DbBuffer(last._endCallNumber, DbBufferSize, direction);
+                addShelf = AddRight;
+                addTable = AddRight;
+                buffer = new DbBuffer(last.endCallNumber, DbBufferSize, direction);
                 break;
             case Direction.Left:
-                _addShelf = AddLeft;
-                _addTable = AddLeft;
-                buffer = new DbBuffer(last._startCallNumber, DbBufferSize, direction);
+                addShelf = AddLeft;
+                addTable = AddLeft;
+                buffer = new DbBuffer(last.startCallNumber, DbBufferSize, direction);
                 break;
             case Direction.Identity:
-                _addShelf = AddRight;
-                _addTable = AddRight;
-                buffer = new DbBuffer(last._startCallNumber, DbBufferSize, Direction.Right);
+                addShelf = AddRight;
+                addTable = AddRight;
+                buffer = new DbBuffer(last.startCallNumber, DbBufferSize, Direction.Right);
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
@@ -101,7 +101,7 @@ public class BookshelfController : MonoBehaviour
         var thread = new Thread(o => PopulateTable(buffer, direction));
         thread.Start();
         yield return InstantiateTable();
-        Display.text = _startCallNumber;
+        Display.text = startCallNumber;
     }
 
     private void AddRight<T>(LinkedList<T> list, T item)
@@ -121,18 +121,18 @@ public class BookshelfController : MonoBehaviour
             var books = GenerateShelf(buffer);
             if (books.Count == 0)
             {
-                _unit.Row.NotifyEnd(direction);
+                unit.Row.NotifyEnd(direction);
                 return;
             }
 
-            _addTable(_table, books);
+            addTable(table, books);
         }
 
-        if (_table.Count > 0)
+        if (table.Count > 0)
         {
             // table should never be empty due to NotifyEnd() above
-            _startCallNumber = _table.First.Value.First.Value.CallNumber;
-            _endCallNumber = _table.Last.Value.Last.Value.CallNumber;
+            startCallNumber = table.First.Value.First.Value.CallNumber;
+            endCallNumber = table.Last.Value.Last.Value.CallNumber;
         }
 
         MetaLoaded = true;
@@ -157,7 +157,7 @@ public class BookshelfController : MonoBehaviour
             totalWidth += book.Width;
             if (totalWidth > ShelfWidth) break;
 
-            _addShelf(books, book);
+            addShelf(books, book);
         }
         return books;
     }
@@ -171,12 +171,12 @@ public class BookshelfController : MonoBehaviour
         }
 
         var i = 0;
-        foreach (var shelf in _table)
+        foreach (var shelf in table)
         {
             var start = Vector3.up * (TopShelfY - i++ * ShelfHeight);
             InstantiateShelf(shelf, start);
         }
-        _unit.DoneLoading = true;
+        unit.DoneLoading = true;
     }
 
     private void InstantiateShelf(LinkedList<MetaBook> shelf, Vector3 start)
