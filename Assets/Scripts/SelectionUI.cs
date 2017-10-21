@@ -20,12 +20,17 @@ public class SelectionUI : MonoBehaviour
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		// TODO
+		
 	}
 	
 	public void OnSliderValueChanged(float value)
 	{
 		Title.text = GetSliderTranslation(value);
+	}
+	
+	public void OnLoadClick()
+	{
+		// TODO
 	}
 	
 	private string GetSliderTranslation(float value)
