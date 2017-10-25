@@ -219,5 +219,6 @@ public class RowController : MonoBehaviour
         {
             yield return unit.UpdateContents(null, Direction.Null);
         }
+        lerping = false;
     }
 }
