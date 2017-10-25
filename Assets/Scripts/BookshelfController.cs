@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,7 @@ public class BookshelfController : MonoBehaviour
     private string endCallNumber;
     private Unit unit;
     private readonly LinkedList<LinkedList<MetaBook>> table = new LinkedList<LinkedList<MetaBook>>();
+    private List<Book> bookList = new List<Book>();
     private ShelfAdder addShelf;
     private TableAdder addTable;
 
@@ -44,7 +46,7 @@ public class BookshelfController : MonoBehaviour
             unit.DoneLoading = false;
         }
 
-        startCallNumber = CallNumber; // DEBUG
+        startCallNumber = CallNumber;
         endCallNumber = CallNumber;
     }
 
@@ -71,6 +73,12 @@ public class BookshelfController : MonoBehaviour
 
     public IEnumerator HandleUpdateEvent(Unit unit, Direction direction)
     {
+        if (direction == Direction.Null)
+        {
+            Clear();
+            yield break;
+        }
+        
         var last = unit.GetComponent<BookshelfController>();
         if (!last) Debug.Log("Could not get last shelf");
 
@@ -200,6 +208,18 @@ public class BookshelfController : MonoBehaviour
             current += book.Width * Vector3.right;
 
             book.LoadData();
+            bookList.Add(book);
         }
+    }
+
+    private void Clear()
+    {
+        foreach (var book in bookList)
+        {
+            Destroy(book.gameObject);
+        }
+        bookList.Clear();
+        table.Clear();
+        startCallNumber = endCallNumber = "";
     }
 }

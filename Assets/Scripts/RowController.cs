@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class RowController : MonoBehaviour
     public int RowSize = 2; // number of units in this row at any given time
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
-    private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>();    // current active units
+    private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>(); // current active units
     private bool lerping;
     private Vector3 firstPos; // first position in array
     private Vector3 lastPos; // last position in array
@@ -118,7 +117,7 @@ public class RowController : MonoBehaviour
         }
 
         container.transform.localPosition = Vector3.zero; // reset position
-        
+
         ShiftFrame(direction);
         lerping = false;
     }
@@ -204,11 +203,21 @@ public class RowController : MonoBehaviour
         }
         return bounds;
     }
-    
+
     // UI Communication
 
     public void SetPosition(string key)
     {
-        // TODO
+        StartCoroutine(_SetPosition(key));
+    }
+
+    private IEnumerator _SetPosition(string key)
+    {
+        while (lerping) yield return null;
+        lerping = true;
+        foreach (var unit in activeUnits)
+        {
+            yield return unit.UpdateContents(null, Direction.Null);
+        }
     }
 }
