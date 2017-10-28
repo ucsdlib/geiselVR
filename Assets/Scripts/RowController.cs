@@ -80,35 +80,39 @@ public class RowController : MonoBehaviour
         if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScrollLeft
             && activeUnits.Count > 0 && activeUnits.First.Value.DoneLoading)
         {
-            StartCoroutine(Scroll(Direction.Right, ScrollTime));
+            StartCoroutine(ShiftFrame(Direction.Right, ScrollTime));
             canScrollRight = true;
         }
         // scroll to the right -> move shelf left
         else if ((flexL < -0.5 || flexR < -0.5) && !lerping && canScrollRight
                  && activeUnits.Count > 0 && activeUnits.Last.Value.DoneLoading)
         {
-            StartCoroutine(Scroll(Direction.Left, ScrollTime));
+            StartCoroutine(ShiftFrame(Direction.Left, ScrollTime));
             canScrollLeft = true;
         }
     }
 
-    IEnumerator Scroll(Direction direction, float time)
+    private IEnumerator ShiftFrame(Direction direction, float time)
     {
         if (lerping) yield break;
-
         lerping = true;
+
         // Calculate direction dependent parameters
         Vector3 end;
+        Vector3 realignDir;
         if (direction == Direction.Right)
         {
             end = container.transform.localPosition + Vector3.right * width;
+            realignDir = Vector3.right;
         }
         else
         {
             end = container.transform.localPosition + Vector3.left * width;
+            realignDir = Vector3.left;
         }
+
         // Lerp
-        float t = 0f;
+        var t = 0f;
         while (t < 1.0f)
         {
             t += Time.deltaTime / time; // scale by time factor
@@ -116,22 +120,21 @@ public class RowController : MonoBehaviour
             yield return null;
         }
 
-        container.transform.localPosition = Vector3.zero; // reset position
+        // Realign position
+        container.transform.localPosition = Vector3.zero;
+        foreach (var unit in activeUnits)
+        {
+            unit.transform.localPosition += realignDir * width;
+        }
 
-        ShiftFrame(direction);
+        CycleUnits(direction);
         lerping = false;
     }
 
-    private void ShiftFrame(Direction direction)
+    private void CycleUnits(Direction direction)
     {
         if (direction == Direction.Right)
         {
-            // Shift units to compensate
-            foreach (Unit unit in activeUnits)
-            {
-                unit.transform.localPosition += Vector3.right * width;
-            }
-
             // Remove invalid unit
             var invalidUnit = activeUnits.Last.Value;
             activeUnits.RemoveLast();
@@ -144,11 +147,6 @@ public class RowController : MonoBehaviour
         }
         else
         {
-            foreach (Unit unit in activeUnits)
-            {
-                unit.transform.localPosition += Vector3.left * width;
-            }
-
             var invalidUnit = activeUnits.First.Value;
             activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
@@ -215,10 +213,15 @@ public class RowController : MonoBehaviour
     {
         while (lerping) yield return null;
         lerping = true;
+
+        // Clear all books
         foreach (var unit in activeUnits)
         {
             yield return unit.UpdateContents(null, Direction.Null);
         }
+
+        // Shift
+
         lerping = false;
     }
 }
