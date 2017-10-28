@@ -63,8 +63,6 @@ public class RowController : MonoBehaviour
             case Direction.Left:
                 canScrollLeft = false;
                 break;
-            case Direction.Identity:
-                break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, null);
         }
