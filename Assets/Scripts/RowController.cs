@@ -49,7 +49,7 @@ public class RowController : MonoBehaviour
 
     private void Update()
     {
-        HandleShiftInput();
+        HandleInput();
     }
 
     public void NotifyEnd(Direction direction)
@@ -70,7 +70,7 @@ public class RowController : MonoBehaviour
         }
     }
 
-    private void HandleShiftInput()
+    private void HandleInput()
     {
         // get both hand x-axis thumbstick value [-2, 1]
         float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
