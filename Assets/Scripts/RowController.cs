@@ -78,23 +78,30 @@ public class RowController : MonoBehaviour
         if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScrollLeft
             && activeUnits.Count > 0 && activeUnits.First.Value.DoneLoading)
         {
-            StartCoroutine(ShiftFrame(Direction.Right, ScrollTime, true));
+            StartCoroutine(Scroll(Direction.Right));
             canScrollRight = true;
         }
         // scroll to the right -> move shelf left
         else if ((flexL < -0.5 || flexR < -0.5) && !lerping && canScrollRight
                  && activeUnits.Count > 0 && activeUnits.Last.Value.DoneLoading)
         {
-            StartCoroutine(ShiftFrame(Direction.Left, ScrollTime, true));
+            StartCoroutine(Scroll(Direction.Left));
             canScrollLeft = true;
         }
     }
 
-    private IEnumerator ShiftFrame(Direction direction, float time, bool realign)
+    private IEnumerator Scroll(Direction direction)
     {
         if (lerping) yield break;
         lerping = true;
 
+        yield return ShiftFrame(direction, ScrollTime, true);
+        CycleUnits(direction);
+        lerping = false;
+    }
+
+    private IEnumerator ShiftFrame(Direction direction, float time, bool realign)
+    {
         // Calculate direction dependent parameters
         Vector3 end;
         Vector3 realignDir;
@@ -127,9 +134,6 @@ public class RowController : MonoBehaviour
                 unit.transform.localPosition += realignDir * width;
             }
         }
-
-        CycleUnits(direction);
-        lerping = false;
     }
 
     private void CycleUnits(Direction direction)
