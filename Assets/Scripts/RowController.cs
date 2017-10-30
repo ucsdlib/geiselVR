@@ -102,10 +102,14 @@ public class RowController : MonoBehaviour
     {
         if (lerping) yield break;
         lerping = true;
-
+        yield return _Scroll(direction);
+        lerping = false;
+    }
+    
+    private IEnumerator _Scroll(Direction direction)
+    {
         yield return ShiftFrame(direction, ScrollTime, true);
         CycleUnits(direction);
-        lerping = false;
     }
 
     private IEnumerator ShiftFrame(Direction direction, float time, bool realign)
@@ -227,7 +231,7 @@ public class RowController : MonoBehaviour
         while (lerping) yield return null;
         lerping = true;
 
-        // Clear all books
+        // clear all books
         foreach (var unit in activeUnits)
         {
             StartCoroutine(unit.UpdateContents(null, Direction.Null));
@@ -237,10 +241,21 @@ public class RowController : MonoBehaviour
         {
             done = true;
             foreach (var unit in activeUnits)
-            {
                 if (!unit.DoneLoading) done = false;
-            }
             yield return null;
+        }
+
+        // shift empty units for effect 
+        for (var i = 0; i < 30; i++)
+        {
+            yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
+        }
+
+        // load in new units
+        yield return activeUnits.First.Value.UpdateContents(refunit, Direction.Identity);
+        for (var i = 0; i < activeUnits.Count - 1; i++)
+        {
+            yield return _Scroll(Direction.Right);
         }
 
         lerping = false;
