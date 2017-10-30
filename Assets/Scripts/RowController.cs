@@ -89,7 +89,7 @@ public class RowController : MonoBehaviour
             canScrollLeft = true;
         }
 
-        if (OVRInput.Get(OVRInput.Button.One))
+        if (OVRInput.Get(OVRInput.Button.Two))
         {
             foreach (var unit in activeUnits)
             {
@@ -230,11 +230,17 @@ public class RowController : MonoBehaviour
         // Clear all books
         foreach (var unit in activeUnits)
         {
-            yield return unit.UpdateContents(null, Direction.Null);
+            StartCoroutine(unit.UpdateContents(null, Direction.Null));
         }
-        while (true)
+        var done = false;
+        while (!done)
         {
-            
+            done = true;
+            foreach (var unit in activeUnits)
+            {
+                if (!unit.DoneLoading) done = false;
+            }
+            yield return null;
         }
 
         lerping = false;
