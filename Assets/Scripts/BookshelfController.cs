@@ -71,11 +71,13 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    public IEnumerator HandleUpdateEvent(Unit unit, Direction direction)
+    private IEnumerator HandleUpdateEvent(Unit unit, Direction direction)
     {
         if (direction == Direction.Null)
         {
+            unit.DoneLoading = false;
             Clear();
+            unit.DoneLoading = true;
             yield break;
         }
         
