@@ -71,8 +71,8 @@ public class RowController : MonoBehaviour
     private void HandleInput()
     {
         // get both hand x-axis thumbstick value [-2, 1]
-        float flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
-        float flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
+        var flexL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[0];
+        var flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
         // scroll to the left -> move shelf right
         if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScrollLeft
@@ -87,6 +87,14 @@ public class RowController : MonoBehaviour
         {
             StartCoroutine(Scroll(Direction.Left));
             canScrollLeft = true;
+        }
+
+        if (OVRInput.Get(OVRInput.Button.One))
+        {
+            foreach (var unit in activeUnits)
+            {
+                StartCoroutine(unit.UpdateContents(null, Direction.Null));
+            }
         }
     }
 
