@@ -112,6 +112,12 @@ public class BookshelfController : MonoBehaviour
         Display.text = startCallNumber;
     }
 
+    public void SetStartEndCallNum(string start, string end)
+    {
+        this.startCallNumber = start;
+        this.endCallNumber = end;
+    }
+
     private void AddRight<T>(LinkedList<T> list, T item)
     {
         list.AddLast(item);
