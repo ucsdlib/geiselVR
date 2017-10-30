@@ -18,6 +18,7 @@ public class SelectionUI : MonoBehaviour
 	public Text Title;
 	public Slider Slider;
 	public RowController Row;
+	public UnitFactory Factory;
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
@@ -31,7 +32,8 @@ public class SelectionUI : MonoBehaviour
 	
 	public void OnLoadClick()
 	{
-		Row.SetPosition(Title.text);
+		var unit = Factory.UnitStartCallNum(Title.text);
+		Row.SetPosition(unit);
 	}
 	
 	private string GetSliderTranslation(float value)

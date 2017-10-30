@@ -217,12 +217,12 @@ public class RowController : MonoBehaviour
 
     // UI Communication
 
-    public void SetPosition(string key)
+    public void SetPosition(Unit refunit)
     {
-        StartCoroutine(_SetPosition(key));
+        StartCoroutine(_SetPosition(refunit));
     }
 
-    private IEnumerator _SetPosition(string key)
+    private IEnumerator _SetPosition(Unit refunit)
     {
         while (lerping) yield return null;
         lerping = true;
@@ -232,8 +232,10 @@ public class RowController : MonoBehaviour
         {
             yield return unit.UpdateContents(null, Direction.Null);
         }
-
-        // Shift
+        while (true)
+        {
+            
+        }
 
         lerping = false;
     }
