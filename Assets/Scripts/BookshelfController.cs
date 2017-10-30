@@ -220,6 +220,7 @@ public class BookshelfController : MonoBehaviour
         }
         bookList.Clear();
         table.Clear();
+        Display.text = "";
         startCallNumber = endCallNumber = "";
     }
 }
