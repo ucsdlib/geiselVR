@@ -30,7 +30,7 @@ public class BookshelfController : MonoBehaviour
 
     private string startCallNumber;
     private string endCallNumber;
-    private Unit unit;
+    private Unit unitComp;
     private readonly LinkedList<LinkedList<MetaBook>> table = new LinkedList<LinkedList<MetaBook>>();
     private List<Book> bookList = new List<Book>();
     private ShelfAdder addShelf;
@@ -39,11 +39,11 @@ public class BookshelfController : MonoBehaviour
     private void Awake()
     {
         // Establish connection to Unit
-        unit = GetComponent<Unit>();
-        if (unit != null)
+        unitComp = GetComponent<Unit>();
+        if (unitComp != null)
         {
-            unit.UpdateContents += HandleUpdateEvent;
-            unit.DoneLoading = false;
+            unitComp.UpdateContents += HandleUpdateEvent;
+            unitComp.DoneLoading = false;
         }
 
         startCallNumber = CallNumber;
@@ -75,9 +75,9 @@ public class BookshelfController : MonoBehaviour
     {
         if (direction == Direction.Null)
         {
-            unit.DoneLoading = false;
+            unitComp.DoneLoading = false;
             Clear();
-            unit.DoneLoading = true;
+            unitComp.DoneLoading = true;
             yield break;
         }
         
@@ -137,7 +137,7 @@ public class BookshelfController : MonoBehaviour
             var books = GenerateShelf(buffer);
             if (books.Count == 0)
             {
-                unit.Row.NotifyEnd(direction);
+                unitComp.Row.NotifyEnd(direction);
                 return;
             }
 
@@ -192,7 +192,7 @@ public class BookshelfController : MonoBehaviour
             var start = Vector3.up * (TopShelfY - i++ * ShelfHeight);
             InstantiateShelf(shelf, start);
         }
-        unit.DoneLoading = true;
+        unitComp.DoneLoading = true;
     }
 
     private void InstantiateShelf(LinkedList<MetaBook> shelf, Vector3 start)
