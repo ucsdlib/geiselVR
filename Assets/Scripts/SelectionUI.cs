@@ -19,11 +19,6 @@ public class SelectionUI : MonoBehaviour
 	public Slider Slider;
 	public RowController Row;
 	public UnitFactory Factory;
-
-	public void OnEndDrag(PointerEventData eventData)
-	{
-		
-	}
 	
 	public void OnSliderValueChanged(float value)
 	{
