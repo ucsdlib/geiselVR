@@ -228,7 +228,7 @@ public class RowController : MonoBehaviour
 
     private IEnumerator _SetPosition(Unit refunit)
     {
-        while (lerping) yield return null;
+        if (lerping) yield break;
         lerping = true;
 
         // clear all books
