@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 public class RowController : MonoBehaviour
 {
     public Unit TemplateUnit; // unit from which to instantiate
     public int RowSize = 2; // number of units in this row at any given time
+    public int CenterPos = 2; // center shelf which contains position set by SetPosition
     public float ScrollTime = 0.12f; // time period for scroll to complete
 
     private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>(); // current active units
@@ -18,6 +20,9 @@ public class RowController : MonoBehaviour
     private bool canScrollRight = true;
     private bool canScrollLeft = true;
     private GameObject container;
+
+    private List<Unit> buildUnits; // contains units built outside of the game area
+    private bool buildDone;
 
     private void Start()
     {
@@ -105,7 +110,7 @@ public class RowController : MonoBehaviour
         yield return _Scroll(direction);
         lerping = false;
     }
-    
+
     private IEnumerator _Scroll(Direction direction)
     {
         yield return ShiftFrame(direction, ScrollTime, true);
@@ -259,5 +264,39 @@ public class RowController : MonoBehaviour
         }
 
         lerping = false;
+    }
+
+    private IEnumerator BuildSearchedUnits(Unit refunit)
+    {
+        buildDone = false;
+        var list = new LinkedList<Unit>();
+        
+        // place center object
+        var center = Instantiate(TemplateUnit, container.transform);
+        center.transform.localPosition += Vector3.down * 100;
+        list.AddLast(center);
+        yield return center.UpdateContents(refunit, Direction.Identity);
+        
+        // build around
+        var lastUnit = center;
+        for (var i = 0; i < CenterPos - 1; i++) // left
+        {
+            var unit = Instantiate(TemplateUnit, container.transform);
+            unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.left;
+            list.AddFirst(unit);
+            yield return unit.UpdateContents(lastUnit, Direction.Left);
+            lastUnit = unit;
+        }
+        lastUnit = center;
+        for (var i = 0; i < RowSize - CenterPos; i++)
+        {
+            var unit = Instantiate(TemplateUnit, container.transform);
+            unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.right;
+            list.AddLast(unit);
+            yield return unit.UpdateContents(lastUnit, Direction.Right);
+            lastUnit = unit;
+        }
+        
+        buildDone = true;
     }
 }
