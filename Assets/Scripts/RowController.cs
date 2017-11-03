@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 public class RowController : MonoBehaviour
 {
@@ -241,14 +240,7 @@ public class RowController : MonoBehaviour
         {
             StartCoroutine(unit.UpdateContents(null, Direction.Null));
         }
-        var done = false;
-        while (!done)
-        {
-            done = true;
-            foreach (var unit in activeUnits)
-                if (!unit.DoneLoading) done = false;
-            yield return null;
-        }
+        while (!UnitsDoneLoading(activeUnits)) yield return null;
 
         // shift empty units for effect 
         for (var i = 0; i < 30; i++)
@@ -298,5 +290,14 @@ public class RowController : MonoBehaviour
         }
         
         buildDone = true;
+    }
+    
+    bool UnitsDoneLoading(IEnumerable<Unit> units)
+    {
+        foreach (var unit in units)
+        {
+            if (!unit.DoneLoading) return false;
+        }
+        return true;
     }
 }
