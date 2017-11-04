@@ -234,6 +234,10 @@ public class RowController : MonoBehaviour
     {
         if (lerping) yield break;
         lerping = true;
+        
+        // build new row
+        var buildUnits = new Out<IEnumerable>();
+        StartCoroutine(BuildSearchedUnits(refunit, buildUnits));
 
         // clear all books
         foreach (var unit in activeUnits)
@@ -258,7 +262,7 @@ public class RowController : MonoBehaviour
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(Unit refunit, ICollection<Unit> buildUnits)
+    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable> outBuildUnits)
     {
         buildDone = false;
         var list = new LinkedList<Unit>();
@@ -289,7 +293,7 @@ public class RowController : MonoBehaviour
             lastUnit = unit;
         }
 
-        buildUnits = list;
+        outBuildUnits.value = list;
         buildDone = true;
     }
     
