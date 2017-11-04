@@ -275,7 +275,7 @@ public class RowController : MonoBehaviour
         {
             var unit = Instantiate(TemplateUnit, container.transform);
             unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.left;
-            list.AddFirst(unit);
+            list.AddLast(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Left);
             lastUnit = unit;
         }
@@ -284,7 +284,7 @@ public class RowController : MonoBehaviour
         {
             var unit = Instantiate(TemplateUnit, container.transform);
             unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.right;
-            list.AddLast(unit);
+            list.AddFirst(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Right);
             lastUnit = unit;
         }
