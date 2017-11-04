@@ -22,8 +22,6 @@ public class RowController : MonoBehaviour
     private bool canScrollLeft = true;
     private GameObject container;
 
-    private bool buildDone;
-
     private void Start()
     {
         // set starting positions
@@ -268,7 +266,7 @@ public class RowController : MonoBehaviour
         lerping = true;
         
         // build new row
-        var buildUnits = new Out<IEnumerable>();
+        var buildUnits = new Out<IEnumerable<Unit>>();
         StartCoroutine(BuildSearchedUnits(refunit, buildUnits));
 
         // clear all books
@@ -278,23 +276,27 @@ public class RowController : MonoBehaviour
         }
         while (!UnitsDoneLoading(activeUnits)) yield return null;
 
-        // shift empty units for effect 
+        // shift empty units for effect and keep going until new row is built
         for (var i = 0; i < 30; i++)
+        {
+            yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
+        }
+        while (!buildUnits.Done)
         {
             yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
         }
 
         // load in new units
-        yield return activeUnits.First.Value.UpdateContents(refunit, Direction.Identity);
-        for (var i = 0; i < activeUnits.Count - 1; i++)
+        foreach (var unit in buildUnits.Value)
         {
-            yield return _Scroll(Direction.Right);
+            yield return ShiftFrame(Direction.Right, ScrollTime, true);
+            CycleUnits(Direction.Right, unit);
         }
-
+        
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable> buildUnits)
+    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable<Unit>> buildUnits)
     {
         var list = new LinkedList<Unit>();
         
