@@ -1,4 +1,5 @@
 ﻿public class Out<T>
 {
-    public T value;
+    public T Value;
+    public bool Done = false;
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
 
@@ -293,9 +294,8 @@ public class RowController : MonoBehaviour
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable> outBuildUnits)
+    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable> buildUnits)
     {
-        buildDone = false;
         var list = new LinkedList<Unit>();
         
         // place center object
@@ -321,8 +321,8 @@ public class RowController : MonoBehaviour
             lastUnit = unit;
         }
 
-        outBuildUnits.value = list;
-        buildDone = true;
+        buildUnits.Value = list;
+        buildUnits.Done = true;
     }
     
     private static bool UnitsDoneLoading(IEnumerable<Unit> units)
