@@ -204,6 +204,13 @@ public class RowController : MonoBehaviour
         return unit;
     }
 
+    private Unit InstantiateUnit()
+    {
+        var unit = Instantiate(TemplateUnit, container.transform);
+        unit.Row = this;
+        return unit;
+    }
+
     private Bounds CalculateLocalBounds(GameObject obj)
     {
         // Get bounds of obj first
