@@ -299,8 +299,7 @@ public class RowController : MonoBehaviour
         var list = new LinkedList<Unit>();
         
         // place center object
-        var center = Instantiate(TemplateUnit, container.transform);
-        center.transform.localPosition += Vector3.down * 100;
+        var center = InstantiateUnit(Vector3.down * 100);
         list.AddLast(center);
         yield return center.UpdateContents(refunit, Direction.Identity);
         
@@ -308,8 +307,7 @@ public class RowController : MonoBehaviour
         var lastUnit = center;
         for (var i = 0; i < CenterPos - 1; i++) // left
         {
-            var unit = Instantiate(TemplateUnit, container.transform);
-            unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.left;
+            var unit = InstantiateUnit(lastUnit.transform.localPosition + width * Vector3.left);
             list.AddLast(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Left);
             lastUnit = unit;
@@ -317,8 +315,7 @@ public class RowController : MonoBehaviour
         lastUnit = center;
         for (var i = 0; i < RowSize - CenterPos; i++)
         {
-            var unit = Instantiate(TemplateUnit, container.transform);
-            unit.transform.localPosition = lastUnit.transform.localPosition + width * Vector3.right;
+            var unit = InstantiateUnit(lastUnit.transform.localPosition + width * Vector3.right);
             list.AddFirst(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Right);
             lastUnit = unit;
