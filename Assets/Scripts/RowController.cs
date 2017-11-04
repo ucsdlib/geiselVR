@@ -177,6 +177,30 @@ public class RowController : MonoBehaviour
             activeUnits.AddLast(newUnit);
         }
     }
+    
+    private void CycleUnits(Direction direction, Unit newUnit)
+    {
+        if (direction == Direction.Right)
+        {
+            // remove invalid input
+            var invalidUnit = activeUnits.Last.Value;
+            activeUnits.RemoveLast();
+            Destroy(invalidUnit.gameObject);
+            
+            // place new unit
+            newUnit.transform.localPosition = firstPos;
+            activeUnits.AddFirst(newUnit);
+        }
+        else
+        {
+            var invalidUnit = activeUnits.Last.Value;
+            activeUnits.RemoveFirst();
+            Destroy(invalidUnit.gameObject);
+            
+            newUnit.transform.localPosition = lastPos;
+            activeUnits.AddLast(newUnit);
+        }
+    }
 
     private IEnumerator InstantiateArray(int size)
     {
