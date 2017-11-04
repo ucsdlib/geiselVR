@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,7 +21,6 @@ public class RowController : MonoBehaviour
     private bool canScrollLeft = true;
     private GameObject container;
 
-    private List<Unit> buildUnits; // contains units built outside of the game area
     private bool buildDone;
 
     private void Start()
@@ -258,7 +258,7 @@ public class RowController : MonoBehaviour
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(Unit refunit)
+    private IEnumerator BuildSearchedUnits(Unit refunit, ICollection<Unit> buildUnits)
     {
         buildDone = false;
         var list = new LinkedList<Unit>();
@@ -288,16 +288,13 @@ public class RowController : MonoBehaviour
             yield return unit.UpdateContents(lastUnit, Direction.Right);
             lastUnit = unit;
         }
-        
+
+        buildUnits = list;
         buildDone = true;
     }
     
-    bool UnitsDoneLoading(IEnumerable<Unit> units)
+    private static bool UnitsDoneLoading(IEnumerable<Unit> units)
     {
-        foreach (var unit in units)
-        {
-            if (!unit.DoneLoading) return false;
-        }
-        return true;
+        return units.All(unit => unit.DoneLoading);
     }
 }
