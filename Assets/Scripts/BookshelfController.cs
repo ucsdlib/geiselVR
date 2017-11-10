@@ -13,7 +13,7 @@ public class BookshelfController : MonoBehaviour
     public bool MetaLoaded { get; private set; }
 
     public string CallNumber;
-    public Book BookTemplate;
+    public BookController BookTemplate;
     public int DbBufferSize = 50;
     public float MaxBookSize = 500f;
     public int ShelfCount = 3;
@@ -24,15 +24,15 @@ public class BookshelfController : MonoBehaviour
     public bool ShowGuides;
     public Text Display;
 
-    private delegate void ShelfAdder(LinkedList<MetaBook> books, MetaBook book);
+    private delegate void ShelfAdder(LinkedList<Book> books, Book book);
 
-    private delegate void TableAdder(LinkedList<LinkedList<MetaBook>> table, LinkedList<MetaBook> shelf);
+    private delegate void TableAdder(LinkedList<LinkedList<Book>> table, LinkedList<Book> shelf);
 
     private string startCallNumber;
     private string endCallNumber;
     private Unit unitComp;
-    private readonly LinkedList<LinkedList<MetaBook>> table = new LinkedList<LinkedList<MetaBook>>();
-    private List<Book> bookList = new List<Book>();
+    private readonly LinkedList<LinkedList<Book>> table = new LinkedList<LinkedList<Book>>();
+    private List<BookController> bookList = new List<BookController>();
     private ShelfAdder addShelf;
     private TableAdder addTable;
 
@@ -154,9 +154,9 @@ public class BookshelfController : MonoBehaviour
         MetaLoaded = true;
     }
 
-    private LinkedList<MetaBook> GenerateShelf(DbBuffer buffer)
+    private LinkedList<Book> GenerateShelf(DbBuffer buffer)
     {
-        var books = new LinkedList<MetaBook>();
+        var books = new LinkedList<Book>();
         var totalWidth = 0.0f;
 
         while (true)
@@ -168,7 +168,7 @@ public class BookshelfController : MonoBehaviour
                 if ((entry = buffer.NextEntry()) == null) return books;
             } while (entry.Width > MaxBookSize);
 
-            var book = new MetaBook(entry);
+            var book = new Book(entry);
 
             totalWidth += book.Width;
             if (totalWidth > ShelfWidth) break;
@@ -195,7 +195,7 @@ public class BookshelfController : MonoBehaviour
         unitComp.DoneLoading = true;
     }
 
-    private void InstantiateShelf(LinkedList<MetaBook> shelf, Vector3 start)
+    private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
     {
         var shelfGameObj = new GameObject("Shelf");
         shelfGameObj.transform.parent = transform;

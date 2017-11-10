@@ -1,40 +1,28 @@
-﻿using System;
-using UnityEngine;
-
-public class Book : MonoBehaviour
+﻿public class Book
 {
-    
-    public TextRenderer TitleRenderer;
-
     public string CallNumber
     {
-        get { return _meta.CallNumber; }
+        get { return _callNumber; }
     }
-    
+
+    public string Title
+    {
+        get { return _title; }
+    }
+
     public float Width
     {
-        get { return _meta.Width; }
+        get { return (float) _widthDb / 1000 + 0.01f; }
     }
 
-    private MetaBook _meta;
-    
-    void Awake()
-    {
-        TitleRenderer = GetComponentInChildren<TextRenderer>();
-        if (!TitleRenderer)
-        {
-            Debug.Log("Could not find title renderer");
-        }
-    }
+    private readonly string _callNumber;
+    private readonly string _title;
+    private readonly double _widthDb;
 
-    public void SetMeta(MetaBook meta)
+    public Book(DataEntry entry)
     {
-        _meta = meta;
-    }
-    
-    public void LoadData()
-    {
-        if (_meta == null) return;
-        TitleRenderer.GenerateText(_meta.CallNumber);
+        _callNumber = entry.CallNum;
+        _title = entry.Title;
+        _widthDb = entry.Width;
     }
 }
