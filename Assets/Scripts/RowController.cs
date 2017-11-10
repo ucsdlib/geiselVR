@@ -187,6 +187,7 @@ public class RowController : MonoBehaviour
             Destroy(invalidUnit.gameObject);
             
             // place new unit
+            newUnit.transform.parent = container.transform;
             newUnit.transform.localPosition = firstPos;
             activeUnits.AddFirst(newUnit);
         }
@@ -196,6 +197,7 @@ public class RowController : MonoBehaviour
             activeUnits.RemoveFirst();
             Destroy(invalidUnit.gameObject);
             
+            newUnit.transform.parent = container.transform;
             newUnit.transform.localPosition = lastPos;
             activeUnits.AddLast(newUnit);
         }
@@ -302,6 +304,7 @@ public class RowController : MonoBehaviour
         
         // place center object
         var center = InstantiateUnit(Vector3.down * 100);
+        center.transform.parent = null;
         list.AddLast(center);
         yield return center.UpdateContents(refunit, Direction.Identity);
         
@@ -309,7 +312,8 @@ public class RowController : MonoBehaviour
         var lastUnit = center;
         for (var i = 0; i < CenterPos - 1; i++) // left
         {
-            var unit = InstantiateUnit(lastUnit.transform.localPosition + width * Vector3.left);
+            var unit = InstantiateUnit(lastUnit.transform.position + width * Vector3.left);
+            unit.transform.parent = null;
             list.AddLast(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Left);
             lastUnit = unit;
@@ -317,7 +321,8 @@ public class RowController : MonoBehaviour
         lastUnit = center;
         for (var i = 0; i < RowSize - CenterPos; i++)
         {
-            var unit = InstantiateUnit(lastUnit.transform.localPosition + width * Vector3.right);
+            var unit = InstantiateUnit(lastUnit.transform.position + width * Vector3.right);
+            unit.transform.parent = null;
             list.AddFirst(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Right);
             lastUnit = unit;
