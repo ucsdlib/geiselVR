@@ -2,27 +2,27 @@
 {
     public string CallNumber
     {
-        get { return _callNumber; }
+        get { return callNumber; }
     }
 
     public string Title
     {
-        get { return _title; }
+        get { return title; }
     }
 
     public float Width
     {
-        get { return (float) _widthDb / 1000 + 0.01f; }
+        get { return (float) widthDb / 1000 + 0.01f; }
     }
 
-    private readonly string _callNumber;
-    private readonly string _title;
-    private readonly double _widthDb;
+    private readonly string callNumber;
+    private readonly string title;
+    private readonly double widthDb;
 
     public Book(DataEntry entry)
     {
-        _callNumber = entry.CallNum;
-        _title = entry.Title;
-        _widthDb = entry.Width;
+        callNumber = entry.CallNum;
+        title = entry.Title;
+        widthDb = entry.Width;
     }
 }
