@@ -9,36 +9,31 @@ using UnityEngine;
 /// </summary>
 public class DbWrapper
 {
-    public static DbWrapper Instance
-    {
-        get { return _instance ?? (_instance = new DbWrapper(DataBasePath)); }
-    }
-
     private static DbWrapper _instance;
-    private const string DataBasePath = "testdb.db"; // within the Assets folder
-    private const string TableName = "testing";
 
-    private IDbConnection _connection;
-    private string _dbPath;
+    private IDbConnection connection;
+    private readonly string dbPath;
+    private string tableName;
 
     private bool Connected
     {
-        get { return _connection.State == ConnectionState.Open; }
+        get { return connection.State == ConnectionState.Open; }
     }
 
-    public DbWrapper(string assetsDbPath)
+    public DbWrapper(string assetsDbPath, string tableName)
     {
-        var _dbPath = "URI=file:" + Application.dataPath + "/" + assetsDbPath;
+        dbPath = "URI=file:" + Application.dataPath + "/" + assetsDbPath;
+        this.tableName = tableName;
         Connect();
     }
 
     private void Connect()
     {
-        _connection = new SqliteConnection(_dbPath);
-        _connection.Open();
+        connection = new SqliteConnection(dbPath);
+        connection.Open();
         if (!Connected)
         {
-            Debug.LogError("Could not connect to db: " + DataBasePath);
+            Debug.LogError("Could not connect to db: " + dbPath);
         }
     }
 
@@ -48,8 +43,8 @@ public class DbWrapper
         
         // Execute query
         var query = string.Format(
-            "SELECT * FROM {0} WHERE call == '{1}'", TableName, callNum);
-        var command = _connection.CreateCommand();
+            "SELECT * FROM {0} WHERE call == '{1}'", tableName, callNum);
+        var command = connection.CreateCommand();
         command.CommandText = query;
         var reader = command.ExecuteReader();
 
@@ -92,10 +87,10 @@ public class DbWrapper
             "WHERE call {1} '{2}' " +
             "ORDER BY call {3} " +
             "LIMIT {4}",
-            TableName, op, startCallNum, order, count);
+            tableName, op, startCallNum, order, count);
 
         // execute query
-        var command = _connection.CreateCommand();
+        var command = connection.CreateCommand();
         command.CommandText = query;
         var reader = command.ExecuteReader(CommandBehavior.SingleResult);
 
@@ -133,10 +128,10 @@ public class DbWrapper
             "SELECT * FROM {0} " +
             "WHERE call {1} '{2}' AND call {3} '{4}' " +
             "ORDER BY call",
-            TableName, lowOp, startCallNum, highOp, endCallNum);
+            tableName, lowOp, startCallNum, highOp, endCallNum);
 
         // execute query
-        var command = _connection.CreateCommand();
+        var command = connection.CreateCommand();
         command.CommandText = query;
         var reader = command.ExecuteReader();
 
