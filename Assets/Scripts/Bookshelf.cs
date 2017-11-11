@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 
 public class Bookshelf : IUnit
 {
@@ -57,6 +58,7 @@ public class Bookshelf : IUnit
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
         PopulateTable(buffer);
+        done = true;
     }
 
     private void PopulateTable(DbBuffer buffer)
@@ -78,8 +80,6 @@ public class Bookshelf : IUnit
         {
             Start = End = "";
         }
-
-        done = true;
     }
 
     private LinkedList<Book> GenerateShelf(DbBuffer buffer)
