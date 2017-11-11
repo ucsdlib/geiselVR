@@ -28,21 +28,24 @@ public class DbWrapper
 
     public DbWrapper(string assetsDbPath)
     {
-        _dbPath = assetsDbPath;
+        var _dbPath = "URI=file:" + Application.dataPath + "/" + assetsDbPath;
         Connect();
     }
 
     private void Connect()
     {
-        var dbUri = "URI=file:" + Application.dataPath + "/" + _dbPath;
-        _connection = new SqliteConnection(dbUri);
+        _connection = new SqliteConnection(_dbPath);
         _connection.Open();
+        if (!Connected)
+        {
+            Debug.LogError("Could not connect to db: " + DataBasePath);
+        }
     }
 
     public void QueryCallNum(string callNum)
     {
-        if (!Connected) Connect();
-
+        if (!Connected) return;
+        
         // Execute query
         var query = string.Format(
             "SELECT * FROM {0} WHERE call == '{1}'", TableName, callNum);
@@ -70,7 +73,7 @@ public class DbWrapper
     /// <param name="forward">if true then loading is in increasing call num direction</param>
     public void QueryCount(ref List<DataEntry> results, string startCallNum, int count, bool forward)
     {
-        if (!Connected) Connect();
+        if (!Connected) return;
 
         // construct query
         string op, order;
@@ -121,7 +124,7 @@ public class DbWrapper
     public List<DataEntry> QueryRange(ref List<DataEntry> results, string startCallNum, string endCallNum,
         bool startInclusive, bool endInclusive)
     {
-        if (!Connected) Connect();
+        if (!Connected) return null;
 
         // construct query
         var lowOp = (startInclusive) ? ">=" : ">";
