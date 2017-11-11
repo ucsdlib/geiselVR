@@ -7,57 +7,63 @@ public class DbBuffer
 {
     public bool Forward
     {
-        get { return _forward; }
+        get { return forward; }
     }
 
-    private readonly DbWrapper _db;
-    private readonly int _capacity;
-    private readonly bool _forward;
-    private string _startCallNum;
-    private int _index;
-    private List<DataEntry> _buffer;
+    private readonly DbWrapper db;
+    private readonly int capacity;
+    private readonly bool forward;
+    private string startCallNum;
+    private int index;
+    private List<DataEntry> buffer;
 
     public DbBuffer(string startCallNum, int capacity, Direction direction)
     {
         switch (direction)
         {
             case Direction.Left:
-                _forward = false;
+                forward = false;
                 break;
             case Direction.Right:
-                _forward = true;
+                forward = true;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(
                     "direction", direction, message: null);
         }
-        _db = DbWrapper.Instance;
-        _startCallNum = startCallNum;
-        _capacity = capacity;
-        _index = 0;
-        _buffer = new List<DataEntry>(capacity);
+        db = Manager.DbWrapper;
+        this.startCallNum = startCallNum;
+        this.capacity = capacity;
+        index = 0;
+        buffer = new List<DataEntry>(capacity);
     }
+
+    public DbBuffer(string startCallNum, Direction direction) :
+        this(startCallNum, Manager.Instance.BufferSize, direction)
+    {
+    }
+
 
     private bool LoadData()
     {
-        _buffer.Clear();
-        _index = 0;
-        _db.QueryCount(ref _buffer, _startCallNum, _capacity, forward: _forward);
-        return _buffer.Count > 0; // check if we added data
+        buffer.Clear();
+        index = 0;
+        db.QueryCount(ref buffer, startCallNum, capacity, forward: forward);
+        return buffer.Count > 0; // check if we added data
     }
 
     [CanBeNull]
     public DataEntry NextEntry()
     {
-        if (_buffer.Count == 0 && !LoadData()) return null;
+        if (buffer.Count == 0 && !LoadData()) return null;
 
         // load next round of data if needed
-        if (_index >= _buffer.Count)
+        if (index >= buffer.Count)
         {
-            _startCallNum = _buffer[_buffer.Count - 1].CallNum;
+            startCallNum = buffer[buffer.Count - 1].CallNum;
             if (!LoadData()) return null;
         }
 
-        return _buffer[_index++];
+        return buffer[index++];
     }
 }
