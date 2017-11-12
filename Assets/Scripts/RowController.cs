@@ -298,22 +298,18 @@ public class RowController : MonoBehaviour
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(Unit refunit, Out<IEnumerable<Unit>> buildUnits)
+    private IEnumerator BuildSearchedUnits(IUnit refunit, Out<IEnumerable<IUnit>> buildUnits)
     {
-        var list = new LinkedList<Unit>();
+        var list = new LinkedList<IUnit>();
         
         // place center object
-        var center = InstantiateUnit(Vector3.down * 100);
-        center.transform.parent = null;
-        list.AddLast(center);
-        yield return center.UpdateContents(refunit, Direction.Identity);
+        list.AddLast(refunit);
         
         // build around
-        var lastUnit = center;
+        var lastUnit = refunit;
         for (var i = 0; i < CenterPos - 1; i++) // left
         {
-            var unit = InstantiateUnit(lastUnit.transform.position + width * Vector3.left);
-            unit.transform.parent = null;
+            
             list.AddLast(unit);
             yield return unit.UpdateContents(lastUnit, Direction.Left);
             lastUnit = unit;

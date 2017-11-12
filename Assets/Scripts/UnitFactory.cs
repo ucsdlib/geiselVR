@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitFactory
 {
@@ -11,7 +10,8 @@ public class UnitFactory
         Debug.Log("UnitFactory: Could not find BookshelfController script on template");
     }
     
-    public  IUnit Blank()
+    public IUnit BlankIUnit()
     {
+        return new Bookshelf("", "", template.ShelfCount, template.ShelfWidth);
     }
 }
