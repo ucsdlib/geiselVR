@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
+using UnityEngine;
 
 public class Bookshelf : IUnit
 {
@@ -20,21 +20,23 @@ public class Bookshelf : IUnit
     private TableAdder addTable;
     private volatile bool done;
 
-    private readonly int dbBufferSize;
     private readonly int shelfCount;
-    private readonly int shelfWidth;
+    private readonly float shelfWidth;
 
-    public Bookshelf(string start, string end, int dbBufferSize, int shelfCount, int shelfWidth)
+    public Bookshelf(string start, string end, int shelfCount, float shelfWidth)
     {
         Start = start;
         End = end;
-        this.dbBufferSize = dbBufferSize;
+        Table = new LinkedList<LinkedList<Book>>();
+        done = true;
         this.shelfCount = shelfCount;
         this.shelfWidth = shelfWidth;
     }
 
     public void Load(Direction direction)
     {
+        if (!done) return;
+        done = false;
         // FIXME The Identity direction does not include the starting book when populating
         DbBuffer buffer;
         switch (direction)
@@ -42,17 +44,17 @@ public class Bookshelf : IUnit
             case Direction.Right:
                 addShelf = AddRight;
                 addTable = AddRight;
-                buffer = new DbBuffer(End, dbBufferSize, direction);
+                buffer = new DbBuffer(End, direction);
                 break;
             case Direction.Left:
                 addShelf = AddLeft;
                 addTable = AddLeft;
-                buffer = new DbBuffer(Start, dbBufferSize, direction);
+                buffer = new DbBuffer(Start, direction);
                 break;
             case Direction.Identity:
                 addShelf = AddRight;
                 addTable = AddRight;
-                buffer = new DbBuffer(Start, dbBufferSize, Direction.Right);
+                buffer = new DbBuffer(Start, Direction.Right);
                 break;
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
@@ -94,7 +96,7 @@ public class Bookshelf : IUnit
             do
             {
                 if ((entry = buffer.NextEntry()) == null) return books; // db ran out
-            } while (entry.Width > shelfWidth);
+            } while (entry.Width > shelfWidth * 100);
 
             var book = new Book(entry);
 
