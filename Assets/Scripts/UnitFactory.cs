@@ -1,27 +1,17 @@
-﻿using System.ComponentModel;
+﻿using UnityEditor;
 using UnityEngine;
 
-public class UnitFactory : MonoBehaviour
+public class UnitFactory
 {
-    public BookshelfController TemplateShelf;
+    private BookshelfController template;
 
-    private BookshelfController bookshelf;
-    private Unit unit;
-
-    private void Start()
+    public UnitFactory(GameObject templateUnit)
     {
-//        bookshelf = Instantiate(TemplateShelf, gameObject.transform);
-//        bookshelf.transform.position += Vector3.down * 100;
-//        unit = bookshelf.GetComponent<Unit>();
-//        if (unit == null)
-//        {
-//            Debug.LogError("UnitFactory could not find Unit component on TemplateShelf");
-//        }
+        template = templateUnit.GetComponent<BookshelfController>();
+        Debug.Log("UnitFactory: Could not find BookshelfController script on template");
     }
-
-    public Unit UnitStartCallNum(string start)
+    
+    public  IUnit Blank()
     {
-//        bookshelf.SetStartEndCallNum(start, "");
-        return unit;
     }
 }

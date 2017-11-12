@@ -1,23 +1,24 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
     public static Manager Instance { get; private set; }
 
-    [Header("Database")]
+    [Header("Database")] 
     public string DataBasePath;
     public string TableName;
     public int BufferSize;
-    
-    [HideInInspector]
-    public static DbWrapper DbWrapper { get { return Instance.dbWrapper; }}
 
-    private DbWrapper dbWrapper;
-    
+    [Header("Units")] 
+    public GameObject TemplateUnit;
+
+    public static DbWrapper DbWrapper { get; private set; }
+    public static UnitFactory UnitFactory { get; private set; }
+
     private void Awake()
     {
         Instance = this;
-        dbWrapper = new DbWrapper(DataBasePath, TableName);
+        DbWrapper = new DbWrapper(DataBasePath, TableName);
+        UnitFactory = new UnitFactory(TemplateUnit);
     }
 }
