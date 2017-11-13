@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
@@ -257,19 +258,24 @@ public class RowController : MonoBehaviour
 
     // UI Communication
 
-    public void SetPosition(Unit refunit)
+    public void SetPosition(IUnit refunit)
     {
         StartCoroutine(_SetPosition(refunit));
     }
 
-    private IEnumerator _SetPosition(Unit refunit)
+    private IEnumerator _SetPosition(IUnit refunit)
     {
         if (lerping) yield break;
         lerping = true;
         
-        // build new row
-        var buildUnits = new Out<IEnumerable<Unit>>();
-        StartCoroutine(BuildSearchedUnits(refunit, buildUnits));
+        // start population
+        var buildUnits = new LinkedList<IUnit>();
+        bool result, done = false;
+        new Thread(o =>
+        {
+            result = BuildSearchedUnits(refunit, buildUnits);
+            done = true;
+        }).Start();
 
         // clear all books
         foreach (var unit in activeUnits)
@@ -283,7 +289,7 @@ public class RowController : MonoBehaviour
         {
             yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
         }
-        while (!buildUnits.Done)
+        while (!done)
         {
             yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
         }
@@ -298,10 +304,8 @@ public class RowController : MonoBehaviour
         lerping = false;
     }
 
-    private IEnumerator BuildSearchedUnits(IUnit refunit, Out<IEnumerable<IUnit>> buildUnits)
+    private bool BuildSearchedUnits(IUnit refunit, LinkedList<IUnit> list)
     {
-        var list = new LinkedList<IUnit>();
-        
         // place center object
         list.AddLast(refunit);
         
@@ -323,10 +327,7 @@ public class RowController : MonoBehaviour
             lastUnit = unit;
         }
 
-        refunit.Load(refunit, Direction.Identity);
-
-        buildUnits.Value = list;
-        buildUnits.Done = true;
+        return refunit.Load(refunit, Direction.Identity);
     }
     
     private static bool UnitsDoneLoading(IEnumerable<Unit> units)

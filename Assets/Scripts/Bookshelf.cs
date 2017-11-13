@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Bookshelf : IUnit
@@ -65,6 +66,16 @@ public class Bookshelf : IUnit
         }
         PopulateTable(buffer);
         done = true;
+        
+        // Load chain
+        foreach (var tuple in chain)
+        {
+            var shelf = tuple.Item1;
+            var dir = tuple.Item2;
+            shelf.Start = Start;
+            shelf.End = End;
+            shelf.Load(dir);
+        }
     }
 
     private void PopulateTable(DbBuffer buffer)
