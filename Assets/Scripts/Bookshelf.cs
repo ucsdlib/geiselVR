@@ -19,6 +19,7 @@ public class Bookshelf : IUnit
     private ShelfAdder addShelf;
     private TableAdder addTable;
     private volatile bool done;
+    private List<Tuple<Bookshelf, Direction>> chain;
 
     private readonly int shelfCount;
     private readonly float shelfWidth;
@@ -28,6 +29,7 @@ public class Bookshelf : IUnit
         Start = start;
         End = end;
         Table = new LinkedList<LinkedList<Book>>();
+        chain = new List<Tuple<Bookshelf, Direction>>();
         done = true;
         this.shelfCount = shelfCount;
         this.shelfWidth = shelfWidth;
@@ -37,6 +39,8 @@ public class Bookshelf : IUnit
     {
         if (!done) return;
         done = false;
+        
+        // Load self
         // FIXME The Identity direction does not include the starting book when populating
         DbBuffer buffer;
         switch (direction)
@@ -120,11 +124,26 @@ public class Bookshelf : IUnit
 
     public bool Load(IUnit unit, Direction direction)
     {
-        throw new NotImplementedException();
+        var bookshelf = unit as Bookshelf;
+        if (bookshelf == null)
+        {
+            Debug.LogError("Bookshelf: received IUnit of wrong type on Load");
+            return false;
+        }
+        Start = bookshelf.Start;
+        End = bookshelf.End;
+        Load(direction);
+        return true;
     }
 
     public void Chain(IUnit unit, Direction direction)
     {
-        throw new NotImplementedException();
+        var bookshelf = unit as Bookshelf;
+        if (bookshelf == null)
+        {
+            Debug.LogError("Bookshelf: receveived IUnit of wrong type on Chain");
+            return;
+        }
+        chain.Add(new Tuple<Bookshelf, Direction>(bookshelf, direction));
     }
 }

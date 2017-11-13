@@ -309,20 +309,21 @@ public class RowController : MonoBehaviour
         var lastUnit = refunit;
         for (var i = 0; i < CenterPos - 1; i++) // left
         {
-            
+            var unit = Manager.UnitFactory.BlankIUnit();
             list.AddLast(unit);
-            yield return unit.UpdateContents(lastUnit, Direction.Left);
+            lastUnit.Chain(unit, Direction.Right);
             lastUnit = unit;
         }
-        lastUnit = center;
+        lastUnit = refunit;
         for (var i = 0; i < RowSize - CenterPos; i++)
         {
-            var unit = InstantiateUnit(lastUnit.transform.position + width * Vector3.right);
-            unit.transform.parent = null;
+            var unit = Manager.UnitFactory.BlankIUnit();
             list.AddFirst(unit);
-            yield return unit.UpdateContents(lastUnit, Direction.Right);
+            lastUnit.Chain(unit, Direction.Left);
             lastUnit = unit;
         }
+
+        refunit.Load(refunit, Direction.Identity);
 
         buildUnits.Value = list;
         buildUnits.Done = true;
