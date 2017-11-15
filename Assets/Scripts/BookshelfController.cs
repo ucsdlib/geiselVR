@@ -107,6 +107,7 @@ public class BookshelfController : MonoBehaviour
 
         Data = shelf;
         yield return InstantiateTable();
+        Display.text = Data.Start;
     }
 
     private IEnumerator InstantiateTable()
