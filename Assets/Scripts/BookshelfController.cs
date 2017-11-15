@@ -30,6 +30,7 @@ public class BookshelfController : MonoBehaviour
         if (unit != null)
         {
             unit.UpdateContents += HandleUpdateEvent;
+            unit.LoadContents += HandleLoadEvent;
             unit.DoneLoading = false;
         }
         Data = new Bookshelf(CallNumber, CallNumber, ShelfCount, ShelfWidth);
@@ -93,6 +94,19 @@ public class BookshelfController : MonoBehaviour
         unit.DoneLoading = true;
         yield return InstantiateTable();
         Display.text = Data.Start;
+    }
+
+    private IEnumerator HandleLoadEvent(IUnit unit)
+    {
+        var shelf = unit as Bookshelf;
+        if (shelf == null)
+        {
+            Debug.LogError("BookshelfController: IUnit not Bookshelf on LoadEvent");
+            yield break;
+        }
+
+        Data = shelf;
+        yield return InstantiateTable();
     }
 
     private IEnumerator InstantiateTable()
