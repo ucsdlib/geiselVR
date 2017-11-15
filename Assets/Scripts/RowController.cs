@@ -294,12 +294,13 @@ public class RowController : MonoBehaviour
             yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
         }
 
-        // TODO
         // load in new units
-        foreach (var unit in buildUnits.Value)
+        foreach (var iunit in buildUnits)
         {
             yield return ShiftFrame(Direction.Right, ScrollTime, true);
+            var unit = InstantiateUnit();
             CycleUnits(Direction.Right, unit);
+            StartCoroutine(unit.LoadContents(iunit));
         }
         
         lerping = false;

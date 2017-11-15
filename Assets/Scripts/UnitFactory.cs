@@ -14,4 +14,9 @@ public class UnitFactory
     {
         return new Bookshelf("", "", template.ShelfCount, template.ShelfWidth);
     }
+
+    public IUnit StartIUnit(string start)
+    {
+        return new Bookshelf(start, "", template.ShelfCount, template.ShelfWidth);
+    }
 }

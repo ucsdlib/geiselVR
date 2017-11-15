@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Bookshelf : IUnit
@@ -20,7 +19,7 @@ public class Bookshelf : IUnit
     private ShelfAdder addShelf;
     private TableAdder addTable;
     private volatile bool done;
-    private List<Tuple<Bookshelf, Direction>> chain;
+    private List<ChainEntry> chain;
 
     private readonly int shelfCount;
     private readonly float shelfWidth;
@@ -30,7 +29,7 @@ public class Bookshelf : IUnit
         Start = start;
         End = end;
         Table = new LinkedList<LinkedList<Book>>();
-        chain = new List<Tuple<Bookshelf, Direction>>();
+        chain = new List<ChainEntry>();
         done = true;
         this.shelfCount = shelfCount;
         this.shelfWidth = shelfWidth;
@@ -68,13 +67,11 @@ public class Bookshelf : IUnit
         done = true;
         
         // Load chain
-        foreach (var tuple in chain)
+        foreach (var entry in chain)
         {
-            var shelf = tuple.Item1;
-            var dir = tuple.Item2;
-            shelf.Start = Start;
-            shelf.End = End;
-            shelf.Load(dir);
+            entry.bookshelf.Start = Start;
+            entry.bookshelf.End = End;
+            entry.bookshelf.Load(entry.direction);
         }
     }
 
@@ -155,6 +152,18 @@ public class Bookshelf : IUnit
             Debug.LogError("Bookshelf: receveived IUnit of wrong type on Chain");
             return;
         }
-        chain.Add(new Tuple<Bookshelf, Direction>(bookshelf, direction));
+        chain.Add(new ChainEntry(bookshelf, direction));
+    }
+
+    private class ChainEntry
+    {
+        public Bookshelf bookshelf;
+        public Direction direction;
+
+        public ChainEntry(Bookshelf bookshelf, Direction direction)
+        {
+            this.bookshelf = bookshelf;
+            this.direction = direction;
+        }
     }
 }
