@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
 
@@ -295,12 +294,14 @@ public class RowController : MonoBehaviour
         }
 
         // load in new units
-        foreach (var iunit in buildUnits)
+        var itr = buildUnits.Last;
+        while (itr != null)
         {
             yield return ShiftFrame(Direction.Right, ScrollTime, true);
             var unit = InstantiateUnit();
             CycleUnits(Direction.Right, unit);
-            StartCoroutine(unit.LoadContents(iunit));
+            StartCoroutine(unit.LoadContents(itr.Value));
+            itr = itr.Previous;
         }
         
         lerping = false;
