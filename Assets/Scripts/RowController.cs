@@ -294,6 +294,7 @@ public class RowController : MonoBehaviour
             yield return ShiftFrame(Direction.Right, ScrollTime / 2, false);
         }
 
+        // TODO
         // load in new units
         foreach (var unit in buildUnits.Value)
         {
