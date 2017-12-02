@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ReceptacleTrigger : MonoBehaviour {
 
+	public DataUI dataUI;
+
 	private void OnTriggerEnter(Collider other) {
 		Debug.Log ("Triggered");
 
