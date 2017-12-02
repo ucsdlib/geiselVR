@@ -43,7 +43,7 @@
 	{
 		this.callNumber = callNumber;
 		this.title = title;
-		this.Width = width;
+		this.widthDb = width;
 		this.author = author;
 		this.description = description;
 	}
