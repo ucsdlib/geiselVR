@@ -16,6 +16,11 @@ public class BookController : MonoBehaviour
         get { return _meta.Width; }
     }
 
+	public Book Meta 
+	{
+		get { return _meta; }
+	}
+
     private Book _meta;
     
     void Awake()
