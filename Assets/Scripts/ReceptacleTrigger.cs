@@ -15,9 +15,10 @@ public class ReceptacleTrigger : MonoBehaviour
             Debug.Log("Could not find controller");
             return;
         }
-
+        
+        other.GetComponent<GrabbableBook>().ForceEnd();
         other.GetComponent<Rigidbody>().isKinematic = true;
-        bookController.transform.parent = transform;
+//        bookController.transform.parent = transform;
         bookController.transform.position = SnapPoint.position;
         bookController.transform.rotation = SnapPoint.rotation;
     }
