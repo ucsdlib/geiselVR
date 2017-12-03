@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReceptacleTrigger : MonoBehaviour {
+public class ReceptacleTrigger : MonoBehaviour
+{
+    public DataUI dataUI;
+    public Transform SnapPoint;
 
-	public DataUI dataUI;
+    private void OnTriggerEnter(Collider other)
+    {
+        var bookController = other.GetComponentInParent<BookController>();
+        if (bookController == null)
+        {
+            Debug.Log("Could not find controller");
+            return;
+        }
 
-	private void OnTriggerEnter(Collider other) {
-		Debug.Log ("Triggered");
-
-		var bookController = other.GetComponentInParent<BookController> ();
-		if (bookController == null) {
-			Debug.Log ("Could not find controller");
-			return;
-		}
-
-		Debug.Log ("Found Book");
-	}
+        other.GetComponent<Rigidbody>().isKinematic = true;
+        bookController.transform.parent = transform;
+        bookController.transform.position = SnapPoint.position;
+        bookController.transform.rotation = SnapPoint.rotation;
+    }
 }
