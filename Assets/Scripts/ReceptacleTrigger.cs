@@ -26,6 +26,7 @@ public class ReceptacleTrigger : MonoBehaviour
         bookController.transform.position = SnapPoint.position;
         bookController.transform.rotation = SnapPoint.rotation;
 
+        DataUi.SetData(bookController.Meta);
         obj = other;
     }
 
@@ -34,6 +35,7 @@ public class ReceptacleTrigger : MonoBehaviour
         if (other == obj)
         {
             obj = null;
+            DataUi.Clear();
         }
     }
 }

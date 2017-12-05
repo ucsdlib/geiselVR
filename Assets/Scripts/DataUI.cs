@@ -3,10 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DataUI : MonoBehaviour {
-	public Text text;
+public class DataUI : MonoBehaviour
+{
+    public Text Text;
 
-	public void SetData(Book book) {
-		
-	}
+    public void SetData(Book book)
+    {
+        var res = "";
+        res += "Title: " + book.Title + "\n";
+        res += "Author: " + book.Author + "\n";
+        res += "Description: " + book.Description + "\n";
+        res += "Call Number: " + book.CallNumber + "\n";
+        res += string.Format("Width: {0:N2}\n", book.Width);
+        Text.text = res;
+    }
+
+    public void Clear()
+    {
+        Text.text = "";
+    }
 }
