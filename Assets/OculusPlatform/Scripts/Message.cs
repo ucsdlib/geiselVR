@@ -147,10 +147,13 @@ namespace Oculus.Platform
       User_GetLoggedInUser                                = 0x436F345D,
       User_GetLoggedInUserFriends                         = 0x587C2A8D,
       User_GetLoggedInUserFriendsAndRooms                 = 0x5E870B87,
+      User_GetLoggedInUserRecentlyMetUsersAndRooms        = 0x295FBA30,
       User_GetNextUserAndRoomArrayPage                    = 0x7FBDD2DF,
       User_GetNextUserArrayPage                           = 0x267CF743,
       User_GetOrgScopedID                                 = 0x18F0B01B,
+      User_GetSdkAccounts                                 = 0x67526A83,
       User_GetUserProof                                   = 0x22810483,
+      User_LaunchProfile                                  = 0x0A397297,
       Voip_SetSystemVoipSuppressed                        = 0x453FC9AA,
 
       /// Sent to indicate that more data has been read or an error occured.
@@ -187,6 +190,11 @@ namespace Oculus.Platform
       ///
       /// Note that you must call Room.Join() if you want to actually join the room.
       Notification_Room_InviteAccepted = 0x6D1071B1,
+
+      /// Handle this to notify the user when they've received an invitation to join
+      /// a room in your game. You can use this in lieu of, or in addition to,
+      /// polling for room invitations via Notification.GetRoomInviteNotifications().
+      Notification_Room_InviteReceived = 0x6A499D54,
 
       /// Indicates that the current room has been updated. Use Message.GetRoom() to
       /// extract the updated room.
@@ -261,8 +269,10 @@ namespace Oculus.Platform
     public virtual Purchase GetPurchase() { return null; }
     public virtual PurchaseList GetPurchaseList() { return null; }
     public virtual Room GetRoom() { return null; }
+    public virtual RoomInviteNotification GetRoomInviteNotification() { return null; }
     public virtual RoomInviteNotificationList GetRoomInviteNotificationList() { return null; }
     public virtual RoomList GetRoomList() { return null; }
+    public virtual SdkAccountList GetSdkAccountList() { return null; }
     public virtual string GetString() { return null; }
     public virtual SystemPermission GetSystemPermission() { return null; }
     public virtual SystemVoipState GetSystemVoipState() { return null; }
@@ -340,6 +350,7 @@ namespace Oculus.Platform
         case Message.MessageType.Notification_MarkAsRead:
         case Message.MessageType.Room_LaunchInvitableUserFlow:
         case Message.MessageType.Room_UpdateOwner:
+        case Message.MessageType.User_LaunchProfile:
           message = new Message(messageHandle);
           break;
 
@@ -444,9 +455,17 @@ namespace Oculus.Platform
           message = new MessageWithRoomList(messageHandle);
           break;
 
+        case Message.MessageType.Notification_Room_InviteReceived:
+          message = new MessageWithRoomInviteNotification(messageHandle);
+          break;
+
         case Message.MessageType.Notification_GetNextRoomInviteNotificationArrayPage:
         case Message.MessageType.Notification_GetRoomInvites:
           message = new MessageWithRoomInviteNotificationList(messageHandle);
+          break;
+
+        case Message.MessageType.User_GetSdkAccounts:
+          message = new MessageWithSdkAccountList(messageHandle);
           break;
 
         case Message.MessageType.ApplicationLifecycle_GetSessionKey:
@@ -465,6 +484,7 @@ namespace Oculus.Platform
           break;
 
         case Message.MessageType.User_GetLoggedInUserFriendsAndRooms:
+        case Message.MessageType.User_GetLoggedInUserRecentlyMetUsersAndRooms:
         case Message.MessageType.User_GetNextUserAndRoomArrayPage:
           message = new MessageWithUserAndRoomList(messageHandle);
           break;
@@ -916,6 +936,18 @@ namespace Oculus.Platform
     }
 
   }
+  public class MessageWithRoomInviteNotification : Message<RoomInviteNotification>
+  {
+    public MessageWithRoomInviteNotification(IntPtr c_message) : base(c_message) { }
+    public override RoomInviteNotification GetRoomInviteNotification() { return Data; }
+    protected override RoomInviteNotification GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetRoomInviteNotification(msg);
+      return new RoomInviteNotification(obj);
+    }
+
+  }
   public class MessageWithRoomInviteNotificationList : Message<RoomInviteNotificationList>
   {
     public MessageWithRoomInviteNotificationList(IntPtr c_message) : base(c_message) { }
@@ -925,6 +957,18 @@ namespace Oculus.Platform
       var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
       var obj = CAPI.ovr_Message_GetRoomInviteNotificationArray(msg);
       return new RoomInviteNotificationList(obj);
+    }
+
+  }
+  public class MessageWithSdkAccountList : Message<SdkAccountList>
+  {
+    public MessageWithSdkAccountList(IntPtr c_message) : base(c_message) { }
+    public override SdkAccountList GetSdkAccountList() { return Data; }
+    protected override SdkAccountList GetDataFromMessage(IntPtr c_message)
+    {
+      var msg = CAPI.ovr_Message_GetNativeMessage(c_message);
+      var obj = CAPI.ovr_Message_GetSdkAccountArray(msg);
+      return new SdkAccountList(obj);
     }
 
   }

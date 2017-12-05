@@ -1,1 +1,0 @@
-Note the confirmation dialog appears in the center pane - it's always a good idea to confirm the user really wants to quit before exiting.

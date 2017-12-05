@@ -62,8 +62,8 @@ public class OVRGrabber : MonoBehaviour
     protected Vector3 m_anchorOffsetPosition;
     protected float m_prevFlex;
 	protected OVRGrabbable m_grabbedObj = null;
-    Vector3 m_grabbedObjectPosOff;
-    Quaternion m_grabbedObjectRotOff;
+    protected Vector3 m_grabbedObjectPosOff;
+    protected Quaternion m_grabbedObjectRotOff;
 	protected Dictionary<OVRGrabbable, int> m_grabCandidates = new Dictionary<OVRGrabbable, int>();
 	protected bool operatingWithoutOVRCameraRig = true;
 
@@ -87,7 +87,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    void Awake()
+    protected virtual void Awake()
     {
         m_anchorOffsetPosition = transform.localPosition;
         m_anchorOffsetRotation = transform.localRotation;
@@ -105,7 +105,7 @@ public class OVRGrabber : MonoBehaviour
 		}
     }
 
-    void Start()
+    protected virtual void Start()
     {
         m_lastPos = transform.position;
         m_lastRot = transform.rotation;
@@ -211,7 +211,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    protected void GrabBegin()
+    protected virtual void GrabBegin()
     {
         float closestMagSq = float.MaxValue;
 		OVRGrabbable closestGrabbable = null;
@@ -300,7 +300,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    protected void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
+    protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
     {
         if (m_grabbedObj == null)
         {
@@ -349,7 +349,7 @@ public class OVRGrabber : MonoBehaviour
         m_grabbedObj = null;
     }
 
-    protected void GrabVolumeEnable(bool enabled)
+    protected virtual void GrabVolumeEnable(bool enabled)
     {
         if (m_grabVolumeEnabled == enabled)
         {
@@ -369,7 +369,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-	protected void OffhandGrabbed(OVRGrabbable grabbable)
+	protected virtual void OffhandGrabbed(OVRGrabbable grabbable)
     {
         if (m_grabbedObj == grabbable)
         {

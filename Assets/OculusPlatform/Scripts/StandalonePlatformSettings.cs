@@ -5,23 +5,38 @@ namespace Oculus.Platform
   // This only exists for the Unity Editor
   public sealed class StandalonePlatformSettings : ScriptableObject
   {
-    private const string OculusPlatformAccessTokenKey = "OculusPlatformAccessToken";
-
-    public static string OculusPlatformAccessToken
+    public static string OculusPlatformTestUserEmail
     {
       get
       {
-        var accessToken = "";
 #if UNITY_EDITOR
-        accessToken = UnityEditor.EditorPrefs.GetString(OculusPlatformAccessTokenKey);
+        return UnityEditor.EditorPrefs.GetString("OculusStandaloneUserEmail");
+#else
+        return string.Empty;
 #endif
-        return accessToken;
       }
-
       set
       {
 #if UNITY_EDITOR
-        UnityEditor.EditorPrefs.SetString(OculusPlatformAccessTokenKey, value);
+        UnityEditor.EditorPrefs.SetString("OculusStandaloneUserEmail", value);
+#endif
+      }
+    }
+
+    public static string OculusPlatformTestUserPassword
+    {
+      get
+      {
+#if UNITY_EDITOR
+        return UnityEditor.EditorPrefs.GetString("OculusStandaloneUserPassword");
+#else
+        return string.Empty;
+#endif
+      }
+      set
+      {
+#if UNITY_EDITOR
+        UnityEditor.EditorPrefs.SetString("OculusStandaloneUserPassword", value);
 #endif
       }
     }
