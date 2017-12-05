@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ReceptacleTrigger : MonoBehaviour
 {
-    public DataUI dataUI;
+    public DataUI DataUi;
     public Transform SnapPoint;
 
     private void OnTriggerEnter(Collider other)
     {
-        var bookController = other.GetComponentInParent<BookController>();
+        var bookController = other.GetComponent<BookController>();
         if (bookController == null)
         {
             Debug.Log("Could not find controller");
@@ -18,7 +18,7 @@ public class ReceptacleTrigger : MonoBehaviour
         
         other.GetComponent<GrabbableBook>().ForceEnd();
         other.GetComponent<Rigidbody>().isKinematic = true;
-//        bookController.transform.parent = transform;
+        bookController.transform.parent = transform;
         bookController.transform.position = SnapPoint.position;
         bookController.transform.rotation = SnapPoint.rotation;
     }
