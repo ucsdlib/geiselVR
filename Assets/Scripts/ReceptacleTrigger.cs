@@ -9,7 +9,6 @@ public class ReceptacleTrigger : MonoBehaviour
 
     private Collider obj = null;
     
-
     private void OnTriggerEnter(Collider other)
     {
         if (obj != null) return;

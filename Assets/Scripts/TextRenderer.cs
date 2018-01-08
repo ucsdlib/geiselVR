@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,7 @@ public class TextRendererSettings
     {
         textAnchor = TextAnchor.MiddleCenter,
         color = Color.black,
-        generationExtents = new Vector2(10, 10),
+        generationExtents = new Vector2(1, 1),
         pivot = new Vector2(0f, 0f),
         richText = true,
         font = Font.CreateDynamicFontFromOSFont("Arial", 72),
@@ -37,9 +38,11 @@ public class TextRenderer : MonoBehaviour
 {
     public float Scale;
 
+    private const float Ratio = 10000f;
+
     void Start()
     {
-        gameObject.transform.localScale = Vector3.one * Scale / 10000f;
+        gameObject.transform.localScale = Vector3.one * Scale / Ratio;
     }
 
     public void GenerateText(string text)

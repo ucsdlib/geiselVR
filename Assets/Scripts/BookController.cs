@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BookController : MonoBehaviour
 {
@@ -8,20 +7,20 @@ public class BookController : MonoBehaviour
 
     public string CallNumber
     {
-        get { return _meta.CallNumber; }
+        get { return meta.CallNumber; }
     }
     
     public float Width
     {
-        get { return _meta.Width; }
+        get { return meta.Width; }
     }
 
 	public Book Meta 
 	{
-		get { return _meta; }
+		get { return meta; }
 	}
 
-    private Book _meta;
+    private Book meta;
     
     void Awake()
     {
@@ -34,12 +33,12 @@ public class BookController : MonoBehaviour
 
     public void SetMeta(Book meta)
     {
-        _meta = meta;
+        this.meta = meta;
     }
     
     public void LoadData()
     {
-        if (_meta == null) return;
-        TitleRenderer.GenerateText(_meta.CallNumber);
+        if (meta == null) return;
+        TitleRenderer.GenerateText(meta.Title);
     }
 }
