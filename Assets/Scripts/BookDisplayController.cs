@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class BookDisplayController : MonoBehaviour
 {
-    public float ScrollTimeFactor;
+    [Tooltip("Number of local units per second")]
+    public float ScrollSpeed;
     public Text SpineText;
 
     private volatile bool lerping;
@@ -19,15 +20,16 @@ public class BookDisplayController : MonoBehaviour
         {
             lerping = true;
             var distance = SpineText.preferredWidth - SpineText.rectTransform.rect.width;
-            StartCoroutine(ShiftSpine(ScrollTimeFactor, distance));
+            StartCoroutine(ShiftSpine(distance, ScrollSpeed));
         }
         SpineText.rectTransform.anchoredPosition += Vector2.left * 0.1f;
     }
     
-    private IEnumerator ShiftSpine(float timeFactor, float distance)
+    private IEnumerator ShiftSpine(float distance, float scrollSpeed)
     {
         var start = SpineText.rectTransform.anchoredPosition;
-        var end = SpineText.rectTransform.anchoredPosition + distance * Vector2.left;
+        var end = SpineText.rectTransform.anchoredPosition + (distance + 20) * Vector2.left;
+        var timeFactor = distance / scrollSpeed;
         var t = 0f;
         while (t < 1.0f)
         {
