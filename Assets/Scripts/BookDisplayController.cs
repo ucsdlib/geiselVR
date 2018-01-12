@@ -7,8 +7,12 @@ using UnityEngine.UI;
 
 public class BookDisplayController : MonoBehaviour
 {
-    [Tooltip("Number of local units per second")]
+    [Tooltip("Number of local units per second")] 
     public float ScrollSpeed;
+
+    [Tooltip("How many seconds to pause for at beginning of text shift")]
+    public float PauseTime;
+    
     public Text SpineText;
 
     private volatile bool lerping;
@@ -22,17 +26,17 @@ public class BookDisplayController : MonoBehaviour
             StartCoroutine(ShiftSpine());
         }
     }
-    
+
     private IEnumerator ShiftSpine()
     {
         var width = SpineText.rectTransform.rect.width;
         var distance = SpineText.preferredWidth - width;
+        var timeFactor = distance / ScrollSpeed;
         var start = SpineText.rectTransform.anchoredPosition;
         var end = SpineText.rectTransform.anchoredPosition + (distance + width / 2) * Vector2.left;
-        var timeFactor = distance / ScrollSpeed;
 
-        yield return new WaitForSeconds(1.0f); // allow user to read start
-        
+        yield return new WaitForSeconds(PauseTime);
+
         // initial normal reading shift
         var t = 0f;
         while (t < 1.0f)
@@ -46,11 +50,12 @@ public class BookDisplayController : MonoBehaviour
         t = 0f;
         while (t < 1.0f)
         {
-            t += Time.deltaTime / (timeFactor / 10);
-            SpineText.rectTransform.anchoredPosition = Vector2.Lerp(end, start, t);
+            t += Time.deltaTime / (timeFactor / 8);
+            SpineText.rectTransform.anchoredPosition = new Vector2(
+                Mathf.SmoothStep(end.x, start.x, t), start.y);
             yield return null;
         }
-        
+
         SpineText.rectTransform.anchoredPosition = start;
         lerping = false;
     }
