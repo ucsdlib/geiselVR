@@ -19,17 +19,21 @@ public class BookDisplayController : MonoBehaviour
         if (!lerping && SpineText.preferredWidth > SpineText.rectTransform.rect.width)
         {
             lerping = true;
-            var distance = SpineText.preferredWidth - SpineText.rectTransform.rect.width;
-            StartCoroutine(ShiftSpine(distance, ScrollSpeed));
+            StartCoroutine(ShiftSpine());
         }
-        SpineText.rectTransform.anchoredPosition += Vector2.left * 0.1f;
     }
     
-    private IEnumerator ShiftSpine(float distance, float scrollSpeed)
+    private IEnumerator ShiftSpine()
     {
+        var width = SpineText.rectTransform.rect.width;
+        var distance = SpineText.preferredWidth - width;
         var start = SpineText.rectTransform.anchoredPosition;
-        var end = SpineText.rectTransform.anchoredPosition + (distance + 20) * Vector2.left;
-        var timeFactor = distance / scrollSpeed;
+        var end = SpineText.rectTransform.anchoredPosition + (distance + width / 2) * Vector2.left;
+        var timeFactor = distance / ScrollSpeed;
+
+        yield return new WaitForSeconds(1.0f); // allow user to read start
+        
+        // initial normal reading shift
         var t = 0f;
         while (t < 1.0f)
         {
@@ -38,7 +42,15 @@ public class BookDisplayController : MonoBehaviour
             yield return null;
         }
 
-        // TODO make a smoother transition back to start
+        // reset shift
+        t = 0f;
+        while (t < 1.0f)
+        {
+            t += Time.deltaTime / (timeFactor / 10);
+            SpineText.rectTransform.anchoredPosition = Vector2.Lerp(end, start, t);
+            yield return null;
+        }
+        
         SpineText.rectTransform.anchoredPosition = start;
         lerping = false;
     }
