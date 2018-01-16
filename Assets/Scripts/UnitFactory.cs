@@ -7,9 +7,12 @@ public class UnitFactory
     public UnitFactory(GameObject templateUnit)
     {
         template = templateUnit.GetComponent<BookshelfController>();
-        Debug.Log("UnitFactory: Could not find BookshelfController script on template");
+        if (template == null)
+        {
+            Debug.Log("UnitFactory: Could not find BookshelfController script on template");
+        }
     }
-    
+
     public IUnit BlankIUnit()
     {
         return new Bookshelf("", "", template.ShelfCount, template.ShelfWidth);
