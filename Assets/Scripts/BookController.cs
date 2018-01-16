@@ -2,43 +2,24 @@
 
 public class BookController : MonoBehaviour
 {
-    
-    public TextRenderer TitleRenderer;
 
-    public string CallNumber
-    {
-        get { return meta.CallNumber; }
-    }
-    
+    public BookDisplayController Display;
+
     public float Width
     {
-        get { return meta.Width; }
+        get { return Meta.Width; }
     }
 
-	public Book Meta 
-	{
-		get { return meta; }
-	}
-
-    private Book meta;
-    
-    void Awake()
-    {
-        TitleRenderer = GetComponentInChildren<TextRenderer>();
-        if (!TitleRenderer)
-        {
-            Debug.Log("Could not find title renderer");
-        }
-    }
+	public Book Meta { get; set; }
 
     public void SetMeta(Book meta)
     {
-        this.meta = meta;
+        Meta = meta;
     }
     
     public void LoadData()
     {
-        if (meta == null) return;
-        TitleRenderer.GenerateText(meta.Title);
+        if (Meta == null) return;
+        Display.SpineText.text = Meta.Title;
     }
 }
