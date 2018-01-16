@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Bookshelf : IUnit
@@ -7,6 +8,7 @@ public class Bookshelf : IUnit
     public string Start { get; private set; }
     public string End { get; private set; }
     public LinkedList<LinkedList<Book>> Table { get; private set; }
+
     public bool Done
     {
         get { return done; }
@@ -39,7 +41,7 @@ public class Bookshelf : IUnit
     {
         if (!done) return;
         done = false;
-        
+
         // Load self
         // FIXME The Identity direction does not include the starting book when populating
         DbBuffer buffer;
@@ -65,7 +67,7 @@ public class Bookshelf : IUnit
         }
         PopulateTable(buffer);
         done = true;
-        
+
         // Load chain
         foreach (var entry in chain)
         {
@@ -107,7 +109,11 @@ public class Bookshelf : IUnit
             DataEntry entry;
             do
             {
-                if ((entry = buffer.NextEntry()) == null) return books; // db ran out
+                if ((entry = buffer.NextEntry()) == null)
+                {
+                    Debug.Log("Database buffer return null");
+                    return books; // db ran out
+                }
             } while (entry.Width > shelfWidth * 100);
 
             var book = new Book(entry);

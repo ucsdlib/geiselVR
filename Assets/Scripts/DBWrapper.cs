@@ -92,7 +92,16 @@ public class DbWrapper
         // execute query
         var command = connection.CreateCommand();
         command.CommandText = query;
-        var reader = command.ExecuteReader(CommandBehavior.SingleResult);
+        IDataReader reader;
+        try
+        {
+            reader = command.ExecuteReader(CommandBehavior.SingleResult);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Database excpetion: " + e.ToString());
+            return;
+        }
 
         var table = new DataTable();
         table.Load(reader);

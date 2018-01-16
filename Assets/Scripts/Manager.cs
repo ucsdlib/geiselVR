@@ -2,7 +2,17 @@
 
 public class Manager : MonoBehaviour
 {
-    public static Manager Instance { get; private set; }
+    public static Manager Instance
+    {
+        get
+        {
+            if (instance == null)
+                Debug.LogError("Got null Manager instance");
+            return instance;
+        }
+    }
+
+    private static Manager instance;
 
     [Header("Database")] 
     public string DataBasePath;
@@ -17,7 +27,7 @@ public class Manager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
         DbWrapper = new DbWrapper(DataBasePath, TableName);
         UnitFactory = new UnitFactory(TemplateUnit);
     }
