@@ -1,12 +1,13 @@
-import sqlite3
 import random
+import sqlite3
 
 ### User Values
 db_file = 'testdb.db'       # data base file path
 table = 'testing'           # name of table to populate
 call_index = 'call_index'   # name for look up index
 call_col = 'call'           # col to index for look up
-size = 100000
+size = 100000               # size of database
+def_title = 'Sample'        # default assigned title
 ###
 
 insertq = 'INSERT INTO testing VALUES (?, ?, ?)'
@@ -32,7 +33,7 @@ for topLetter in alphabet:
         subNum = str(random.randrange(0, 100))
 
         call = topLetter + botLetter + num + ' .' + subLetter + subNum
-        title = 'Sample'
+        title = def_title
         width = 20 + random.randrange(-10, 10)
 
         print(call, title, width)
