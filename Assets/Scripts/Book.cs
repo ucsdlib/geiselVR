@@ -1,5 +1,7 @@
 ﻿public class Book
 {
+	private const float WidthMult = 3.0f;
+	
     public string CallNumber
     {
         get { return callNumber; }
@@ -12,7 +14,7 @@
 
     public float Width
     {
-        get { return (float) widthDb / 1000 + 0.01f; }
+        get { return (float) widthDb * WidthMult / 1000 + 0.01f; }
     }
 
 	public string Author 
