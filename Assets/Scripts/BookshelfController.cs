@@ -137,9 +137,10 @@ public class BookshelfController : MonoBehaviour
             var book = Instantiate(BookTemplate);
             book.SetMeta(meta);
 
+            // move to location and retain offset rotation and position
             book.transform.parent = shelfGameObj.transform;
-            book.transform.localPosition = current;
-            book.transform.rotation = shelfGameObj.transform.rotation;
+            book.transform.localPosition = current + book.transform.position; 
+            book.transform.rotation = shelfGameObj.transform.rotation * book.transform.rotation;
             current += book.Width * Vector3.right;
 
             book.LoadData();
