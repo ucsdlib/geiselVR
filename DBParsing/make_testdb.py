@@ -7,9 +7,10 @@ table = 'testing'           # name of table to populate
 call_index = 'call_index'   # name for look up index
 call_col = 'call'           # col to index for look up
 size = 100000               # size of database
-def_title = 'Sample'        # default assigned title
+def_title = 'Sample Book Sample Book Sample Book'   # default assigned title
 ###
 
+tableq = 'CREATE TABLE IF NOT EXISTS ' + table + '(' + call_col + ' text PRIMARY KEY, title text, width real);'
 insertq = 'INSERT INTO testing VALUES (?, ?, ?)'
 dropq = 'DROP INDEX IF EXISTS ' + call_index
 indexq = 'CREATE INDEX ' + call_index + ' ON ' + table + '(' + call_col + ')'
@@ -20,6 +21,7 @@ alphabet.extend("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 conn = sqlite3.connect(db_file)
 curs = conn.cursor()
+curs.execute(tableq)
 curs.execute(deleteq)
 curs.execute(dropq)
 curs.execute(indexq)
