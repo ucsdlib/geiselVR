@@ -33,5 +33,6 @@ public class ObjectPool : MonoBehaviour {
     public void GiveBack(GameObject o)
     {
         o.SetActive(false);
+        o.transform.parent = null;
     }
 }
