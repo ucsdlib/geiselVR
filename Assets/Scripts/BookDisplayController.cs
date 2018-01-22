@@ -23,7 +23,12 @@ public class BookDisplayController : MonoBehaviour
         if (!lerping && SpineText.preferredWidth > SpineText.rectTransform.rect.width)
         {
             lerping = true;
+            SpineText.alignment = TextAnchor.MiddleLeft;
             StartCoroutine(ShiftSpine());
+        }
+        else
+        {
+            SpineText.alignment = TextAnchor.MiddleCenter;
         }
     }
 
