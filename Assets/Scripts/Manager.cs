@@ -18,23 +18,26 @@ public class Manager : MonoBehaviour
     public string DataBasePath;
     public string TableName;
     public int BufferSize;
+    public int DefaultPoolSize;
 
-    [Header("Templates and Pools")] 
+    [Header("Templates and Instantiators")] 
     public GameObject TemplateUnit;
-    public ObjectPool BookPool;
+    public Instantiator BookInstantiator;
 
     public static DbWrapper DbWrapper { get; private set; }
     public static UnitFactory UnitFactory { get; private set; }
+    public static ObjectPool<BookController> BookPool { get; private set; }
 
     private void Awake()
     {
+        if (BookInstantiator == null)
+        {
+            Debug.LogError("Manager: missing Book Instantiator reference");
+        }
+        
         instance = this;
         DbWrapper = new DbWrapper(DataBasePath, TableName);
         UnitFactory = new UnitFactory(TemplateUnit);
-
-        if (BookPool == null)
-        {
-            Debug.LogError("Manager: missing BookPool reference");
-        }
+        BookPool = new ObjectPool<BookController>(BookInstantiator, DefaultPoolSize);
     }
 }
