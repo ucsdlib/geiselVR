@@ -20,7 +20,8 @@ public class BookshelfController : MonoBehaviour
     public Text Display;
     
     private Unit unit;
-    private ObjectPool<BookController> books;
+    private ObjectPool<BookController> bookPool;
+    private List<BookController> books;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class BookshelfController : MonoBehaviour
         }
         
         Data = new Bookshelf(CallNumber, CallNumber, ShelfCount, ShelfWidth);
-        books = Manager.BookPool;
+        bookPool = Manager.BookPool;
     }
 
     private void OnDrawGizmos()
@@ -54,6 +55,11 @@ public class BookshelfController : MonoBehaviour
             Gizmos.DrawCube(center, size);
             Gizmos.matrix = Matrix4x4.identity;
         }
+    }
+
+    private void OnDisable()
+    {
+        Clear(); // otherwise books would get destroyed and invalidate book pool
     }
 
     private IEnumerator HandleUpdateEvent(Unit lastUnit, Direction direction)
@@ -134,7 +140,7 @@ public class BookshelfController : MonoBehaviour
         var current = Vector3.zero;
         foreach (var meta in shelf)
         {
-            var book = Instantiate(BookTemplate);
+            var book = bookPool.Borrow();
             book.SetMeta(meta);
 
             // move to location and retain offset rotation and position
@@ -153,7 +159,7 @@ public class BookshelfController : MonoBehaviour
         Data = null;
         foreach (var book in books)
         {
-            Destroy(book);
+            bookPool.GiveBack(book);
         }
         books.Clear();
         Display.text = "";
