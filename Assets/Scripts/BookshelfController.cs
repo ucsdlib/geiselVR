@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class BookshelfController : MonoBehaviour
 {
+    public Bookshelf Data { get; private set; }
+    
     public string CallNumber;
-    public BookController BookTemplate;
-    public float MaxBookSize = 500f;
     public int ShelfCount = 3;
     public float ShelfHeight = 0.37f;
     public float ShelfWidth = 1.0f;
@@ -18,14 +18,12 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
     public Text Display;
-
+    
     private Unit unit;
-    private readonly List<BookController> books = new List<BookController>();
-    public Bookshelf Data { get; private set; }
+    private ObjectPool<BookController> books;
 
     private void Awake()
     {
-        // Establish connection to Unit
         unit = GetComponent<Unit>();
         if (unit != null)
         {
@@ -33,7 +31,9 @@ public class BookshelfController : MonoBehaviour
             unit.LoadContents += HandleLoadEvent;
             unit.DoneLoading = false;
         }
+        
         Data = new Bookshelf(CallNumber, CallNumber, ShelfCount, ShelfWidth);
+        books = Manager.BookPool;
     }
 
     private void OnDrawGizmos()

@@ -3,14 +3,22 @@ using UnityEngine;
 
 public class ObjectPool<T> where T : MonoBehaviour {
     private readonly List<T> pool;
-    private Instantiator instantiator;
+    private readonly Instantiator instantiator;
 
     public ObjectPool(Instantiator instantiator, int startSize)
     {
         this.instantiator = instantiator;
         pool = new List<T>();
         var objList = instantiator.InstantiateGroup(startSize);
+        if (objList.Count == 0) return;
 
+        var component = objList[0].GetComponent<T>();
+        if (component == null)
+        {
+            Debug.LogError("ObjectPool: could not find required component from Instantiator return");
+            return;
+        }
+        
         foreach (var o in objList)
         {
             pool.Add(o.GetComponent<T>());
