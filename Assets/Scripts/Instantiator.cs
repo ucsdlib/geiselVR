@@ -27,4 +27,16 @@ public class Instantiator : MonoBehaviour
             Destroy(o);
         }
     }
+
+    public GameObject InstantiateSingle()
+    {
+        var o = Instantiate(Template);
+        o.SetActive(false);
+        return o;
+    }
+
+    public void DestroySingle(GameObject o)
+    {
+        Destroy(o);
+    }
 }
