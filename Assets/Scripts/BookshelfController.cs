@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
+// mant to be used with a pool. Calling Destroy() causes problems because of OnDisable()
 public class BookshelfController : MonoBehaviour
 {
     public Bookshelf Data { get; private set; }
@@ -21,7 +22,7 @@ public class BookshelfController : MonoBehaviour
     
     private Unit unit;
     private ObjectPool<BookController> bookPool;
-    private List<BookController> books;
+    private readonly List<BookController> books = new List<BookController>();
 
     private void Awake()
     {
@@ -59,7 +60,7 @@ public class BookshelfController : MonoBehaviour
 
     private void OnDisable()
     {
-        Clear(); // otherwise books would get destroyed and invalidate book pool
+        Clear();
     }
 
     private IEnumerator HandleUpdateEvent(Unit lastUnit, Direction direction)
