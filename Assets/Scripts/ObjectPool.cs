@@ -1,38 +1,40 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour {
-    public GameObject Template; // note that OnEnable, OnDisable should be implemented
-    public int StartSize;
+public class ObjectPool<T> where T : MonoBehaviour {
+    private readonly List<T> pool;
+    private Instantiator instantiator;
 
-    private readonly List<GameObject> pool = new List<GameObject>();
-
-    private void Start()
+    public ObjectPool(Instantiator instantiator, int startSize)
     {
-        for (var i = 0; i < StartSize; i++)
+        this.instantiator = instantiator;
+        pool = new List<T>();
+        var objList = instantiator.InstantiateGroup(startSize);
+
+        foreach (var o in objList)
         {
-            var o = Instantiate(Template);
-            o.SetActive(false);
-            pool.Add(o);
+            pool.Add(o.GetComponent<T>());
         }
     }
     
-    public GameObject Borrow()
+    public T Borrow()
     {
         foreach (var o in pool)
         {
-            if (o.activeInHierarchy) continue;
-            o.SetActive(true);
+            if (o.gameObject.activeInHierarchy) continue;
+            o.gameObject.SetActive(true);
             return o;
         }
-        var newo = Instantiate(Template);
+        
+        // expand size if needed
+        var newo = instantiator.InstantiateSingle().GetComponent<T>();
         pool.Add(newo);
         return newo;
     }
     
-    public void GiveBack(GameObject o)
+    public void GiveBack(T o)
     {
-        o.SetActive(false);
+        o.gameObject.SetActive(false);
         o.transform.parent = null;
     }
 }
