@@ -31,6 +31,7 @@ public class ObjectPool<T> where T : MonoBehaviour {
         {
             if (o.gameObject.activeInHierarchy) continue;
             o.gameObject.SetActive(true);
+            Debug.Log("Giving book"); // DEBUG
             return o;
         }
         
@@ -44,5 +45,6 @@ public class ObjectPool<T> where T : MonoBehaviour {
     {
         o.gameObject.SetActive(false);
         o.transform.parent = null;
+        Debug.Log("Got book back"); // DEBUG
     }
 }
