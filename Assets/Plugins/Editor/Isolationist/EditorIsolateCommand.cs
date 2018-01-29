@@ -65,7 +65,7 @@ namespace Plugins.Isolationist.Editor
 			get
 			{
 				if (Event.current == null) return false;
-				if (Event.current.type != EventType.keyUp) return false;
+				if (Event.current.type != EventType.KeyUp) return false;
 				return Event.current.keyCode == _hotkey && Event.current.alt == _alt && Event.current.control == _ctrl && Event.current.shift == _shift;
 			}
 		}

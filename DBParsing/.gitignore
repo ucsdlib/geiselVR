@@ -100,3 +100,4 @@ ENV/
 *.db
 *.db-journal
 data.tsv
+data/
