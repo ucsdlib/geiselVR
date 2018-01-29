@@ -4,6 +4,9 @@ using UnityEngine;
 public class ObjectPool<T> where T : MonoBehaviour {
     private readonly List<T> pool;
     private readonly Instantiator instantiator;
+    private readonly Vector3 initPos;
+    private readonly Quaternion initRot;
+    
 
     public ObjectPool(Instantiator instantiator, int startSize)
     {
@@ -23,6 +26,9 @@ public class ObjectPool<T> where T : MonoBehaviour {
         {
             pool.Add(o.GetComponent<T>());
         }
+
+        initPos = objList[0].transform.position;
+        initRot = objList[0].transform.rotation;
     }
     
     public T Borrow()
@@ -43,8 +49,13 @@ public class ObjectPool<T> where T : MonoBehaviour {
     
     public void GiveBack(T o)
     {
+        Debug.Log(o.transform.position.ToString() + o.transform.rotation.ToString()); // DEBUG
+        
         o.gameObject.SetActive(false);
         o.transform.parent = null;
-        Debug.Log("Got book back"); // DEBUG
+        o.transform.position = initPos;
+        o.transform.rotation = initRot;
+        
+        Debug.Log(o.transform.position.ToString() + o.transform.rotation.ToString()); // DEBUG
     }
 }
