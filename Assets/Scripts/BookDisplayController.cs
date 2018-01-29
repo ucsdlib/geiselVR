@@ -16,6 +16,12 @@ public class BookDisplayController : MonoBehaviour
     public Text SpineText;
 
     private volatile bool lerping;
+    private Vector2 spineInitPos;
+
+    private void Start()
+    {
+        spineInitPos = SpineText.rectTransform.anchoredPosition;
+    }
 
     private void Update()
     {
@@ -30,6 +36,13 @@ public class BookDisplayController : MonoBehaviour
         {
             SpineText.alignment = TextAnchor.MiddleCenter;
         }
+    }
+
+    private void OnEnable()
+    {
+        // disable may have interrupted coroutine, reset to init
+        lerping = false;
+        SpineText.rectTransform.anchoredPosition = spineInitPos;
     }
 
     private IEnumerator ShiftSpine()
