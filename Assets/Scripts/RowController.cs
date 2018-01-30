@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class RowController : MonoBehaviour
 {
-    public Unit TemplateUnit; // unit from which to instantiate
     public int RowSize = 2; // number of units in this row at any given time
     public int CenterPos = 2; // center shelf which contains position set by SetPosition
     public float ScrollTime = 0.12f; // time period for scroll to complete
@@ -21,10 +20,12 @@ public class RowController : MonoBehaviour
     private bool canScrollRight = true;
     private bool canScrollLeft = true;
     private GameObject container;
-
+    private ObjectPool<Unit> unitPool;
+    
     private void Start()
     {
-        // set starting positions
+        unitPool = Manager.UnitPool;
+        
         firstPos = Vector3.zero;
 
         // set up container for shifting
@@ -33,18 +34,19 @@ public class RowController : MonoBehaviour
         container.transform.localPosition = Vector3.zero;
         container.transform.rotation = transform.rotation;
 
-        var refTranform = transform.Find(TemplateUnit.name);
-        if (refTranform) // reference unit found as child
-        {
-            var prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
-            if (prefab) TemplateUnit = prefab;
-            Destroy(refTranform.gameObject);
-        }
+//        var refTranform = transform.Find(TemplateUnit.name);
+//        if (refTranform) // reference unit found as child
+//        {
+//            var prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
+//            if (prefab) TemplateUnit = prefab;
+//            Destroy(refTranform.gameObject);
+//        }
 
+        // calculate width of one unit
         var unit = InstantiateUnit(Vector3.zero);
         unit.transform.rotation = Quaternion.Euler(0, 0, 0);
         width = CalculateLocalBounds(unit.gameObject).size.x;
-        Destroy(unit.gameObject);
+        DestroyUnit(unit);
 
         StartCoroutine(InstantiateArray(RowSize));
         lastPos = firstPos + Vector3.right * (RowSize - 1) * width;
@@ -158,7 +160,7 @@ public class RowController : MonoBehaviour
             // Remove invalid unit
             var invalidUnit = activeUnits.Last.Value;
             activeUnits.RemoveLast();
-            Destroy(invalidUnit.gameObject);
+            DestroyUnit(invalidUnit);
 
             // Instantiate new unit
             var newUnit = InstantiateUnit(firstPos);
@@ -169,7 +171,7 @@ public class RowController : MonoBehaviour
         {
             var invalidUnit = activeUnits.First.Value;
             activeUnits.RemoveFirst();
-            Destroy(invalidUnit.gameObject);
+            DestroyUnit(invalidUnit);
 
             var newUnit = InstantiateUnit(lastPos);
             StartCoroutine(newUnit.UpdateContents(activeUnits.Last.Value, Direction.Right));
@@ -184,7 +186,7 @@ public class RowController : MonoBehaviour
             // remove invalid input
             var invalidUnit = activeUnits.Last.Value;
             activeUnits.RemoveLast();
-            Destroy(invalidUnit.gameObject);
+            DestroyUnit(invalidUnit);
             
             // place new unit
             newUnit.transform.parent = container.transform;
@@ -195,7 +197,7 @@ public class RowController : MonoBehaviour
         {
             var invalidUnit = activeUnits.Last.Value;
             activeUnits.RemoveFirst();
-            Destroy(invalidUnit.gameObject);
+            DestroyUnit(invalidUnit);
             
             newUnit.transform.parent = container.transform;
             newUnit.transform.localPosition = lastPos;
@@ -223,7 +225,8 @@ public class RowController : MonoBehaviour
 
     private Unit InstantiateUnit(Vector3 position)
     {
-        var unit = Instantiate(TemplateUnit, container.transform);
+        var unit = unitPool.Borrow();
+        unit.transform.parent = container.transform;
         unit.transform.localPosition = position;
         unit.Row = this;
         return unit;
@@ -231,9 +234,16 @@ public class RowController : MonoBehaviour
 
     private Unit InstantiateUnit()
     {
-        var unit = Instantiate(TemplateUnit, container.transform);
+        var unit = unitPool.Borrow();
+        unit.transform.parent = container.transform;
         unit.Row = this;
         return unit;
+    }
+
+    private void DestroyUnit(Unit unit)
+    {
+        unit.Row = null;
+        unitPool.GiveBack(unit);
     }
 
     private Bounds CalculateLocalBounds(GameObject obj)

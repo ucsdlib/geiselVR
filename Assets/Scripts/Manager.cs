@@ -21,14 +21,13 @@ public class Manager : MonoBehaviour
     public int DefaultPoolSize;
 
     [Header("Templates and Instantiators")] 
-    public GameObject TemplateUnit;
     public Instantiator BookInstantiator;
-    public Instantiator BookshelfInstantiator;
+    public Instantiator UnitInstantiator;
 
     public static DbWrapper DbWrapper { get; private set; }
     public static UnitFactory UnitFactory { get; private set; }
     public static ObjectPool<BookController> BookPool { get; private set; }
-    public static ObjectPool<BookshelfController> BookshelfPool { get; private set; }
+    public static ObjectPool<Unit> UnitPool { get; private set; }
 
     private void Awake()
     {
@@ -39,8 +38,8 @@ public class Manager : MonoBehaviour
         
         instance = this;
         DbWrapper = new DbWrapper(DataBasePath, TableName);
-        UnitFactory = new UnitFactory(TemplateUnit);
+        UnitFactory = new UnitFactory(UnitInstantiator.Template);
         BookPool = new ObjectPool<BookController>(BookInstantiator, DefaultPoolSize);
-        BookshelfPool = new ObjectPool<BookshelfController>(BookshelfInstantiator, 5);
+        UnitPool = new ObjectPool<Unit>(UnitInstantiator, 5);
     }
 }
