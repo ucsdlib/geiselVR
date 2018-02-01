@@ -8,9 +8,15 @@ public class BookSpawn : MonoBehaviour
 
 	private void Start()
 	{
-		book1.SetMeta (new Book ("A1", "Adventures of Finn, and something to make title longer", 20.0, "Thomas Paine", "A book about adventure, and something to make the title a lot longer"));
-		book2.SetMeta (new Book ("A2", "The Game of the Seven Hundred Countries and we can put so much more on this title", 19.0, "Giovanni Grio", "Witness the epic tale of a yonug boy battling for the grand prize"));
-		book3.SetMeta (new Book ("A3", "Star Wars The Force Awakens and the story of Harry Potter", 21.0, "George Lucas", "In a galaxy far far away, there are Jedi with lightsabers"));
+		book1.SetMeta(new Book(
+			"1", "A1", "Ender's Game", "Various authors", 12, "Science Fiction",
+			"Space station fights", "A young boy becomes a military leader"));
+		book2.SetMeta(new Book(
+			"2", "A2", "Harry Potter: Azkaban", "JK Rowling", 20, "Fantasy",
+			"Magic", "Rowling creates a magical world"));
+		book3.SetMeta(new Book(
+			"3", "A3", "Meditations", "Marcus Aurelius", 12, "Non-fiction", 
+			"Philosophy", "Thoughts of Marcus Aurelius"));
 
 		book1.LoadData ();
 		book2.LoadData ();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Mono.Data.Sqlite;
+using Oculus.Platform.Models;
 using UnityEngine;
 
 /// <summary>
@@ -106,17 +107,27 @@ public class DbWrapper
         var table = new DataTable();
         table.Load(reader);
 
-        var callCol = table.Columns["call"];
-        var titleCol = table.Columns["title"];
-        var widthCol = table.Columns["width"];
+        var id = table.Columns["id"];
+        var call = table.Columns["call"];
+        var title = table.Columns["title"];
+        var author = table.Columns["author"];
+        var width = table.Columns["width"];
+        var genre = table.Columns["genre"];
+        var subject = table.Columns["subject"];
+        var summary = table.Columns["summary"];
 
         foreach (DataRow row in table.Rows)
         {
             var entry = new DataEntry
             {
-                CallNum = (string) row[callCol],
-                Title = (string) row[titleCol],
-                Width = Convert.ToDouble(row[widthCol])
+                Id = row[id] as string,
+                Call = row[call] as string,
+                Title = row[title] as string,
+                Author = row[author] as string,
+                Width = Convert.ToDouble(row[width]),
+                Genre = row[genre] as string,
+                Subject = row[subject] as string,
+                Summary = row[summary] as string
             };
             results.Add(entry);
         }
@@ -160,19 +171,24 @@ public class DbWrapper
 
 public class DataEntry
 {
-    public string CallNum;
+    public string Id;
+    public string Call;
     public string Title;
+    public string Author;
     public double Width;
+    public string Genre;
+    public string Subject;
+    public string Summary;
 
     public void Read(IDataReader reader)
     {
-        CallNum = reader.GetString(0);
+        // TODO deprecate
         Title = reader.GetString(1);
         Width = reader.GetDouble(2);
     }
-
+    
     public override string ToString()
     {
-        return string.Format("Data: {0}|{1}|{2}", CallNum, Title, Width);
+        return string.Format("Data: {0}|{1}|{2}", Call, Title, Width);
     }
 }

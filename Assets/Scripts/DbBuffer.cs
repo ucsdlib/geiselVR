@@ -60,7 +60,7 @@ public class DbBuffer
         // load next round of data if needed
         if (index >= buffer.Count)
         {
-            startCallNum = buffer[buffer.Count - 1].CallNum;
+            startCallNum = buffer[buffer.Count - 1].Call;
             if (!LoadData()) return null;
         }
 

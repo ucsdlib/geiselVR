@@ -12,7 +12,7 @@ public class DataUI : MonoBehaviour
         var res = "";
         res += "Title: " + book.Title + "\n";
         res += "Author: " + book.Author + "\n";
-        res += "Description: " + book.Description + "\n";
+        res += "Summary: " + book.Summary + "\n";
         res += "Call Number: " + book.CallNumber + "\n";
         res += string.Format("Width: {0:N2}\n", book.Width);
         Text.text = res;
