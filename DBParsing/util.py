@@ -90,3 +90,56 @@ def group_processor(path, columns, processor, *args):
     """
     for group in group_iterator(path, columns):
         processor(group, *args)
+
+
+def query_create_table(table, columns, names):
+    """
+    Generate table creation query
+    :param table: Name of table
+    :param columns: IDs of columns. Defined in util.py
+    :param names: SQL col names. Matches 1:1 with columns list
+    """
+    q = 'CREATE TABLE IF NOT EXISTS ' + table + '('
+
+    first = True
+    for col, name in zip(columns, names):
+        if first:
+            if columns[0] == DIM_OR_DESC:
+                q += names[0] + " real PRIMARY KEY"
+            else:
+                q += names[0] + " text PRIMARY KEY"
+            first = False
+        else:
+                if col == DIM_OR_DESC:
+                    q += ',' + name + " real"
+                else:
+                    q += ',' + name + " text"
+    q += ')'
+    return q
+
+
+def query_insert(table, count):
+    """Generate insert query into table for count many items"""
+    q = 'INSERT INTO ' + table + ' VALUES (?'
+    for i in range(0, count - 1):
+        q += ',?'
+    q += ')'
+    return q
+
+
+def query_drop_index(index):
+    """Generate drop query for index with name 'index'"""
+    return 'DROP INDEX IF EXISTS ' + index
+
+
+def query_create_index(table, index, col_name):
+    """
+    Generate query to create index with name 'index' on column
+    'col_name' in table 'table'
+    """
+    return 'CREATE INDEX ' + index + ' ON ' + table + '(' + col_name + ')'
+
+
+def query_delete_table(table):
+    """Generate table delete query for table with name 'table'"""
+    return 'DELETE FROM ' + table
