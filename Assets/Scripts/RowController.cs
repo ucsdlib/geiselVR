@@ -34,14 +34,6 @@ public class RowController : MonoBehaviour
         container.transform.localPosition = Vector3.zero;
         container.transform.rotation = transform.rotation;
 
-//        var refTranform = transform.Find(TemplateUnit.name);
-//        if (refTranform) // reference unit found as child
-//        {
-//            var prefab = (Unit) PrefabUtility.GetPrefabParent(TemplateUnit);
-//            if (prefab) TemplateUnit = prefab;
-//            Destroy(refTranform.gameObject);
-//        }
-
         // calculate width of one unit
         var unit = InstantiateUnit(Vector3.zero);
         unit.transform.rotation = Quaternion.Euler(0, 0, 0);

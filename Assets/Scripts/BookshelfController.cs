@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Mono.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 public class BookshelfController : MonoBehaviour
 {
     public Bookshelf Data { get; private set; }
-    
+
     public string CallNumber;
     public int ShelfCount = 3;
     public float ShelfHeight = 0.37f;
@@ -19,7 +20,7 @@ public class BookshelfController : MonoBehaviour
     public Vector3 Offset = Vector3.zero;
     public bool ShowGuides;
     public Text Display;
-    
+
     private Unit unit;
     private ObjectPool<BookController> bookPool;
     private readonly List<BookController> books = new List<BookController>();
@@ -33,7 +34,7 @@ public class BookshelfController : MonoBehaviour
             unit.LoadContents += HandleLoadEvent;
             unit.DoneLoading = false;
         }
-        
+
         Data = new Bookshelf(CallNumber, CallNumber, ShelfCount, ShelfWidth);
         bookPool = Manager.BookPool;
     }
@@ -80,13 +81,14 @@ public class BookshelfController : MonoBehaviour
             Debug.LogError("Could not get last shelf");
             yield break;
         }
+
         var lastData = last.Data;
         if (lastData == null)
         {
             Debug.LogError("Last unit did not have data");
             yield break;
         }
-       
+
         // load data
         var done = false;
         Data = new Bookshelf(lastData.Start, lastData.End, ShelfCount, ShelfWidth);
@@ -126,6 +128,7 @@ public class BookshelfController : MonoBehaviour
             InstantiateShelf(shelf, start);
             yield return null;
         }
+
         unit.DoneLoading = true;
     }
 
@@ -146,7 +149,7 @@ public class BookshelfController : MonoBehaviour
 
             // move to location and retain offset rotation and position
             book.transform.parent = shelfGameObj.transform;
-            book.transform.localPosition = current + book.transform.position; 
+            book.transform.localPosition = current + book.transform.position;
             book.transform.rotation = shelfGameObj.transform.rotation * book.transform.rotation;
             current += book.Width * Vector3.right;
 
@@ -155,13 +158,16 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void Clear()
     {
-        Data = null;
         foreach (var book in books)
         {
             bookPool.GiveBack(book);
         }
+
         books.Clear();
         Display.text = "";
     }
