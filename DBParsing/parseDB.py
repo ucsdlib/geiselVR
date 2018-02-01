@@ -9,6 +9,7 @@ input_file = 'data/data1.tsv'  # input tsv file
 columns = [  # ID of columns to add
     util.ITEM_NUM,
     util.CALL_NUM,
+    util.TITLE,
     util.AUTHOR,
     util.DIM_OR_DESC,
     util.GENRE,
@@ -18,6 +19,7 @@ columns = [  # ID of columns to add
 names = [  # column names for each ID in 'columns'
     'id',
     'call',
+    'title',
     'author',
     'width',
     'genre',
@@ -27,6 +29,7 @@ names = [  # column names for each ID in 'columns'
 table = 'main'  # table name
 index_col = names[1]  # name of column to index
 index_name = names[1] + "_index"  # name of index itself
+width_index = 4 # where width is. needed to convert to float
 ###
 
 # Useful queries
@@ -42,6 +45,7 @@ def store_data(data, cursor):
     count += 1
     if count % 50000 == 0:
         print("Records processed:", count)
+    data[width_index] = util.extract_dim(data[width_index])
     cursor.execute(
         util.query_insert(table, len(names)),
         data
