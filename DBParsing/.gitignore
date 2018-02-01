@@ -96,7 +96,6 @@ ENV/
 .ropeproject
 
 # User additions
-.idea
 *.db
 *.db-journal
 data.tsv
