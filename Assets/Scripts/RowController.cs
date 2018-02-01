@@ -49,22 +49,6 @@ public class RowController : MonoBehaviour
         HandleInput();
     }
 
-    public void NotifyEnd(Direction direction)
-    {
-        Debug.Log("Notifying end for: " + direction);
-        switch (direction)
-        {
-            case Direction.Right:
-                canScrollRight = false;
-                break;
-            case Direction.Left:
-                canScrollLeft = false;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException("direction", direction, null);
-        }
-    }
-
     private void HandleInput()
     {
         // get both hand x-axis thumbstick value [-2, 1]
