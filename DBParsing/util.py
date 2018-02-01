@@ -30,13 +30,25 @@ dim_regex = re.compile('(\d+(?:\s+\d+\/\d+)?)\s?')  # get dimension
 
 
 def process_col(path, col, processor, *args):
+    """
+    Applies a method to every item of a column
+    :param path: Location of data
+    :param col: Column identifier. These are defined in util.py
+    :param processor: Function to apply to every element. Takes in element string
+    :param args: Any arguments to forward to processor
+    """
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
             processor(row[col], *args)
 
 
-def process_col_iter(path, col):
+def col_iterator(path, col):
+    """
+    Provides an iterator for each element in a column.
+    :param path: Location of data
+    :param col: Column Defined. Defined in util.py
+    """
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
@@ -44,10 +56,12 @@ def process_col_iter(path, col):
 
 
 def extract_dim(data):
+    """
+    Parse dimension field to obtain a float value
+    """
     dim_match = dim_regex.match(data)
     if dim_match is not None:
         dim_parts = dim_match.group(0).strip().split()
         return float(sum(Fraction(s) for s in dim_parts))
     else:
         return 0
-

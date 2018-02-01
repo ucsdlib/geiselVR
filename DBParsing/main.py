@@ -5,6 +5,6 @@ from util import *
 PATH = 'data.tsv'
 
 count = 0
-for data in process_col_iter(PATH, ISBN):
+for data in col_iterator(PATH, ISBN):
     print(count, data)
     count += 1
