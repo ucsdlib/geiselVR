@@ -40,6 +40,8 @@ def process_col(path, col, processor, *args):
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
+            if len(row) != SIZE:
+                continue
             processor(row[col], *args)
 
 
@@ -52,6 +54,8 @@ def col_iterator(path, col):
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
+            if len(row) != SIZE:
+                continue
             yield row[col]
 
 
@@ -76,6 +80,8 @@ def group_iterator(path, columns):
     with open(path) as file:
         reader = csv.reader(file, delimiter='\t')
         for row in reader:
+            if len(row) != SIZE:
+                continue
             l = []
             for col in columns:
                 l.append(row[col])
@@ -142,4 +148,4 @@ def query_create_index(table, index, col_name):
 
 def query_delete_table(table):
     """Generate table delete query for table with name 'table'"""
-    return 'DELETE FROM ' + table
+    return 'DROP TABLE IF EXISTS ' + table
