@@ -65,3 +65,28 @@ def extract_dim(data):
         return float(sum(Fraction(s) for s in dim_parts))
     else:
         return 0
+
+
+def group_iterator(path, columns):
+    """
+    Provides an iterator for all elements over a group of columns
+    :param path: Location of data
+    :param columns: Collection of columns. Defined in util.py
+    """
+    with open(path) as file:
+        reader = csv.reader(file, delimiter='\t')
+        for row in reader:
+            l = []
+            for col in columns:
+                l.append(row[col])
+            yield l
+
+
+def group_processor(path, columns, processor, *args):
+    """
+    Convenience method for group_iterator. Applies processor to
+    each group returned by group_iterator. Args are forwarded to processor.
+    Processor must take group as first argument
+    """
+    for group in group_iterator(path, columns):
+        processor(group, *args)
