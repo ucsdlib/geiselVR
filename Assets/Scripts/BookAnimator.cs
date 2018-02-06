@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Advertisements;
+﻿using UnityEngine;
 
 public class BookAnimator : MonoBehaviour
 {
