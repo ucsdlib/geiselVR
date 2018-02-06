@@ -7,12 +7,14 @@ using UnityEngine.UI;
 
 public class BookDisplayController : MonoBehaviour
 {
-    [Tooltip("Number of local units per second")] 
+    [Tooltip("Number of local units per second")]
     public float ScrollSpeed;
 
     [Tooltip("How many seconds to pause for at beginning of text shift")]
     public float PauseTime;
-    
+
+    public bool Animate { get; set; }
+
     public Text SpineText;
 
     private volatile bool lerping;
@@ -21,12 +23,14 @@ public class BookDisplayController : MonoBehaviour
     private void Start()
     {
         spineInitPos = SpineText.rectTransform.anchoredPosition;
+        Animate = false;
     }
 
     private void Update()
     {
         // scroll if text exceeds bounds
-        if (!lerping && SpineText.preferredWidth > SpineText.rectTransform.rect.width)
+        if (Animate && !lerping &&
+            SpineText.preferredWidth > SpineText.rectTransform.rect.width)
         {
             lerping = true;
 //            SpineText.alignment = TextAnchor.MiddleLeft;
