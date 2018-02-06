@@ -1,7 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,8 +41,7 @@ public class BookDisplayController : MonoBehaviour
 
     private void OnEnable()
     {
-        // disable may have interrupted coroutine, reset to init
-        lerping = false;
+        lerping = false; // disable may have interrupted coroutine, reset to init
         SpineText.rectTransform.anchoredPosition = spineInitPos;
     }
 
@@ -53,9 +49,9 @@ public class BookDisplayController : MonoBehaviour
     {
         var width = SpineText.rectTransform.rect.width;
         var distance = SpineText.preferredWidth - width;
-        var timeFactor = distance / ScrollSpeed;
         var start = SpineText.rectTransform.anchoredPosition;
         var end = SpineText.rectTransform.anchoredPosition + (distance + width / 2) * Vector2.left;
+        var timeFactor = (distance + width / 2) / ScrollSpeed;
 
         yield return new WaitForSeconds(PauseTime);
 
