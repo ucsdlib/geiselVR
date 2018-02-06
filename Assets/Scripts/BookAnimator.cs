@@ -4,15 +4,12 @@ public class BookAnimator : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger enter"); // DEBUG
         var bookController = other.GetComponent<BookController>();
         if (bookController == null)
         {
-            Debug.Log("Could not find book controller"); // DEBUG
             return;
         }
 
-        Debug.Log("Changing animate"); // DEBUG
         bookController.Display.Animate = true;
     }
 
@@ -21,11 +18,9 @@ public class BookAnimator : MonoBehaviour
         var bookController = other.GetComponent<BookController>();
         if (bookController == null)
         {
-            Debug.Log("Could not find book controller"); // DEBUG
             return;
         }
 
-        Debug.Log("Changing animate"); // DEBUG
         bookController.Display.Animate = false;
     }
 }
