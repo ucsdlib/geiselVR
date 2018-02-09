@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class Manager : MonoBehaviour
     [Header("Templates and Instantiators")] 
     public Instantiator BookInstantiator;
     public Instantiator UnitInstantiator;
+
+    [Header("Materials")] 
+    public List<Material> BookMaterials;
 
     public static DbWrapper DbWrapper { get; private set; }
     public static UnitFactory UnitFactory { get; private set; }
