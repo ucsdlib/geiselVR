@@ -42,13 +42,10 @@ public class RowController : MonoBehaviour
         width = CalculateLocalBounds(unit.gameObject).size.x;
         DestroyUnit(unit);
 
-        if (UseDummyUnits)
-        {
-            dummyContainer = new GameObject("DummyContainer");
-            dummyContainer.transform.parent = transform;
-            dummyContainer.transform.localPosition = width * Vector3.left;
-            dummyContainer.transform.rotation = transform.rotation;
-        }
+        dummyContainer = new GameObject("DummyContainer");
+        dummyContainer.transform.parent = transform;
+        dummyContainer.transform.localPosition = width * Vector3.left;
+        dummyContainer.transform.rotation = transform.rotation;
 
         StartCoroutine(InstantiateArray(RowSize));
         lastPos = firstPos + Vector3.right * (RowSize - 1) * width;
@@ -108,42 +105,22 @@ public class RowController : MonoBehaviour
         // calculate direction dependent parameters
         var dirVec = direction.ToVector();
         var end = container.transform.localPosition + dirVec * width;
-        var dummyStart = Vector3.zero;
-        var dummyEnd = Vector3.zero;
-        if (UseDummyUnits)
-        {
-            dummyStart = firstPos + width * Vector3.left;
-            dummyEnd = dummyContainer.transform.localPosition + dirVec * width;
-        }
+        var dummyStart = firstPos + width * Vector3.left;
+        var dummyEnd = dummyContainer.transform.localPosition + dirVec * width;
 
         // Lerp
         var t = 0f;
-        if (UseDummyUnits)
+        while (t < 1.0f)
         {
-            while (t < 1.0f)
-            {
-                t += Time.deltaTime / time; // scale by time factor
-                container.transform.localPosition = Vector3.Slerp(firstPos, end, t);
-                dummyContainer.transform.localPosition = Vector3.Slerp(dummyStart, dummyEnd, t);
-                yield return null;
-            }
-        }
-        else
-        {
-            while (t < 1.0f)
-            {
-                t += Time.deltaTime / time; // scale by time factor
-                container.transform.localPosition = Vector3.Slerp(firstPos, end, t);
-                yield return null;
-            }
+            t += Time.deltaTime / time; // scale by time factor
+            container.transform.localPosition = Vector3.Slerp(firstPos, end, t);
+            dummyContainer.transform.localPosition = Vector3.Slerp(dummyStart, dummyEnd, t);
+            yield return null;
         }
 
         // reset containers
         container.transform.localPosition = firstPos;
-        if (UseDummyUnits)
-        {
-            dummyContainer.transform.localPosition = dummyStart;
-        }
+        dummyContainer.transform.localPosition = dummyStart;
 
         // move main units forward since we moved container back
         if (realign)
