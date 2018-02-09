@@ -105,37 +105,52 @@ public class RowController : MonoBehaviour
 
     private IEnumerator ShiftFrame(Direction direction, float time, bool realign)
     {
-        // Calculate direction dependent parameters
-        Vector3 end;
-        Vector3 realignDir;
-        if (direction == Direction.Right)
+        // calculate direction dependent parameters
+        var dirVec = direction.ToVector();
+        var end = container.transform.localPosition + dirVec * width;
+        var dummyStart = Vector3.zero;
+        var dummyEnd = Vector3.zero;
+        if (UseDummyUnits)
         {
-            end = container.transform.localPosition + Vector3.right * width;
-            realignDir = Vector3.right;
-        }
-        else
-        {
-            end = container.transform.localPosition + Vector3.left * width;
-            realignDir = Vector3.left;
+            dummyStart = firstPos + width * Vector3.left;
+            dummyEnd = dummyContainer.transform.localPosition + dirVec * width;
         }
 
         // Lerp
         var t = 0f;
-        while (t < 1.0f)
+        if (UseDummyUnits)
         {
-            t += Time.deltaTime / time; // scale by time factor
-            container.transform.localPosition = Vector3.Slerp(Vector3.zero, end, t);
-            yield return null;
+            while (t < 1.0f)
+            {
+                t += Time.deltaTime / time; // scale by time factor
+                container.transform.localPosition = Vector3.Slerp(firstPos, end, t);
+                dummyContainer.transform.localPosition = Vector3.Slerp(dummyStart, dummyEnd, t);
+                yield return null;
+            }
+        }
+        else
+        {
+            while (t < 1.0f)
+            {
+                t += Time.deltaTime / time; // scale by time factor
+                container.transform.localPosition = Vector3.Slerp(firstPos, end, t);
+                yield return null;
+            }
         }
 
-        container.transform.localPosition = Vector3.zero;
+        // reset containers
+        container.transform.localPosition = firstPos;
+        if (UseDummyUnits)
+        {
+            dummyContainer.transform.localPosition = dummyStart;
+        }
 
-        // Realign position
+        // move main units forward since we moved container back
         if (realign)
         {
             foreach (var unit in activeUnits)
             {
-                unit.transform.localPosition += realignDir * width;
+                unit.transform.localPosition += dirVec * width;
             }
         }
     }
