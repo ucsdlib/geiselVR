@@ -8,6 +8,8 @@ public class Bookshelf : IUnit
     public string Start { get; private set; }
     public string End { get; private set; }
     public LinkedList<LinkedList<Book>> Table { get; private set; }
+    
+    private const float MinWidth = 10 / 1000f;
 
     public bool Done
     {
@@ -117,6 +119,7 @@ public class Bookshelf : IUnit
             } while (entry.Width > shelfWidth * 100);
 
             var book = new Book(entry);
+            if (book.Width < MinWidth) continue;
 
             totalWidth += book.Width;
             if (totalWidth >= shelfWidth) break;

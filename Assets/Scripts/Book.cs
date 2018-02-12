@@ -1,6 +1,6 @@
 ﻿public class Book
 {
-    private const float WidthMult = 3.0f;
+    private const float WidthMult = 2.0f;
 
     public string Id { get; private set; }
     public string CallNumber { get; private set; }
