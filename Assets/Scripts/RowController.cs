@@ -206,6 +206,8 @@ public class RowController : MonoBehaviour
             var dummyR = InstantiateUnit(lastPos + width * Vector3.right);
             dummyL.transform.parent = dummyContainer.transform;
             dummyR.transform.parent = dummyContainer.transform;
+            // note that dummy rotation was set to normal container rotation
+            // assumption is that dummyContainer and normal container have same rotation
 
             // clear dummies
             dummyL.UpdateContents(dummyL, Direction.Null);
@@ -219,6 +221,7 @@ public class RowController : MonoBehaviour
     {
         var unit = unitPool.Borrow();
         unit.transform.parent = container.transform;
+        unit.transform.rotation = container.transform.rotation * unit.transform.rotation;
         unit.transform.localPosition = position;
         unit.Row = this;
         return unit;
@@ -228,6 +231,7 @@ public class RowController : MonoBehaviour
     {
         var unit = unitPool.Borrow();
         unit.transform.parent = container.transform;
+        unit.transform.rotation = container.transform.rotation * unit.transform.rotation;
         unit.Row = this;
         return unit;
     }
