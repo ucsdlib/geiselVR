@@ -146,6 +146,7 @@ public class BookshelfController : MonoBehaviour
         {
             var book = bookPool.Borrow();
             book.SetMeta(meta);
+            book.ParentBookshelf = this;
 
             // move to location and retain offset rotation and position
             book.transform.parent = shelfGameObj.transform;
@@ -158,9 +159,6 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Clear()
     {
         foreach (var book in books)

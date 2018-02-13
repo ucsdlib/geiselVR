@@ -5,6 +5,8 @@ public class BookController : MonoBehaviour
 {
     public BookDisplayController Display;
 
+    public BookshelfController ParentBookshelf { get; set; }
+
     public float Width
     {
         get { return Meta.Width; }
