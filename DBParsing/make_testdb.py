@@ -1,3 +1,9 @@
+"""
+Module for generating a test database, since the data used to develop
+GeiselVR cannot be publicly distributable. Parameters are set in the "User
+Values" section in the script, where they are also documented. The resulting
+database will be compatible with the GeiselVR program.
+"""
 import random
 import sqlite3
 
