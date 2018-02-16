@@ -7,14 +7,22 @@ database will be compatible with the GeiselVR program.
 import random
 import sqlite3
 
-### User Values
-db_file = 'testdb.db'       # data base file path
-table = 'testing'           # name of table to populate
-call_index = 'call_index'   # name for look up index
-call_col = 'call'           # col to index for look up
-size = 100000               # size of database
-def_title = 'Sample Book Sample Book Sample Book'   # default assigned title
-###
+# User Values
+
+# Output database file path
+db_file = 'testdb.db'
+# Desired SQLite table name
+table = 'testing'
+# Name of index for searching column. Typically this is the call number column
+call_index = 'call_index'
+# Name of column used for searching
+call_col = 'call'
+# Size of the database
+size = 100000
+# Title of every book in database
+def_title = 'Sample Book Sample Book Sample Book'
+
+#
 
 tableq = 'CREATE TABLE IF NOT EXISTS ' + table + '(' + call_col + ' text PRIMARY KEY, title text, width real);'
 insertq = 'INSERT INTO testing VALUES (?, ?, ?)'
@@ -49,4 +57,3 @@ for topLetter in alphabet:
 
 conn.commit()
 conn.close()
-
