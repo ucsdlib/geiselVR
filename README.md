@@ -21,6 +21,6 @@ The recommended Unity version for this project is Unity 2017.3.1; earlier versio
 1. Run script `ParseDB/make_testdb.py` after setting desired parameters. The script is internally documented.
 2. Copy generated database file to `Assets/` folder
 3. Open project in Unity 2017.3.1
-4. Open the scene `Scene/DML`
+4. Open the scene `Scenes/DML`
 5. In the attribute editor of the Manager object, enter the database path relative to the `Assets/` folder.
 6. Press play
