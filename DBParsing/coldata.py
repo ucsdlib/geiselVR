@@ -4,7 +4,7 @@ Defines the columns which GeiselVR is currently expecting.
 import util
 
 ids = [
-    util.ISBN,
+    util.ITEM_NUM,
     util.CALL_NUM,
     util.TITLE,
     util.AUTHOR,
@@ -24,3 +24,7 @@ names = [
     'subject',
     'summary'
 ]
+
+table = {}
+for i in range(0, len(ids)):
+    table[ids[i]] = i
