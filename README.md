@@ -24,3 +24,9 @@ The recommended Unity version for this project is Unity 2017.3.1; earlier versio
 4. Open the scene `Assets/Scenes/DML`
 5. In the attribute editor of the Manager object, enter the database path relative to the `Assets/` folder.
 6. Press play
+
+### Commit convention
+The commits loosely follow a numbering system that designates which major and minor task the commit belongs to. These tasks are defined here:
+https://workflowy.com/s/FzTg.hGDsPIx82V
+
+This is a workflowy list, and therefore has somewhat strange controls. Click a bullet to zoom into it, or expand it with the + button.
