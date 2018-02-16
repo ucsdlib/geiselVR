@@ -18,7 +18,7 @@ The recommended Unity version for this project is Unity 2017.3.1; earlier versio
 3. **Oculus Rift**
 
 ### Unity set-up
-1. Run script `ParseDB/make_testdb.py` after setting desired parameters
+1. Run script `ParseDB/make_testdb.py` after setting desired parameters. The script is internally documented.
 2. Copy generated database file to `Assets/` folder
 3. Open project in Unity 2017.3.1
 4. Open the scene `Scene/DML`
