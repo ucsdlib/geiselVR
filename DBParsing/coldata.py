@@ -3,7 +3,7 @@ Defines the columns which GeiselVR is currently expecting.
 """
 import util
 
-colids = [
+ids = [
     util.ISBN,
     util.CALL_NUM,
     util.TITLE,
@@ -14,7 +14,7 @@ colids = [
     util.SUMMARY
 ]
 
-colnames = [
+names = [
     'id',
     'call',
     'title',
