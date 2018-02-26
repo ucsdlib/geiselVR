@@ -1,13 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Controls behavior of a Book Receptacle, a device which takes <see cref="Book"/> objects and
+/// populates a <see cref="DataUi"/> object with its data.
+/// </summary>
 public class ReceptacleTrigger : MonoBehaviour
 {
+    /// <summary>
+    /// Will display <see cref="Book"/> object data
+    /// </summary>
     public DataUI DataUi;
+    
+    /// <summary>
+    /// Position to which objects will snap too when received
+    /// </summary>
     public Transform SnapPoint;
 
-    private Collider obj = null;
+    private Collider obj = null; // stores currently held object
     
     private void OnTriggerEnter(Collider other)
     {

@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// A model class containing a collection of <see cref="Book"/> objects which is able to
+/// self-populate given initial conditions. Can be used as the internal data of a
+/// <see cref="BookshelfController"/>.
+/// </summary>
 public class Bookshelf : IUnit
 {
     public string Start { get; private set; }
     public string End { get; private set; }
     public LinkedList<LinkedList<Book>> Table { get; private set; }
-    
-    private const float MinWidth = 10 / 1000f;
+
+    private const float MinWidth = 10 / 1000f; // min width of a valid book
 
     public bool Done
     {
         get { return done; }
     }
 
+    // Delegates used to abstract away book loading direction
     private delegate void ShelfAdder(LinkedList<Book> books, Book book);
 
     private delegate void TableAdder(LinkedList<LinkedList<Book>> table, LinkedList<Book> shelf);
@@ -23,11 +29,18 @@ public class Bookshelf : IUnit
     private ShelfAdder addShelf;
     private TableAdder addTable;
     private volatile bool done;
-    private List<ChainEntry> chain;
 
-    private readonly int shelfCount;
+    private List<ChainEntry> chain; // these will be loaded as well after Load() is called
+    private readonly int shelfCount; // 
     private readonly float shelfWidth;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="start">starting identifier used in loading</param>
+    /// <param name="end">ending identifier used in loading</param>
+    /// <param name="shelfCount">number of shelves</param>
+    /// <param name="shelfWidth">width of each shelf. determines book count</param>
     public Bookshelf(string start, string end, int shelfCount, float shelfWidth)
     {
         Start = start;
@@ -39,6 +52,13 @@ public class Bookshelf : IUnit
         this.shelfWidth = shelfWidth;
     }
 
+    /// <summary>
+    /// Given initial conditions, query the database until this object is filled with
+    /// <see cref="Book"/> objects. Any chained <see cref="Bookshelf"/> objects will also have this
+    /// function called.
+    /// </summary>
+    /// <param name="direction">direction to load</param>
+    /// <exception cref="ArgumentOutOfRangeException">if direction is invalid</exception>
     public void Load(Direction direction)
     {
         if (!done) return;
@@ -67,6 +87,7 @@ public class Bookshelf : IUnit
             default:
                 throw new ArgumentOutOfRangeException("direction", direction, message: null);
         }
+
         PopulateTable(buffer);
         done = true;
 
@@ -79,6 +100,7 @@ public class Bookshelf : IUnit
         }
     }
 
+    // Populate the table using the given database buffer
     private void PopulateTable(DbBuffer buffer)
     {
         for (var i = 0; i < shelfCount; i++)
@@ -100,6 +122,7 @@ public class Bookshelf : IUnit
         }
     }
 
+    // Generate one shelf of books using the given database buffer
     private LinkedList<Book> GenerateShelf(DbBuffer buffer)
     {
         var books = new LinkedList<Book>();
@@ -126,6 +149,7 @@ public class Bookshelf : IUnit
 
             addShelf(books, book);
         }
+
         return books;
     }
 
@@ -139,6 +163,13 @@ public class Bookshelf : IUnit
         list.AddFirst(item);
     }
 
+    /// <summary>
+    /// Given initial conditions, query the database until this object is filled with
+    /// <see cref="Book"/> objects.
+    /// </summary>
+    /// <param name="unit">Unit to use as reference for loading</param>
+    /// <param name="direction">Direction in reference to previous unit in which to load</param>
+    /// <returns></returns>
     public bool Load(IUnit unit, Direction direction)
     {
         var bookshelf = unit as Bookshelf;
@@ -147,12 +178,19 @@ public class Bookshelf : IUnit
             Debug.LogError("Bookshelf: received IUnit of wrong type on Load");
             return false;
         }
+
         Start = bookshelf.Start;
         End = bookshelf.End;
         Load(direction);
         return true;
     }
 
+    /// <summary>
+    /// Add a unit to this chain. It will be loaded when <see cref="Load()"/> is called on
+    /// this object.
+    /// </summary>
+    /// <param name="unit">unit in question</param>
+    /// <param name="direction">parameter to units <see cref="Load()"/> function</param>
     public void Chain(IUnit unit, Direction direction)
     {
         var bookshelf = unit as Bookshelf;
@@ -161,11 +199,13 @@ public class Bookshelf : IUnit
             Debug.LogError("Bookshelf: receveived IUnit of wrong type on Chain");
             return;
         }
+
         chain.Add(new ChainEntry(bookshelf, direction));
     }
 
     private class ChainEntry
     {
+        // Bookshelf will be loaded in direction
         public Bookshelf bookshelf;
         public Direction direction;
 

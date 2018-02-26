@@ -1,29 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Mono.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
-// mant to be used with a pool. Calling Destroy() causes problems because of OnDisable()
+/// <summary>
+/// Controls a physical bookshelf. It is the view for a <see cref="Bookshelf"/> model. Designed to
+/// be used with a pool.
+/// </summary>
 public class BookshelfController : MonoBehaviour
 {
     public Bookshelf Data { get; private set; }
 
+    [Tooltip("Starting call number")]
     public string CallNumber;
+
+    [Tooltip("Number of shelves per bookshelf")]
     public int ShelfCount = 3;
+    
+    [Tooltip("Height of shelf")]
     public float ShelfHeight = 0.37f;
+    
+    [Tooltip("Width of shelf")]
     public float ShelfWidth = 1.0f;
+    
+    [Tooltip("Y coordinate of the top shelf")]
     public float TopShelfY = 1.6f;
+    
+    [Tooltip("Moves location of all shelves by given amount")]
     public Vector3 Offset = Vector3.zero;
+    
+    [Tooltip("Enables guides showing where shelves would be with current parameters")]
     public bool ShowGuides;
+    
+    [Tooltip("Display where to show starting call number")]
     public Text Display;
 
-    private Unit unit;
-    private ObjectPool<BookController> bookPool;
-    private readonly List<BookController> books = new List<BookController>();
+    private Unit unit; // communication to unit
+    private ObjectPool<BookController> bookPool; // pool of BookControllers to draw from
+    private readonly List<BookController> books = new List<BookController>(); // all books contained
 
     private void Awake()
     {
@@ -132,6 +149,7 @@ public class BookshelfController : MonoBehaviour
         unit.DoneLoading = true;
     }
 
+    // Helper function for InstantiateTable()
     private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
     {
         var shelfGameObj = new GameObject("Shelf");
@@ -159,6 +177,7 @@ public class BookshelfController : MonoBehaviour
         }
     }
 
+    // Remove all books from bookshelf
     private void Clear()
     {
         foreach (var book in books)

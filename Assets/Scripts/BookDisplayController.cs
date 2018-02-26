@@ -2,20 +2,27 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the display of a physical book.
+/// </summary>
 public class BookDisplayController : MonoBehaviour
 {
-    [Tooltip("Number of local units per second")]
+    [Tooltip("Number of local units per second for scrolling elements")]
     public float ScrollSpeed;
 
     [Tooltip("How many seconds to pause for at beginning of text shift")]
     public float PauseTime;
 
+    /// <summary>
+    /// Enables animation of data elements such as title scrolling
+    /// </summary>
     public bool Animate { get; set; }
 
+    [Tooltip("Text on spine of book")]
     public Text SpineText;
 
-    private volatile bool lerping;
-    private Vector2 spineInitPos;
+    private volatile bool lerping; // true if in middle of animation
+    private Vector2 spineInitPos; // starting position of spine text
 
     private void Start()
     {
@@ -45,6 +52,7 @@ public class BookDisplayController : MonoBehaviour
         SpineText.rectTransform.anchoredPosition = spineInitPos;
     }
 
+    // Animates the text along the book spine
     private IEnumerator ShiftSpine()
     {
         var width = SpineText.rectTransform.rect.width;

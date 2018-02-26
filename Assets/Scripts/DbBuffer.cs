@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using UnityEngine;
 
+/// <summary>
+/// Allows buffered access to a <see cref="DbWrapper"/>
+/// </summary>
 public class DbBuffer
 {
     public bool Forward
@@ -31,6 +33,7 @@ public class DbBuffer
                 throw new ArgumentOutOfRangeException(
                     "direction", direction, message: null);
         }
+
         db = Manager.DbWrapper;
         this.startCallNum = startCallNum;
         this.capacity = capacity;
@@ -43,7 +46,6 @@ public class DbBuffer
     {
     }
 
-
     private bool LoadData()
     {
         buffer.Clear();
@@ -52,6 +54,10 @@ public class DbBuffer
         return buffer.Count > 0; // check if we added data
     }
 
+    /// <summary>
+    /// Get next available data base entry
+    /// </summary>
+    /// <returns>Next available data base entry</returns>
     [CanBeNull]
     public DataEntry NextEntry()
     {

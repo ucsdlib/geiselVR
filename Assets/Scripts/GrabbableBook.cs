@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GrabbableBook : OVRGrabbable
 {
+    /// <summary>
+    /// Forces the <see cref="OVRGrabber"/> to release this object
+    /// </summary>
     public void ForceEnd()
     {
         if (!isGrabbed) return;

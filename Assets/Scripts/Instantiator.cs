@@ -2,6 +2,10 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+/// <summary>
+/// Acts as an interface to instantiate a collection of game objects or a single one. Used in
+/// conjunction with <see cref="ObjectPool"/>
+/// </summary>
 public class Instantiator : MonoBehaviour
 {
     public GameObject Template;

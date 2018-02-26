@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays data contained in a <see cref="Book"/> object
+/// </summary>
 public class DataUI : MonoBehaviour
 {
     public Text Text;

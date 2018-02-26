@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Abstracts unit data loading away from Unity API
+/// Abstracts <see cref="Unit"/> data loading away from Unity API
 /// </summary>
 public interface IUnit
 {

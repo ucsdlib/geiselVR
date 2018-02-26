@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ModGrabber : OVRGrabber {
+    /// <summary>
+    /// Release grabbed <see cref="OVRGrabbable"/>
+    /// </summary>
     public void ForceRelease()
     {
         GrabEnd();
@@ -10,8 +13,9 @@ public class ModGrabber : OVRGrabber {
 
     protected override void GrabVolumeEnable(bool enabled)
     {
-        // this behavior causes problems and it is unclear
-        // why oculus chose to implement it
+        // The original method was problematic, and thus it has been overridden to remove its 
+        // functionality
+        
         m_grabVolumeEnabled = enabled;
     }
 }

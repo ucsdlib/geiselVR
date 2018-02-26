@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Factory for <see cref="Unit"/> and <see cref="IUnit"/> objects.
+/// </summary>
 public class UnitFactory
 {
     private BookshelfController template;

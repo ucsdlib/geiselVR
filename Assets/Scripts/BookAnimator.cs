@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Causes all <see cref="BookController"/> within colliders to start animating
+/// </summary>
 public class BookAnimator : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)

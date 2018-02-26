@@ -3,25 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Controls a Row, an abstract entity consiting of several <see cref="Unit"/> objects which
+/// manages their movement.
+/// </summary>
 public class RowController : MonoBehaviour
 {
-    public int RowSize = 2; // number of units in this row at any given time
+    [Tooltip("Number of units at any given time")]
+    public int RowSize = 2;
+    
+    [Tooltip("Indicates zero-indexed position of the center unit, i.e. one in front of user")]
     public int CenterPos = 2; // center shelf which contains position set by SetPosition
+    
+    [Tooltip("Time period for scroll to complete. Lower is faster")]
     public float ScrollTime = 0.12f; // time period for scroll to complete
-    public bool UseDummyUnits = false;
+    
+    [Tooltip("Enables use of blank units around the main units for padding")]
+    public bool UseDummyUnits;
 
     private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>(); // current active units
-    private bool lerping;
+    private bool lerping; // true if in the process of shifting units
     private Vector3 firstPos; // first position in array
     private Vector3 lastPos; // last position in array
     private float width; // width of one unit
     private bool canScrollRight = true;
     private bool canScrollLeft = true;
-    private GameObject container;
-    private GameObject dummyContainer;
+    private GameObject container; // contains all units
+    private GameObject dummyContainer; // contains all dummy units
     private ObjectPool<Unit> unitPool;
 
     private void Start()
