@@ -24,7 +24,7 @@ public class RowController : MonoBehaviour
     public bool UseDummyUnits;
 
     private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>(); // current active units
-    private bool lerping; // true if in the process of shifting units
+    private volatile bool lerping; // true if in the process of shifting units
     private Vector3 firstPos; // first position in array
     private Vector3 lastPos; // last position in array
     private float width; // width of one unit
