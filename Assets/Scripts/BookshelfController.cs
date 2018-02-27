@@ -42,6 +42,21 @@ public class BookshelfController : MonoBehaviour
     private ObjectPool<BookController> bookPool; // pool of BookControllers to draw from
     private readonly List<BookController> books = new List<BookController>(); // all books contained
 
+    /// <summary>
+    /// Stop managing the given <see cref="BookController"/> object. This operation prevents the
+    /// object from being deleted when this <see cref="BookshelfController"/> is disabled /
+    /// destroyed, and sets its parents to null if found.
+    /// </summary>
+    /// <param name="bookController">Object to stop managing</param>
+    /// <returns>true if <paramref name="bookController"/> was found and removed.
+    /// false otherwise.</returns>
+    public bool ReleaseBook(BookController bookController)
+    {
+        if (!books.Remove(bookController)) return false;
+        bookController.transform.parent = null;
+        return true;
+    }
+
     private void Awake()
     {
         unit = GetComponent<Unit>();
