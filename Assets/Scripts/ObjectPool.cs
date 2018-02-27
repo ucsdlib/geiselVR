@@ -3,8 +3,8 @@ using UnityEngine;
 
 /// <summary>
 /// Generic pool of objects which allows efficient reuse during runtime. Requires an
-/// <see cref="Instantiator"/> to function. The reason these are sepeareted is to avoid having to
-/// call GetComponent<>.
+/// <see cref="Instantiator"/> to function. The reason these are separated is to avoid having to
+/// call GetComponent.
 /// </summary>
 /// <typeparam name="T">Type of object to pool. Typically, this is a component attached to a
 /// GameObject.
