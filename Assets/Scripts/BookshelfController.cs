@@ -167,7 +167,7 @@ public class BookshelfController : MonoBehaviour
     // Helper function for InstantiateTable()
     private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
     {
-        var shelfGameObj = new GameObject("Shelf");
+        var shelfGameObj = new GameObject("Shelf"); // FIXME excessive shelves created
         shelfGameObj.transform.parent = transform;
         shelfGameObj.transform.localPosition = start;
         shelfGameObj.transform.rotation = transform.rotation;
@@ -202,5 +202,9 @@ public class BookshelfController : MonoBehaviour
 
         books.Clear();
         Display.text = "";
+    }
+    
+    private void Clear2()
+    {
     }
 }
