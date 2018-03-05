@@ -41,6 +41,7 @@ public class BookshelfController : MonoBehaviour
     private Unit unit; // communication to unit
     private ObjectPool<BookController> bookPool; // pool of BookControllers to draw from
     private readonly List<BookController> books = new List<BookController>(); // all books contained
+    private readonly List<GameObject> shelves = new List<GameObject>();
 
     /// <summary>
     /// Stop managing the given <see cref="BookController"/> object. This operation prevents the
@@ -69,6 +70,11 @@ public class BookshelfController : MonoBehaviour
 
         Data = new Bookshelf(CallNumber, CallNumber, ShelfCount, ShelfWidth);
         bookPool = Manager.BookPool;
+
+        for (var i = 0; i < ShelfCount; i++)
+        {
+            shelves.Add(new GameObject("Shelf")); 
+        }
     }
 
     private void OnDrawGizmos()
@@ -154,37 +160,39 @@ public class BookshelfController : MonoBehaviour
     private IEnumerator InstantiateTable()
     {
         var i = 0;
-        foreach (var shelf in Data.Table)
+        var itr = shelves.GetEnumerator();
+        itr.MoveNext();
+        foreach (var shelfData in Data.Table)
         {
             var start = Vector3.up * (TopShelfY - i++ * ShelfHeight);
-            InstantiateShelf(shelf, start);
+            InstantiateShelf(itr.Current, shelfData, start);
+            itr.MoveNext();
             yield return null;
         }
-
+        itr.Dispose();
         unit.DoneLoading = true;
     }
 
     // Helper function for InstantiateTable()
-    private void InstantiateShelf(LinkedList<Book> shelf, Vector3 start)
+    private void InstantiateShelf(GameObject shelfObj, IEnumerable<Book> shelfData, Vector3 start)
     {
-        var shelfGameObj = new GameObject("Shelf"); // FIXME excessive shelves created
-        shelfGameObj.transform.parent = transform;
-        shelfGameObj.transform.localPosition = start;
-        shelfGameObj.transform.rotation = transform.rotation;
-        shelfGameObj.transform.Translate(Offset);
+        shelfObj.transform.parent = transform;
+        shelfObj.transform.localPosition = start;
+        shelfObj.transform.rotation = transform.rotation;
+        shelfObj.transform.Translate(Offset);
 
         // Instantiate in order
         var current = Vector3.zero;
-        foreach (var meta in shelf)
+        foreach (var meta in shelfData)
         {
             var book = bookPool.Borrow();
             book.SetMeta(meta);
             book.ParentBookshelf = this;
 
             // move to location and retain offset rotation and position
-            book.transform.parent = shelfGameObj.transform;
+            book.transform.parent = shelfObj.transform;
             book.transform.localPosition = current + book.transform.position;
-            book.transform.rotation = shelfGameObj.transform.rotation * book.transform.rotation;
+            book.transform.rotation = shelfObj.transform.rotation * book.transform.rotation;
             current += book.Width * Vector3.right;
 
             book.LoadData();
@@ -202,9 +210,5 @@ public class BookshelfController : MonoBehaviour
 
         books.Clear();
         Display.text = "";
-    }
-    
-    private void Clear2()
-    {
     }
 }
