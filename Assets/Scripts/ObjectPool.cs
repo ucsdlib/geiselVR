@@ -69,7 +69,7 @@ public class ObjectPool<T> where T : MonoBehaviour
 
     /// <summary>
     /// Give back an item to the pool, effectively relinquishing it. The item will be deactivated
-    /// and stored for reuse.
+    /// and its parent set to null.
     /// </summary>
     /// <param name="o">Item to give back</param>
     public void GiveBack(T o)
