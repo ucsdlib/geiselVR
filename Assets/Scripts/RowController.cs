@@ -13,15 +13,18 @@ public class RowController : MonoBehaviour
 {
     [Tooltip("Number of units at any given time")]
     public int RowSize = 2;
-    
+
     [Tooltip("Indicates zero-indexed position of the center unit, i.e. one in front of user")]
     public int CenterPos = 2; // center shelf which contains position set by SetPosition
-    
+
     [Tooltip("Time period for scroll to complete. Lower is faster")]
     public float ScrollTime = 0.12f; // time period for scroll to complete
-    
+
     [Tooltip("Enables use of blank units around the main units for padding")]
     public bool UseDummyUnits;
+
+    [Tooltip("Enables use of keyboard as input. Useful for debugging")]
+    public bool EnableKeyboardControl;
 
     private readonly LinkedList<Unit> activeUnits = new LinkedList<Unit>(); // current active units
     private volatile bool lerping; // true if in the process of shifting units
@@ -87,11 +90,17 @@ public class RowController : MonoBehaviour
             canScrollLeft = true;
         }
 
-        if (OVRInput.Get(OVRInput.Button.Two))
+        if (EnableKeyboardControl)
         {
-            foreach (var unit in activeUnits)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                StartCoroutine(unit.UpdateContents(null, Direction.Null));
+                StartCoroutine(Scroll(Direction.Right));
+                canScrollRight = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                StartCoroutine(Scroll(Direction.Left));
+                canScrollLeft = true;
             }
         }
     }
@@ -265,7 +274,9 @@ public class RowController : MonoBehaviour
             foreach (Transform child in obj.transform)
             {
                 Renderer childRender = child.GetComponent<Renderer>();
-                bounds.Encapsulate(childRender ? childRender.bounds : CalculateLocalBounds(child.gameObject));
+                bounds.Encapsulate(childRender
+                    ? childRender.bounds
+                    : CalculateLocalBounds(child.gameObject));
             }
         }
 
