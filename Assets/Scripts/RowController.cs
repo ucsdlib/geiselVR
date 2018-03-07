@@ -31,11 +31,18 @@ public class RowController : MonoBehaviour
     private Vector3 firstPos; // first position in array
     private Vector3 lastPos; // last position in array
     private float width; // width of one unit
-    private bool canScrollRight = true;
-    private bool canScrollLeft = true;
+    private bool canScroll = true; // set to false on scroll. set to true by done unit
     private GameObject container; // contains all units
     private GameObject dummyContainer; // contains all dummy units
     private ObjectPool<Unit> unitPool;
+    
+    /// <summary>
+    /// Notifies that scrolling is now allowed
+    /// </summary>
+    public void NotifyScrollOk()
+    {
+        canScroll = true;
+    }
 
     private void Start()
     {
@@ -76,31 +83,27 @@ public class RowController : MonoBehaviour
         var flexR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick)[0];
 
         // scroll to the left -> move shelf right
-        if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScrollLeft
+        if ((flexL > 0.5 || flexR > 0.5) && !lerping && canScroll
             && activeUnits.Count > 0 && activeUnits.First.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Right));
-            canScrollRight = true;
         }
         // scroll to the right -> move shelf left
-        else if ((flexL < -0.5 || flexR < -0.5) && !lerping && canScrollRight
+        else if ((flexL < -0.5 || flexR < -0.5) && !lerping && canScroll
                  && activeUnits.Count > 0 && activeUnits.Last.Value.DoneLoading)
         {
             StartCoroutine(Scroll(Direction.Left));
-            canScrollLeft = true;
         }
 
-        if (EnableKeyboardControl)
+        if (EnableKeyboardControl && canScroll)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
                 StartCoroutine(Scroll(Direction.Right));
-                canScrollRight = true;
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKey(KeyCode.LeftArrow))
             {
                 StartCoroutine(Scroll(Direction.Left));
-                canScrollLeft = true;
             }
         }
     }
@@ -162,6 +165,7 @@ public class RowController : MonoBehaviour
 
             // Instantiate new unit
             var newUnit = InstantiateUnit(firstPos);
+            canScroll = false; // new unit will set to true
             StartCoroutine(newUnit.UpdateContents(activeUnits.First.Value, Direction.Left));
             activeUnits.AddFirst(newUnit);
         }
@@ -172,6 +176,7 @@ public class RowController : MonoBehaviour
             DestroyUnit(invalidUnit);
 
             var newUnit = InstantiateUnit(lastPos);
+            canScroll = false;
             StartCoroutine(newUnit.UpdateContents(activeUnits.Last.Value, Direction.Right));
             activeUnits.AddLast(newUnit);
         }
@@ -205,7 +210,7 @@ public class RowController : MonoBehaviour
 
     private IEnumerator InstantiateArray(int size)
     {
-        canScrollLeft = canScrollRight = false;
+        canScroll = false;
 
         var firstUnit = InstantiateUnit(firstPos);
         yield return firstUnit.UpdateContents(firstUnit, Direction.Identity); // load itself
@@ -233,7 +238,7 @@ public class RowController : MonoBehaviour
             dummyR.UpdateContents(dummyR, Direction.Null);
         }
 
-        canScrollLeft = canScrollRight = true;
+        canScroll = true;
     }
 
     private Unit InstantiateUnit(Vector3 position)

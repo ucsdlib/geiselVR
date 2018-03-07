@@ -140,6 +140,7 @@ public class BookshelfController : MonoBehaviour
         while (!done) yield return null;
         unit.DoneLoading = true;
         yield return InstantiateTable();
+        unit.Row.NotifyScrollOk();
         Display.text = Data.Start;
     }
 
@@ -171,6 +172,7 @@ public class BookshelfController : MonoBehaviour
         }
         itr.Dispose();
         unit.DoneLoading = true;
+        unit.Row.NotifyScrollOk();
     }
 
     // Helper function for InstantiateTable()
