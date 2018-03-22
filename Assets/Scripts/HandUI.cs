@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HandUI : MonoBehaviour
 {
@@ -12,14 +11,7 @@ public class HandUI : MonoBehaviour
         if(OVRInput.Get(OVRInput.Button.One) && Time.time - lastPressTime > 0.5)
         {
             lastPressTime = Time.time;
-            if (HandUIObj.activeInHierarchy)
-            {
-                HandUIObj.SetActive(false);
-            }
-            else
-            {
-                HandUIObj.SetActive(true);
-            }
+            HandUIObj.SetActive(!HandUIObj.activeInHierarchy);
         }
     }
 }
