@@ -35,14 +35,4 @@ public class SelectionUI : MonoBehaviour
         var index = (int) Math.Floor(value * 27);
         return alphabet[index];
     }
-
-    // DEBUG
-    private void Update()
-    {
-        if (OVRInput.Get(OVRInput.Button.Two))
-        {
-            Title.text = "R";
-            OnLoadClick();
-        }
-    }
 }
